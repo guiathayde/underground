@@ -18,9 +18,9 @@ int main()
   sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
 
   sf::Texture playerTexture;
-  playerTexture.loadFromFile("assets/characters/PlayerOne/player.png");
+  playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png");
 
-  Player player(&playerTexture, sf::Vector2u(4, 2), 0.3f, 100.0f, 200.0f);
+  Player player(&playerTexture, sf::Vector2u(4, 4), 0.3f, 100.0f, 200.0f);
 
   std::vector<Platform> platforms;
 
@@ -34,9 +34,9 @@ int main()
   while (window.isOpen())
   {
     deltaTime = clock.restart().asSeconds();
-    // if had a problem with resizing the screen and the character falls
-    // if (deltaTime > 1.0f / 20.0f)
-    //   deltaTime = 1.0f / 20.0f;
+    // solution of resize window
+    if (deltaTime > 1.0f / 20.0f)
+      deltaTime = 1.0f / 20.0f;
 
     sf::Event event;
     while (window.pollEvent(event))

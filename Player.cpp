@@ -51,6 +51,9 @@ void Player::Update(float deltaTime)
       faceRight = false;
   }
 
+  if (velocity.y < 0.0f)
+    row = 2;
+
   animation.Update(row, deltaTime, faceRight);
   body.setTextureRect(animation.uvRect);
   body.move(velocity * deltaTime);
