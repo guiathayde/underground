@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 
 
-Enemy::Enemy(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed,float jumoHeight):Character(texture,imageCount,origin,switchTime,speed,jumpHeight)
+Enemy::Enemy(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed,float jumoHeight,int hearts,bool isAlive):Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive)
 {
   body.setSize(sf::Vector2f(100.0f, 150.0f));
   body.setOrigin(body.getSize() / 2.0f);
@@ -38,6 +38,9 @@ void Enemy::Update(float deltaTime, Player p)
         faceRight = true;
         else
         faceRight = false;
+    }
+    if(hearts <= 0){
+        isAlive = false;
     }
 
     
@@ -75,5 +78,6 @@ float Enemy::Attack(Player p){
         velocity.x += speed;
         return velocity.x;
     }
+    
     return 0.0;
 }

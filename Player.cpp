@@ -1,7 +1,7 @@
 #include <cmath>
 #include "Player.h"
 
-Player::Player(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed, float jumpHeight,bool isPlayerOne):Character(texture,imageCount,origin,switchTime,speed,jumpHeight) 
+Player::Player(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts,bool isAlive, bool isPlayerOne):Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive) 
 {
   
   this->isPlayerOne = isPlayerOne;
@@ -49,10 +49,21 @@ void Player::Update(float deltaTime)
     else
       faceRight = false;
   }
+  
   if(velocity.y < 0)
     row = 2;
-
+  else if(velocity.y > 0 && !canJump)
+    row = 3;
+  
+  if(hearts <= 0)
+    isAlive = false;
+  
   animation.Update(row, deltaTime, faceRight);
   body.setTextureRect(animation.uvRect);
   body.move(velocity * deltaTime);
+}
+
+void Player::GetDamage()
+{
+  this->hearts--;
 }

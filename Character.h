@@ -3,27 +3,31 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
 #include "Collider.h"
-
 class Character
 {
 protected:
+
   sf::RectangleShape body;
   sf::Texture texture;
   sf::Vector2u imageCount;
   sf::Vector2f origin;
+  sf::Vector2f velocity;
 
   Animation animation;
+  
   unsigned int row;
+  int hearts;
+
   float switchTime;
   float speed;
-  bool faceRight;
-
-  sf::Vector2f velocity;
-  bool canJump;
   float jumpHeight;
+  
+  bool canJump;
+  bool faceRight;
+  bool isAlive;
 
 public:
-  Character(sf::Texture *texture, sf::Vector2u imageCount, sf::Vector2f origin,float switchTime, float speed, float jumpHeight);
+  Character(sf::Texture *texture, sf::Vector2u imageCount, sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts, bool isAlived);
   ~Character();
 
   //virtual void Update(float deltaTime) = 0;
@@ -33,4 +37,6 @@ public:
 
   sf::Vector2f GetPosition() { return body.getPosition(); }
   Collider GetCollider() { return Collider(body); }
+  bool GetIsAlive(){return isAlive;}
+  void SetIsAlive(bool alive){isAlive = isAlive;};
 };
