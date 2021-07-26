@@ -1,7 +1,12 @@
 #include <vector>
+#include <list>
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "Platform.h"
+#include "Enemy.h"
+#include <iostream>
+using std::cout;
+using std::endl;
 
 static const float VIEW_WIDTH = 1280.0f;
 static const float VIEW_HEIGHT = 720.0f;
@@ -15,28 +20,47 @@ void ResizeView(const sf::RenderWindow &window, sf::View &view)
 int main()
 {
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
-  sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
+  sf::View view(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(1280.0f, 720.0f));
 
+  sf::Texture plataformTexture;
+  plataformTexture.loadFromFile("assets/background/Plataforms/teste.png");
+  
   sf::Texture playerTexture;
   playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png");
+  
+  sf::Texture enemyTexture;
+  enemyTexture.loadFromFile("assets/characters/EnemyMelee/enemy_melee.png");
+  
+  
+  Player player(&playerTexture, sf::Vector2u(4, 4),sf::Vector2f(-200.0,200.0), 0.30f, 200.0f, 200.0f,true);
+  Enemy enemy(&enemyTexture,sf::Vector2u(6,2),sf::Vector2f(800.0,20.0), 0.3f, 100.0f,100.0f);
+  Enemy enemy2(&enemyTexture,sf::Vector2u(6,2),sf::Vector2f(-500.0,20.0), 0.3f, 100.0f,100.0f);
 
-  Player player(&playerTexture, sf::Vector2u(4, 4), 0.3f, 100.0f, 200.0f);
+
+  std::list<Enemy> enemys;
+  std::list <Enemy> :: iterator it;
+  
+
+  
+  enemys.push_back(static_cast<Enemy>(enemy));
+  enemys.push_back(static_cast<Enemy>(enemy2));
+
+
 
   std::vector<Platform> platforms;
 
-  platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f)));
-  platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f)));
-  platforms.push_back(Platform(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f)));
+  platforms.push_back(Platform(&plataformTexture, sf::Vector2f(5000.0f, 300.0f), sf::Vector2f(600.0f, 600.0f)));
+  platforms.push_back(Platform(&plataformTexture, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f)));
+  //platforms.push_back(Platform(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f)));
 
   float deltaTime = 0.0f;
   sf::Clock clock;
-
   while (window.isOpen())
   {
     deltaTime = clock.restart().asSeconds();
-    // solution of resize window
-    if (deltaTime > 1.0f / 20.0f)
-      deltaTime = 1.0f / 20.0f;
+    // if had a problem with resizing the screen and the character falls
+    // if (deltaTime > 1.0f / 20.0f)
+    //   deltaTime = 1.0f / 20.0f;
 
     sf::Event event;
     while (window.pollEvent(event))
@@ -47,24 +71,38 @@ int main()
       if (event.type == sf::Event::Resized)
         ResizeView(window, view);
     }
-
+    
     player.Update(deltaTime);
-
+    for(it = enemys.begin();it != enemys.end();it++)
+      it->Update(deltaTime,player);
+    
+    
     sf::Vector2f direction;
 
     for (int i = 0; i < platforms.size(); i++)
     {
       Platform &platform = platforms[i];
-
       if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
-        player.OnCollision(direction);
+          player.OnCollision(direction);
+        
+      
+      for(it = enemys.begin();it != enemys.end();it++){
+        if (platform.GetCollider().CheckCollision(it->GetCollider(), direction, 1.0f)){
+          it->OnCollision(direction);
+        }
+      }
     }
 
     view.setCenter(player.GetPosition());
 
     window.clear();
     window.setView(view);
+    
     player.Draw(window);
+    for(it = enemys.begin(); it != enemys.end(); ++it)
+      it->Draw(window);
+        
+    
 
     for (Platform &platform : platforms)
       platform.Draw(window);
