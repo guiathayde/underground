@@ -21,14 +21,14 @@ void Level::Initialize(int enemiesNum)
   for (int i = 0; i < enemiesNum; i++)
   {
 
-    Enemy *aux = new Enemy(&enemyTexture, sf::Vector2u(6, 2), sf::Vector2f(i*100.0f, 200.0f), 0.3f, 100.0f, 100.0f, 3, true);
+    Enemy *aux = new Enemy(&enemyTexture, sf::Vector2u(6, 2), sf::Vector2f(i * 100.0f, 200.0f), 0.3f, 100.0f, 100.0f, 3, true);
     this->enemies.push_back(aux);
   }
 
   static sf::Texture playerTexture;
   if (playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png"))
     printf("Carregou player");
-  Player *p = new Player(&playerTexture, sf::Vector2u(4, 4), sf::Vector2f(-200.0f, 200.0f), 0.30f, 200.0f, 500.0f, 300, true, true);
+  Player *p = new Player(&playerTexture, sf::Vector2u(4, 4), sf::Vector2f(-200.0f, 200.0f), 0.30f, 200.0f, 200.0f, 300, true, true);
 
   playerOne = p;
 

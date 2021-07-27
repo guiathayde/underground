@@ -1,12 +1,10 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include "Level.h"
 #include <SFML/Graphics.hpp>
 
-#include "Enemy.h"
-#include "Platform.h"
-//#include "Menu.h"
+#include "Level.h"
+#include "Menu.h"
 
 using std::cout;
 using std::endl;
@@ -25,41 +23,67 @@ int main()
 
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
   sf::View view(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(1280.0f, 720.0f));
-  sf::Texture backGround;
-  //Menu menu(window.getSize().x, window.getSize().y);
 
-  Level level(1, backGround);
+  Menu menu(window.getSize().x, window.getSize().y);
+
+  sf::Texture background;
+  Level level(1, background);
+  level.Initialize(2);
 
   float deltaTime = 0.0f;
   sf::Clock clock;
 
-  level.Initialize(90);
   while (window.isOpen())
   {
     deltaTime = clock.restart().asSeconds();
-    // solution window resize and player fall
+    // solution when resizing the window and the player falls
     if (deltaTime > 1.0f / 20.0f)
       deltaTime = 1.0f / 20.0f;
 
     sf::Event event;
     while (window.pollEvent(event))
     {
-      if (event.type == sf::Event::Closed)
+      switch (event.type)
+      {
+      case sf::Event::Closed:
         window.close();
+        break;
 
-      if (event.type == sf::Event::Resized)
+      case sf::Event::Resized:
         ResizeView(window, view);
-    }
+        break;
 
+      case sf::Event::KeyReleased:
+        if (event.key.code == sf::Keyboard::Escape && menu.GetPause())
+          menu.SetPause(false);
+        else if (event.key.code == sf::Keyboard::Escape)
+          menu.SetPause(true);
+
+        menu.SelectItem(event, window);
+        break;
+
+      default:
+        break;
+      }
+    }
 
     level.Update(deltaTime);
     level.CheckCollison();
-    view.setCenter(level.GetPlayer().GetPosition());
-    
+
     window.clear();
+
+    if (menu.GetPause())
+    {
+      view.setCenter(menu.GetCenterPosition());
+      menu.Draw(window);
+    }
+    else
+    {
+      view.setCenter(level.GetPlayer().GetPosition());
+      level.Draw(window);
+    }
+
     window.setView(view);
-    
-    level.Draw(window);
     window.display();
   }
   return 0;
