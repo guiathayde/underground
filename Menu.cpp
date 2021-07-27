@@ -79,6 +79,7 @@ void Menu::SelectItem(sf::Event event, sf::RenderWindow &window)
     {
     case 0:
       cout << "Play pressed!" << endl;
+      SetPause(false);
       break;
 
     case 1:
