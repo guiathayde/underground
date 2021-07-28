@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 #include "Level.h"
 
 Level::Level(int level, sf::Texture backgroundTexture)
@@ -15,8 +18,8 @@ void Level::Initialize(int enemiesNum)
 {
   std::list<Enemy>::iterator itEnemies;
   static sf::Texture enemyTexture;
-  if (enemyTexture.loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
-    printf("Carregou inimigo");
+  if (!enemyTexture.loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
+    cerr << "Error loading enemy texture" << endl;
 
   for (int i = 0; i < enemiesNum; i++)
   {
@@ -26,16 +29,16 @@ void Level::Initialize(int enemiesNum)
   }
 
   static sf::Texture playerTexture;
-  if (playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png"))
-    printf("Carregou player");
+  if (!playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png"))
+    cerr << "Error loading player texture" << endl;
   Player *p = new Player(&playerTexture, sf::Vector2u(4, 4), sf::Vector2f(-200.0f, 200.0f), 0.30f, 200.0f, 200.0f, 300, true, true);
 
   playerOne = p;
 
   static sf::Texture plataformTexture;
 
-  if (plataformTexture.loadFromFile("assets/background/Plataforms/teste.png"))
-    printf("Carregou plataforma");
+  if (!plataformTexture.loadFromFile("assets/background/Plataforms/teste.png"))
+    cerr << "Error loading platform texture" << endl;
   Platform *auxPlatform = new Platform(&plataformTexture, sf::Vector2f(5000.0f, 200.0f), sf::Vector2f(100.0f, 600.0f));
   this->platforms.push_back(auxPlatform);
 }

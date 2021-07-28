@@ -67,9 +67,6 @@ int main()
       }
     }
 
-    level.Update(deltaTime);
-    level.CheckCollison();
-
     window.clear();
 
     if (menu.GetPause())
@@ -79,6 +76,8 @@ int main()
     }
     else
     {
+      level.Update(deltaTime);
+      level.CheckCollison();
       view.setCenter(level.GetPlayer().GetPosition());
       level.Draw(window);
     }
