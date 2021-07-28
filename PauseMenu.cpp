@@ -11,35 +11,31 @@ PauseMenu::PauseMenu(float width, float height)
   centerPosition.x = width / 2;
   centerPosition.y = height / 2;
 
-  if (!font.loadFromFile("assets/Quicksand.ttf"))
-    cerr << "Error loading font!" << endl;
+  if (!font.loadFromFile("assets/DarkMage.ttf"))
+    cerr << "Error loading DarkMage font!" << endl;
 
   menu[0].setFont(font);
+  menu[0].setCharacterSize(64);
   menu[0].setFillColor(sf::Color::Red);
-  menu[0].setString("Play");
-  menu[0].setPosition(sf::Vector2f(width / 3, height / (MENU_MAX_ITEMS + 1) * 1));
+  menu[0].setString("Return to the game");
 
   menu[1].setFont(font);
+  menu[1].setCharacterSize(64);
   menu[1].setFillColor(sf::Color::White);
-  menu[1].setString("Options");
-  menu[1].setPosition(sf::Vector2f(width / 3, height / (MENU_MAX_ITEMS + 1) * 2));
-
-  menu[2].setFont(font);
-  menu[2].setFillColor(sf::Color::White);
-  menu[2].setString("Exit");
-  menu[2].setPosition(sf::Vector2f(width / 3, height / (MENU_MAX_ITEMS + 1) * 3));
+  menu[1].setString("Back to main menu");
 }
 
 PauseMenu::~PauseMenu()
 {
 }
 
-void PauseMenu::Draw(sf::RenderWindow &window)
+void PauseMenu::Draw(sf::RenderWindow &window, sf::View &view)
 {
+  menu[0].setPosition(view.getCenter().x - 500.0f, view.getCenter().y - 200.0f);
+  menu[1].setPosition(view.getCenter().x - 500.0f, view.getCenter().y - 100.0f);
+
   for (int i = 0; i < MENU_MAX_ITEMS; i++)
-  {
     window.draw(menu[i]);
-  }
 }
 
 void PauseMenu::MoveUp()
@@ -62,7 +58,7 @@ void PauseMenu::MoveDown()
   }
 }
 
-void PauseMenu::SelectItem(sf::Event event, sf::RenderWindow &window)
+void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu)
 {
   switch (event.key.code)
   {
@@ -78,51 +74,18 @@ void PauseMenu::SelectItem(sf::Event event, sf::RenderWindow &window)
     switch (GetPressedItem())
     {
     case 0:
-      cout << "Play pressed!" << endl;
+      cout << "Return to the game pressed!" << endl;
       SetPause(false);
       break;
 
     case 1:
-      cout << "Options pressed!" << endl;
-      break;
-
-    case 2:
-      cout << "Quit pressed!" << endl;
-      window.close();
+      cout << "Back to main menu pressed!" << endl;
+      mainMenu.SetPlaying(false);
       break;
 
     default:
       break;
     }
-
-  case sf::Mouse::Left:
-  {
-    sf::Vector2i position = sf::Mouse::getPosition();
-    // explanation of this conditionals: https://en.sfml-dev.org/forums/index.php?topic=21666.0
-    bool firstOption = menu[0].getGlobalBounds().contains(window.mapPixelToCoords(position));
-    bool secondOption = menu[1].getGlobalBounds().contains(window.mapPixelToCoords(position));
-    bool thirdOption = menu[2].getGlobalBounds().contains(window.mapPixelToCoords(position));
-
-    cout << "Mouse position: " << position.x << ", " << position.y << endl;
-    cout << firstOption << " " << secondOption << " " << thirdOption << endl;
-
-    if (firstOption)
-    {
-      cout << "Play pressed!" << endl;
-      SetPause(false);
-    }
-    else if (secondOption)
-    {
-      cout << "Options pressed!" << endl;
-    }
-    else if (thirdOption)
-    {
-      cout << "Quit pressed!" << endl;
-      window.close();
-    }
-
-    break;
-  }
 
   default:
     break;

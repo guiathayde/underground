@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#define MAINMENU_MAX_ITEMS 4
+#define MAINMENU_MAX_ITEMS 5
 
 class MainMenu
 {

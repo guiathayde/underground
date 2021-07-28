@@ -2,7 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#define MENU_MAX_ITEMS 3
+#include "MainMenu.h"
+
+#define MENU_MAX_ITEMS 2
 
 class PauseMenu
 {
@@ -18,10 +20,10 @@ public:
   PauseMenu(float width, float height);
   ~PauseMenu();
 
-  void Draw(sf::RenderWindow &window);
+  void Draw(sf::RenderWindow &window, sf::View &view);
   void MoveUp();
   void MoveDown();
-  void SelectItem(sf::Event event, sf::RenderWindow &window);
+  void SelectItem(sf::Event event, MainMenu &mainMenu);
 
   int GetPressedItem() { return selectedItemIndex; }
 

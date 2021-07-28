@@ -21,7 +21,6 @@ void ResizeView(const sf::RenderWindow &window, sf::View &view)
 
 int main()
 {
-
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
   sf::View view(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(1280.0f, 720.0f));
 
@@ -65,7 +64,7 @@ int main()
           mainMenu.SelectItem(event, window);
 
         if (pauseMenu.GetPause())
-          pauseMenu.SelectItem(event, window);
+          pauseMenu.SelectItem(event, mainMenu);
 
         break;
       }
@@ -79,8 +78,8 @@ int main()
 
     if (pauseMenu.GetPause() && mainMenu.GetPlaying())
     {
-      view.setCenter(pauseMenu.GetCenterPosition());
-      pauseMenu.Draw(window);
+      level.Draw(window);
+      pauseMenu.Draw(window, view);
     }
     else if (mainMenu.GetPlaying())
     {
@@ -98,5 +97,6 @@ int main()
     window.setView(view);
     window.display();
   }
+
   return 0;
 }

@@ -28,7 +28,7 @@ MainMenu::MainMenu(float width, float height)
   menu[0].setString("Underground");
   textRect = menu[0].getLocalBounds();
   menu[0].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-  menu[0].setPosition(sf::Vector2f(width / 2, height / (MAINMENU_MAX_ITEMS + 1) * 1.75));
+  menu[0].setPosition(sf::Vector2f((width / 2) - 35.0f, height / (MAINMENU_MAX_ITEMS + 1) * 1.85));
 
   menu[1].setFont(itemFont);
   menu[1].setCharacterSize(54);
@@ -53,6 +53,14 @@ MainMenu::MainMenu(float width, float height)
   textRect = menu[3].getLocalBounds();
   menu[3].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
   menu[3].setPosition(sf::Vector2f(width / 2, height / (MAINMENU_MAX_ITEMS + 1) * 4.25));
+
+  menu[4].setFont(itemFont);
+  menu[4].setCharacterSize(54);
+  menu[4].setFillColor(sf::Color::Black);
+  menu[4].setString("Quit");
+  textRect = menu[4].getLocalBounds();
+  menu[4].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+  menu[4].setPosition(sf::Vector2f(width / 2, height / (MAINMENU_MAX_ITEMS + 1) * 5.25));
 }
 
 MainMenu::~MainMenu()
@@ -117,6 +125,11 @@ void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window)
 
     case 3:
       cout << "Ranking pressed!" << endl;
+      break;
+
+    case 4:
+      cout << "Quit pressed!" << endl;
+      window.close();
       break;
 
     default:
