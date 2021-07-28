@@ -1,4 +1,5 @@
 main.exe
 main
-SFML
+SFML/include
+SFML/lib
 **.dll
