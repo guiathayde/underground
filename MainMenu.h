@@ -2,21 +2,24 @@
 
 #include <SFML/Graphics.hpp>
 
-#define MAX_NUMBER_OF_ITEMS 3
+#define MAINMENU_MAX_ITEMS 4
 
-class Menu
+class MainMenu
 {
 private:
   int selectedItemIndex;
-  bool isPaused;
+  bool isPlaying;
 
   sf::Vector2f centerPosition;
-  sf::Font font;
-  sf::Text menu[MAX_NUMBER_OF_ITEMS];
+  sf::Font titleFont;
+  sf::Font itemFont;
+  sf::Texture backgroundTexture;
+  sf::RectangleShape background;
+  sf::Text menu[MAINMENU_MAX_ITEMS];
 
 public:
-  Menu(float width, float height);
-  ~Menu();
+  MainMenu(float width, float height);
+  ~MainMenu();
 
   void Draw(sf::RenderWindow &window);
   void MoveUp();
@@ -25,8 +28,8 @@ public:
 
   int GetPressedItem() { return selectedItemIndex; }
 
-  void SetPause(bool state) { isPaused = state; }
-  bool GetPause() { return isPaused; }
+  void SetPlaying(bool state) { isPlaying = state; }
+  bool GetPlaying() { return isPlaying; }
 
   sf::Vector2f GetCenterPosition() { return centerPosition; }
 };

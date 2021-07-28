@@ -4,7 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "Level.h"
-#include "Menu.h"
+#include "MainMenu.h"
+#include "PauseMenu.h"
 
 using std::cout;
 using std::endl;
@@ -24,7 +25,8 @@ int main()
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
   sf::View view(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(1280.0f, 720.0f));
 
-  Menu menu(window.getSize().x, window.getSize().y);
+  MainMenu mainMenu(window.getSize().x, window.getSize().y);
+  PauseMenu pauseMenu(window.getSize().x, window.getSize().y);
 
   sf::Texture background;
   Level level(1, background);
@@ -54,13 +56,19 @@ int main()
         break;
 
       case sf::Event::KeyReleased:
-        if (event.key.code == sf::Keyboard::Escape && menu.GetPause())
-          menu.SetPause(false);
+      {
+        if (event.key.code == sf::Keyboard::Escape && pauseMenu.GetPause())
+          pauseMenu.SetPause(false);
         else if (event.key.code == sf::Keyboard::Escape)
-          menu.SetPause(true);
+          pauseMenu.SetPause(true);
+        else if (!mainMenu.GetPlaying())
+          mainMenu.SelectItem(event, window);
 
-        menu.SelectItem(event, window);
+        if (pauseMenu.GetPause())
+          pauseMenu.SelectItem(event, window);
+
         break;
+      }
 
       default:
         break;
@@ -69,17 +77,22 @@ int main()
 
     window.clear();
 
-    if (menu.GetPause())
+    if (pauseMenu.GetPause() && mainMenu.GetPlaying())
     {
-      view.setCenter(menu.GetCenterPosition());
-      menu.Draw(window);
+      view.setCenter(pauseMenu.GetCenterPosition());
+      pauseMenu.Draw(window);
     }
-    else
+    else if (mainMenu.GetPlaying())
     {
       level.Update(deltaTime);
       level.CheckCollison();
       view.setCenter(level.GetPlayer().GetPosition());
       level.Draw(window);
+    }
+    else if (!mainMenu.GetPlaying())
+    {
+      view.setCenter(mainMenu.GetCenterPosition());
+      mainMenu.Draw(window);
     }
 
     window.setView(view);
