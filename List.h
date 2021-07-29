@@ -1,209 +1,202 @@
 #pragma once
-#include<iostream>
+#include <iostream>
+
 using std::cout;
 using std::endl;
 
-template <class TypeElement>
-class Element{
-private:
-    
-    TypeElement info;
-    Element<TypeElement> *pNext;
-    Element<TypeElement> *pPrev;
-
-public:
-
-    Element(TypeElement *info);
-    ~Element();
-    
-    void SetInfo(TypeElement &info);
-    TypeElement GetInfo();
-
-    void SetNext(Element<TypeElement>* pN);
-    Element<TypeElement>* GetNext();
-    
-    void SetPrev(Element<TypeElement>* pP);
-    Element<TypeElement>* GetPrev();
-
-};
-
-template <class TypeElement>
-Element<TypeElement>::Element(TypeElement *info){
-    SetInfo(&info);
-    pNext = NULL;
-    pPrev = NULL;
-}
-
-template <class TypeElement>
-Element<TypeElement>::~Element(){
-    pNext = NULL;
-    pPrev = NULL;
-
-}
-
-template <class TypeElement>
-void Element<TypeElement>::SetInfo(TypeElement &info){
-    this->info = info;
-}
-
-template <class TypeElement>
-TypeElement Element<TypeElement>::GetInfo(){
-    return info;
-}
-
-template <class TypeElement>
-void Element<TypeElement>::SetNext(Element<TypeElement>* pN){
-    if(pN == NULL)
-        cout << "Elemento Nulo" << endl; 
-    else
-        pNext = pN;
-}
-
-template <class TypeElement>
-Element<TypeElement>* Element<TypeElement>::GetNext(){
-    return pNext;
-}
-
-template <class TypeElement>
-void Element<TypeElement>::SetPrev(Element<TypeElement>* pP){
-    if(pP == NULL)
-        cout << "Elemento Nulo" <<endl;
-    else
-        pPrev = pP;
-}
-
-template <class TypeElement>
-Element<TypeElement>* Element<TypeElement>::GetPrev(){
-    return pPrev;
-}
-
-template <class TypeList>
+template<class T1>
 class List
 {
+public:
+    
+
+    template<class T2>
+    class Element{
+    private:
+        
+        //aqui guarda a informação 
+        T2 *info;
+        
+        //ponteiros para a lista duplamente encadeada
+        Element<T2> *pNext;
+        Element<T2> *pPrev;
+    
+    public:
+        
+        
+        
+        Element(T2 *info){
+
+            SetInfo(info);
+            pNext = NULL;
+            pPrev = NULL;
+        }
+
+        ~Element(){
+            
+            pNext = NULL;
+            pPrev = NULL;
+        }
+
+        //funções set
+        void SetInfo(T2  *in){
+            if(in != NULL)
+                info = in;
+            else
+                cout << "Informação nula" << endl;
+        }
+        void SetNext(Element<T2>* pN){
+                pNext = pN;
+            
+        }
+        void SetPrev(Element<T2>* pP){
+                pPrev = pP; 
+        }
+        
+        //funções get
+        T2* GetInfo(){return info;}
+        Element<T2>* GetNext(){return pNext;}
+        Element<T2>* GetPrev(){return pPrev;}
+
+    };
+
 private:
     
+    Element<T1>* pFirst;
+    Element<T1>* pLast;
+    Element<T1>* pAux;
     
-    Element<TypeList> *pFirst;
-    Element<TypeList> *pLast;
-    int size;
-    
-
-
+    int n_elementos;
 
 public:
-
+    
     List();
     ~List();
 
-    TypeList* operator[](int i);
 
-    void Push_Back(TypeList pNew);
-    void Erase(TypeList *element);
+    void Insert(T1 *pnew);
     void ClearAll();
+    void RemoveInfo(T1 *pRemove);
+    void Delete(T1* pDelete);
     void ListAll();
+
+    int GetSize(){return n_elementos;}
+
+    T1 *operator[](int x);
     
+
+    T1 *GetFirstList(){
+        
+        pAux = pFirst;
+        return pAux->GetInfo();
+        
+    }
     
-    void SetSize(int s);
-    int GetSize();
+    T1 *GetNextList(){
+        
+        //cout << "Entrou no get next" <<endl;
+        //cout << pAux <<endl;
+        pAux = pAux->GetNext();
+        //cout << pAux <<endl;
+        if(pAux == NULL)
+            return NULL;
+        return pAux->GetInfo();
+    }
 
 };
 
-
-template<class TypeList>
-TypeList* List<TypeList>::operator[](int i){
-    if(i <= size && i >= 0 ){
-        Element<TypeList> *tmp = pFirst;
-        for(int j = 0; j != i ; j++){
-            tmp = tmp->GetNext();
-        }
-        return tmp;
-    }
-    cout << "Local inacessível"<<endl;
-    exit(1);
+template<class T1>
+List<T1>::List():
+pFirst(NULL),pLast(NULL),pAux(NULL)
+{
+    n_elementos = 0;
 }
 
-
-template <class TypeList>
-List<TypeList>::List()
-{
-    pFirst = NULL;
-    pLast = NULL;
-    size = 0;
-}
-template <class TypeList>
-List<TypeList>::~List()
-{
+template<class T1>
+List<T1>::~List(){
+    //cout << "Entrou na destrutora "<< pFirst <<endl;
+    
     ClearAll();
+    pFirst = NULL;
+
 }
 
-template<class TypeList>
-void List<TypeList>::Push_Back(TypeList pNew){
-    if(pNew != NULL){
-        Element<TypeList> *tmp = NULL;
-        tmp = new Element<TypeList>(pNew);
-        tmp->SetInfo(*pNew);
+template<class T1>
+void List<T1>::Insert(T1 *pnew){
         
+    Element<T1>* tmp = NULL;
+    tmp = new Element<T1>(pnew);
+        
+        //cout << "Chegou aquiwdw" <<endl;
+        //cout << pFirst << endl;
         if(pFirst == NULL){
+        
+            //cout << "Chegou aqui 2" <<endl;
             pFirst = tmp;
+            pFirst->SetPrev(NULL);
+            pFirst->SetNext(NULL);
+            pLast = pFirst;
+            //cout << "Chegou aqui 3" <<endl;
         }
-        else{
+            
+        else
+        {
+            //cout << "Chegou aqui 4" <<endl;
             pLast->SetNext(tmp);
             tmp->SetPrev(pLast);
-        }
-        pLast = tmp;
-        size++;
-        SetSize(size);
-    }
-}
-template<class TypeList>
-void List<TypeList>::Erase(TypeList *element){
-    
-    if(element != NULL){
-        Element<TypeList>* tmp = pFirst;
-        while(tmp != NULL){
-            if(tmp->GetInfo() == element){
-                tmp->GetNext()->SetPrev(tmp->GetPrev);
-                tmp->GetPrev()->SetNext(tmp->GetNext);
-                tmp= NULL;
-                break;
-            }
-            tmp->GetNext();
+            pLast = tmp;
         }
         
-    }
+        n_elementos++;
+        //cout << "Chegou aqui" <<endl;
 }
 
-template<class TypeList>
-void List<TypeList>::ClearAll(){
+
+template<class T1>
+void List<T1>::ClearAll(){
+    
     while(pFirst != NULL){
         
-        Element<TypeList>* tmp = pFirst;
+        Element<T1> *tmp = NULL;
+        //cout <<"Fez o tmp"<<endl;
+        tmp = pFirst;
         pFirst = pFirst->GetNext();
-        pFirst->SetPrev(NULL);
-        
         delete(tmp);
+        //cout << "Deletou" <<endl;
+    
     }
 
 }
 
-template<class TypeList>
-void List<TypeList>::ListAll(){
-    if(pFirst != NULL){
-        Element<TypeList> *tmp = pFirst;
-        while(tmp != NULL){
-            cout << tmp <<endl;
-            tmp = tmp->GetNext();
-        }
+template<class T1>
+void List<T1>::RemoveInfo(T1 *pRemove){
+    pFirst = pAux;
+    while(pAux != NULL){
         
+        if(pAux->GetInfo() == pRemove){
+            pAux->GetPrev()->SetNext(pAux->GetNext());
+            pAux->GetNext()->SetPrev(pAux->GetPrev());
+            delete(pAux);
+        }
+
     }
-
-}
-template<class TypeList>
-void List<TypeList>::SetSize(int s){
-    size = s;
 }
 
-template<class TypeList>
-int List<TypeList>::GetSize(){
-    return size;
+template<class T1>
+T1* List<T1>::operator[](int x){
+    if(x < n_elementos && x>=0){
+        Element<T1>* pA;
+        pA = pFirst;
+        
+        for(int i = 0; i < x; i++){
+            //cout << i <<endl;
+                if(pA)
+                    pA = pA->GetNext();
+        }
+        if(pA)
+            return pA->GetInfo();
+    }
+    else
+        cout <<"Feliz aniverssario Garret"<<endl;
+    return NULL;    
 }

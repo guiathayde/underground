@@ -1,6 +1,6 @@
 #pragma once
 
-#include "List1.h"
+#include "List.h"
 #include "Character.h"
 #include "Platform.h"
 #include <list>
@@ -9,7 +9,7 @@ class CharacterList
 {
 private:
     
-    List1<Character> ListCharacters;
+    List<Character> ListCharacters;
 
 
 public:
