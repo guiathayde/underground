@@ -19,7 +19,7 @@ private:
   sf::Texture platformTexture;
 
   CharacterList characters;
-
+  
   list<Enemy *> enemies;
   list<Platform *> platforms;
   Player *playerOne;
@@ -28,10 +28,10 @@ public:
   Level(int level, sf::Texture backgroundTexture);
   ~Level();
 
-  void Initialize(int enemiesNum);
-  void CheckCollision();
+  void Initialize(int enimiesNum);
+  void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);
-  Player *GetPlayer() { return static_cast<Player *>(characters.GetPlayer()); }
+  Player *GetPlayer() { return static_cast<Player*>(characters.GetPlayer()); }
   void SetPlayer(Player *p) { playerOne = p; };
 };
