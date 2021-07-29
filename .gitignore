@@ -1,1 +1,5 @@
 main.exe
+main
+SFML/include
+SFML/lib
+**.dll
