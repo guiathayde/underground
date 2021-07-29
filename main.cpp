@@ -29,7 +29,6 @@ int main()
 
   sf::Texture background;
   Level level(1, background);
-  level.Initialize(2);
 
   float deltaTime = 0.0f;
   sf::Clock clock;
@@ -61,7 +60,7 @@ int main()
         else if (event.key.code == sf::Keyboard::Escape)
           pauseMenu.SetPause(true);
         else if (!mainMenu.GetPlaying())
-          mainMenu.SelectItem(event, window);
+          mainMenu.SelectItem(event, window, level);
 
         if (pauseMenu.GetPause())
           pauseMenu.SelectItem(event, mainMenu);

@@ -11,10 +11,10 @@ MainMenu::MainMenu(float width, float height)
   centerPosition.x = width / 2;
   centerPosition.y = height / 2;
 
-  if (!titleFont.loadFromFile("assets/Aokigahara.ttf"))
+  if (!titleFont.loadFromFile("assets/fonts/Aokigahara.ttf"))
     cerr << "Error loading title Aokigahara font!" << endl;
 
-  if (!itemFont.loadFromFile("assets/DarkMage.ttf"))
+  if (!itemFont.loadFromFile("assets/fonts/DarkMage.ttf"))
     cerr << "Error loading item DarkMage font!" << endl;
 
   if (!backgroundTexture.loadFromFile("assets/background/mainMenuBackground.png"))
@@ -99,7 +99,7 @@ void MainMenu::MoveDown()
   }
 }
 
-void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window)
+void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window, Level &level)
 {
   switch (event.key.code)
   {
@@ -116,6 +116,7 @@ void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window)
     {
     case 1:
       cout << "Play pressed!" << endl;
+      level.Initialize(2);
       SetPlaying(true);
       break;
 

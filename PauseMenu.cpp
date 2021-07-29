@@ -11,7 +11,7 @@ PauseMenu::PauseMenu(float width, float height)
   centerPosition.x = width / 2;
   centerPosition.y = height / 2;
 
-  if (!font.loadFromFile("assets/DarkMage.ttf"))
+  if (!font.loadFromFile("assets/fonts/DarkMage.ttf"))
     cerr << "Error loading DarkMage font!" << endl;
 
   menu[0].setFont(font);

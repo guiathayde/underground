@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Level.h"
+
 #define MAINMENU_MAX_ITEMS 5
 
 class MainMenu
@@ -24,7 +26,7 @@ public:
   void Draw(sf::RenderWindow &window);
   void MoveUp();
   void MoveDown();
-  void SelectItem(sf::Event event, sf::RenderWindow &window);
+  void SelectItem(sf::Event event, sf::RenderWindow &window, Level &level);
 
   int GetPressedItem() { return selectedItemIndex; }
 
