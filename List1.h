@@ -114,7 +114,7 @@ pFirst(NULL),pLast(NULL),pAux(NULL)
 
 template<class T1>
 List1<T1>::~List1(){
-    cout << "Entrou na destrutora "<< pFirst <<endl;
+    //cout << "Entrou na destrutora "<< pFirst <<endl;
     
     ClearAll();
     pFirst = NULL;
@@ -189,7 +189,7 @@ T1* List1<T1>::operator[](int x){
         pA = pFirst;
         
         for(int i = 0; i < x; i++){
-            cout << i <<endl;
+            //cout << i <<endl;
                 if(pA)
                     pA = pA->GetNext();
         }

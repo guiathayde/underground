@@ -25,7 +25,7 @@ Character* CharacterList::GetPlayer(){
         //verifica se esse elemento é o player
         if(tmp->GetIsPlayer())
             //se sim retorna o player
-            cout << tmp <<endl;
+            //cout << tmp <<endl;
             return tmp;
         //se não pega o proximo elemento da lista
         tmp = ListCharacters.GetNextList();
@@ -99,7 +99,7 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms){
     int i;
     int j;
     int size = ListCharacters.GetSize();
-    cout << ListCharacters.GetSize() <<endl;
+    //cout << ListCharacters.GetSize() <<endl;
     for (itPlatform = platforms.begin(); itPlatform != platforms.end(); itPlatform++)
     {
         
