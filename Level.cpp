@@ -60,7 +60,7 @@ void Level::Draw(sf::RenderWindow &window)
   //desenha o jogador
   
   
-    characters.DrawCharaceters(window);
+    characters.DrawCharacters(window);
     //cout << "Saiu do Drawn"<<endl;
     for (itPlatform = platforms.begin(); itPlatform != platforms.end(); ++itPlatform)
       (*itPlatform)->Draw(window);

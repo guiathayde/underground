@@ -21,7 +21,7 @@ public:
     void RemoveCharacter(Character* pR);
     void InitializeCharacters(int enemiesNum);
     void UpdateCharacter(float deltaTime);
-    void DrawCharaceters(sf::RenderWindow &window);
+    void DrawCharacters(sf::RenderWindow &window);
     
     void CheckCharactersCollision(std::list<Platform*> platforms);
     Character *GetPlayer();

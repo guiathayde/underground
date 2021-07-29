@@ -78,7 +78,7 @@ void CharacterList::UpdateCharacter(float deltaTime){
 
 }
 
-void CharacterList::DrawCharaceters(sf::RenderWindow &window){
+void CharacterList::DrawCharacters(sf::RenderWindow &window){
     
     Character* tmp;
     Character *p = GetPlayer();
