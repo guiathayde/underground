@@ -7,6 +7,8 @@ using namespace std;
 #include "Enemy.h"
 #include "Platform.h"
 #include "Player.h"
+#include "CharacterList.h"
+#include "List1.h"
 
 class Level
 {
@@ -16,6 +18,8 @@ private:
   sf::Texture backgroundTexture;
   sf::Texture platformTexture;
 
+  CharacterList characters;
+  
   list<Enemy *> enemies;
   list<Platform *> platforms;
   Player *playerOne;
@@ -28,6 +32,6 @@ public:
   void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);
-  Player GetPlayer() { return *playerOne; }
+  Player *GetPlayer() { return static_cast<Player*>(characters.GetPlayer()); }
   void SetPlayer(Player *p) { playerOne = p; };
 };

@@ -33,14 +33,14 @@ int main()
   float deltaTime = 0.0f;
   sf::Clock clock;
 
-  level.Initialize(90);
+  level.Initialize(4);
   while (window.isOpen())
   {
     deltaTime = clock.restart().asSeconds();
     // solution window resize and player fall
     if (deltaTime > 1.0f / 20.0f)
       deltaTime = 1.0f / 20.0f;
-
+    //cout <<"delta time" <<deltaTime <<endl;
     sf::Event event;
     while (window.pollEvent(event))
     {
@@ -53,12 +53,13 @@ int main()
 
 
     level.Update(deltaTime);
+    //cout <<level.GetPlayer()->GetPosition().x<<level.GetPlayer()->GetPosition().y<<endl;
     level.CheckCollison();
-    view.setCenter(level.GetPlayer().GetPosition());
+    view.setCenter(level.GetPlayer()->GetPosition());
     
     window.clear();
     window.setView(view);
-    
+
     level.Draw(window);
     window.display();
   }

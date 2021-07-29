@@ -7,15 +7,15 @@
 #include <list>
 
 
-class Player:public Character
+class Player: public Character
 {
 private:
   bool isPlayerOne;
 
 public:
-  Player(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed, float jumpHeight,int hearts,bool isAlive, bool isPlayerOne);
+  Player(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed, float jumpHeight,int hearts,bool isAlive, bool isPlayer, bool isPlayerOne);
   ~Player();
 
-  void Update(float deltaTime);
+  void Update(float deltaTime, Character* p);
   void GetDamage();
 };

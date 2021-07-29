@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 
 
-Enemy::Enemy(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed,float jumoHeight,int hearts,bool isAlive):Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive)
+Enemy::Enemy(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed,float jumoHeight,int hearts,bool isAlive,bool isPlayer):Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer)
 {
   body.setSize(sf::Vector2f(100.0f, 150.0f));
   body.setOrigin(body.getSize() / 2.0f);
@@ -17,12 +17,14 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Update(float deltaTime, Player p)
+void Enemy::Update(float deltaTime,Character* character)
 {
+    Player *p;
+    p = static_cast<Player*>(character);    
     
     velocity.x *= 0.5f; // time to stop action walk (slow down)
-    if(SeePlayer(p)){
-        velocity.x = Attack(p);
+    if(SeePlayer(*p)){
+        velocity.x = Attack(*p);
     }
 
     velocity.y += 981.0f * deltaTime;
@@ -57,7 +59,7 @@ bool Enemy::SeePlayer(Player p){
     pos_player = p.GetPosition();
     float D = sqrt((pos_player.x-pos_enemy.x)*(pos_player.x-pos_enemy.x)+(pos_player.y-pos_enemy.y)*(pos_player.y-pos_enemy.y));
     
-    if(D <= 200)
+    if(D <= 500.0)
         return true;
     else 
         return false;

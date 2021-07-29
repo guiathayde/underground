@@ -2,7 +2,7 @@
 #include "Character.h"
 #include <list>
 
-Character::Character(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin ,float switchTime, float speed, float jumpHeight,int hearts, bool isAlive) : animation(texture, imageCount, switchTime)
+Character::Character(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin ,float switchTime, float speed, float jumpHeight,int hearts, bool isAlive, bool isPlayer) : animation(texture, imageCount, switchTime)
 {
   this->speed = speed;
   this->jumpHeight = jumpHeight;

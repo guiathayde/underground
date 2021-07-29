@@ -1,7 +1,12 @@
 #include <cmath>
 #include "Player.h"
+#include <iostream>
+using std::cout;
+using std::endl;
 
-Player::Player(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts,bool isAlive, bool isPlayerOne):Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive) 
+
+Player::Player(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts,bool isAlive, bool isPlayer,bool isPlayerOne):
+Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer) 
 {
   
   this->isPlayerOne = isPlayerOne;
@@ -17,10 +22,10 @@ Player::~Player()
 {
 }
 
-void Player::Update(float deltaTime)
+void Player::Update(float deltaTime, Character* ini)
 {
   velocity.x *= 0.5f; // time to stop action walk (slow down)
-
+  //cout << deltaTime <<endl;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     velocity.x -= speed;
 
