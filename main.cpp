@@ -84,7 +84,7 @@ int main()
     {
       level.Update(deltaTime);
       level.CheckCollison();
-      view.setCenter(level.GetPlayer().GetPosition());
+      view.setCenter(level.GetPlayer()->GetPosition());
       level.Draw(window);
     }
     else if (!mainMenu.GetPlaying())
