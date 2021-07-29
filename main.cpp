@@ -1,6 +1,3 @@
-#include <vector>
-#include <list>
-#include <iostream>
 #include <SFML/Graphics.hpp>
 
 #include "Level.h"
