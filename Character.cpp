@@ -1,17 +1,14 @@
-#include <cmath>
 #include "Character.h"
-#include <list>
 
-Character::Character(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin ,float switchTime, float speed, float jumpHeight,int hearts, bool isAlive, bool isPlayer) : animation(texture, imageCount, switchTime)
+Character::Character(sf::Texture *texture, sf::Vector2u imageCount, sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer) : animation(texture, imageCount, switchTime)
 {
   this->speed = speed;
   this->jumpHeight = jumpHeight;
   this->hearts = hearts;
   this->isAlive = isAlive;
+  this->isPlayer = isPlayer;
   row = 0;
   faceRight = true;
-
-  
 }
 
 Character::~Character()

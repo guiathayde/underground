@@ -42,7 +42,7 @@ public:
             if (in != NULL)
                 info = in;
             else
-                cout << "Informação nula" << endl;
+                cerr << "Info NULL!" << endl;
         }
         void SetNext(Element<T2> *pN)
         {
@@ -53,8 +53,8 @@ public:
             pPrev = pP;
         }
 
-        //funções get
-        T2 *GetInfo() { return info; }
+        //funções get return info;
+        T2 *GetInfo() { return info != NULL ? info : NULL; }
         Element<T2> *GetNext() { return pNext; }
         Element<T2> *GetPrev() { return pPrev; }
     };
@@ -80,23 +80,22 @@ public:
 
     T1 *operator[](int x);
 
-    T1 *GetFirstList()
+    Element<T1> *GetFirstList()
     {
-
-        pAux = pFirst;
-        return pAux->GetInfo();
+        if (pFirst == NULL)
+        {
+            cerr << "pFirst in List is NULL!" << endl;
+            return NULL;
+        }
+        return pFirst;
     }
 
-    T1 *GetNextList()
+    Element<T1> *GetNextList(Element<T1> *paux)
     {
-
-        //cout << "Entrou no get next" <<endl;
-        //cout << pAux <<endl;
-        pAux = pAux->GetNext();
-        //cout << pAux <<endl;
-        if (pAux == NULL)
+        paux = paux->GetNext();
+        if (paux == NULL)
             return NULL;
-        return pAux->GetInfo();
+        return paux;
     }
 };
 
@@ -109,8 +108,6 @@ List<T1>::List() : pFirst(NULL), pLast(NULL), pAux(NULL)
 template <class T1>
 List<T1>::~List()
 {
-    //cout << "Entrou na destrutora "<< pFirst <<endl;
-
     ClearAll();
     pFirst = NULL;
 }
@@ -126,25 +123,19 @@ void List<T1>::Insert(T1 *pnew)
 
     if (pFirst == NULL)
     {
-
-        //cout << "Chegou aqui 2" <<endl;
         pFirst = tmp;
         pFirst->SetPrev(NULL);
         pFirst->SetNext(NULL);
         pLast = pFirst;
-        //cout << "Chegou aqui 3" <<endl;
     }
-
     else
     {
-        //cout << "Chegou aqui 4" <<endl;
         pLast->SetNext(tmp);
         tmp->SetPrev(pLast);
         pLast = tmp;
     }
 
     n_elementos++;
-    //cout << "Chegou aqui" <<endl;
 }
 
 template <class T1>
