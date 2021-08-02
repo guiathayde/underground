@@ -40,7 +40,7 @@ void EntityList::CheckEntitysCollision(){
             }
             
         }
-    }    
+    }  
+
+
 }
-
-

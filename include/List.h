@@ -156,14 +156,10 @@ template<class T1>
 void List<T1>::ClearAll(){
     
     while(pFirst != NULL){
-        
         Element<T1> *tmp = NULL;
-        //cout <<"Fez o tmp"<<endl;
         tmp = pFirst;
         pFirst = pFirst->GetNext();
         delete(tmp);
-        //cout << "Deletou" <<endl;
-    
     }
 
 }

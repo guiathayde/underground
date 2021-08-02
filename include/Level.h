@@ -23,18 +23,23 @@ private:
   EntityList entities;
   CharacterList characters;
 
-  list<Platform *> platforms;
+  sf::RectangleShape background;
+
+  sf::View *view;
+  float sizeX;
+
   Player *playerOne;
 
 public:
-  Level(int level, sf::Texture backgroundTexture);
+  Level(int level, sf::Texture backgroundTexture, sf::View *view, float sizeX);
   ~Level();
 
-  void Initialize(int enimiesNum);
+  void Initialize(int enimiesNum, sf::RenderWindow &window);
   void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);
   Player *GetPlayer() { return static_cast<Player*>(characters.GetPlayer()); }
   void SetPlayer(Player *p) { playerOne = p; };
   void ClearAll();
+  float GetSizeX() { return sizeX / 2.0f; }
 };

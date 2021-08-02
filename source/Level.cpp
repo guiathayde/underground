@@ -1,11 +1,11 @@
 #include "Level.h"
 
-Level::Level(int level, sf::Texture backgroundTexture):
-entities(n_entities,true)
+Level::Level(int level, sf::Texture backgroundTexture, sf::View *view, float sizeX):entities(n_entities,true)
 {
-  
+  this->sizeX = sizeX;
   this->level = level;
   this->backgroundTexture = backgroundTexture;
+  this->view = view;
 }
 
 Level::~Level()
@@ -13,21 +13,37 @@ Level::~Level()
   ClearAll();
 }
 
-void Level::Initialize(int enemiesNum)
+void Level::Initialize(int enemiesNum, sf::RenderWindow &window)
 {
   //Testando lista Template
-  cout << "Não entrou" <<endl;
+  
   characters.InitializeCharacters(enemiesNum,&entities);
   
-  if (platformTexture.loadFromFile("assets/background/Plataforms/teste.png"))
-    printf("Carregou plataforma\n");
+  sf::Vector2u windowSize = window.getSize();
 
-  Platform *auxPlatform = NULL;
-  auxPlatform = new Platform(&platformTexture, sf::Vector2f(5000.0f, 600.0f), sf::Vector2f(1000.0f, 1000.0f));
-  //Platform *auxPlatform2 = new Platform(&platformTexture, sf::Vector2f(800.0f, 200.0f), sf::Vector2f(600.0f, 600.0f));
+  sf::Vector2f backgroundSize;
+  backgroundSize.x = static_cast<float>(backgroundTexture.getSize().x);
+  backgroundSize.y = static_cast<float>(windowSize.y);
+  background.setSize(backgroundSize);
+  background.setTexture(&backgroundTexture);
+
+  playerOne = static_cast<Player *>(characters.GetPlayer());
+
+  static sf::Texture plataformTexture;
+  if (!plataformTexture.loadFromFile("assets/background/Plataforms/teste.png"))
+    printf("Error loading platform texture\n");
+
+  sf::Vector2f basePlatformPosition;
+  basePlatformPosition.x = 0.0f;
+  basePlatformPosition.y = static_cast<float>(windowSize.y);
+  
+  Platform *auxPlatform = new Platform(&plataformTexture, sf::Vector2f(5000.0f, 100.0f), sf::Vector2f(basePlatformPosition.x, basePlatformPosition.y + 2.5f));
+  Platform *auxPlatform2 = new Platform(&plataformTexture, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(basePlatformPosition.x, basePlatformPosition.y));
+  Platform *auxPlatform3 = new Platform(&plataformTexture, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(2500.0f, basePlatformPosition.y));
   
   entities.InsertEntity(auxPlatform);
-  ///entities.InsertEntity(auxPlatform2);
+  entities.InsertEntity(auxPlatform2);
+  entities.InsertEntity(auxPlatform3);
 
 }
 
@@ -39,11 +55,8 @@ void Level::CheckCollison()
 
 void Level::Draw(sf::RenderWindow &window)
 {
-  std::list<Platform*>::iterator itPlatform;
 
-  for (itPlatform = platforms.begin(); itPlatform != platforms.end(); ++itPlatform)
-    (*itPlatform)->Draw(window);
-
+  window.draw(background);
   entities.DrawEntitys(window); 
 
 
@@ -59,6 +72,6 @@ void Level::Update(float deltaTime)
 } 
 
 void Level::ClearAll(){
-    characters.DeleteCharacters();
+  entities.DeleteEntitys();
 
 }

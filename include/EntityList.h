@@ -18,7 +18,12 @@ public:
     
     void InsertEntity(Entity* pC);
     void RemoveEntity(Entity* pR);
-    void DeleteEntitys();
+    void DeleteEntitys(){
+
+        cout <<"entou no delete "<<endl;
+        ListEntities.ClearAll();
+        
+    }
     
     void InitializeEntitys(int enemiesNum);
     void UpdateEntity(float deltaTime);

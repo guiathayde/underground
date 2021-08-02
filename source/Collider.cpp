@@ -29,7 +29,7 @@ bool Collider::CheckCollision(const Collider &other, sf::Vector2f &direction, fl
     {
       if (deltaX > 0.0f)
       {
-        Move(intersectX * (1.0f - push), 0.0f);
+        //Move(intersectX * (1.0f - push), 0.0f);
         other.Move(-intersectX * push, 0.0f);
 
         direction.x = 1.0f;
@@ -37,7 +37,7 @@ bool Collider::CheckCollision(const Collider &other, sf::Vector2f &direction, fl
       }
       else
       {
-        Move(-intersectX * (1.0f - push), 0.0f);
+        //Move(-intersectX * (1.0f - push), 0.0f);
         other.Move(intersectX * push, 0.0f);
 
         direction.x = -1.0f;
@@ -48,7 +48,7 @@ bool Collider::CheckCollision(const Collider &other, sf::Vector2f &direction, fl
     {
       if (deltaY > 0.0f)
       {
-        Move(0.0f, intersectY * (1.0f - push));
+        //Move(0.0f, intersectY * (1.0f - push));
         other.Move(0.0f, -intersectY * push);
 
         direction.x = 0.0f;
@@ -56,7 +56,7 @@ bool Collider::CheckCollision(const Collider &other, sf::Vector2f &direction, fl
       }
       else
       {
-        Move(0.0f, -intersectY * (1.0f - push));
+        //Move(0.0f, -intersectY * (1.0f - push));
         other.Move(0.0f, intersectY * push);
 
         direction.x = 0.0f;
