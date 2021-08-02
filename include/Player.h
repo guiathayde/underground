@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "ManagerAnimation.h"
-#include "ManagerCollider.h"
+#include "Animation.h"
+#include "Collider.h"
 #include "Character.h"
 #include <list>
 

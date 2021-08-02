@@ -34,13 +34,9 @@ void EntityList::CheckEntitysCollision(){
     int cont = 0;
 
     for(i = 0; i < size; i++){
-        cout<<ListEntities[i]<<endl;
         for(j = 0; j < size ; j++){
-            if(ListEntities[i]!= ListEntities[j] && !ListEntities[j]->IsPlatform() && ListEntities[i]->GetManagerCollider().CheckCollision(ListEntities[j]->GetManagerCollider(),direction,0.1f)){
+            if(ListEntities[i]!= ListEntities[j] && !ListEntities[j]->IsPlatform() && ListEntities[i]->GetCollider().CheckCollision(ListEntities[j]->GetCollider(),direction,0.1f)){
                 ListEntities[j]->OnCollision(direction);
-                cout <<"colidiu entidade entidade" <<endl;
-
-
             }
             
         }

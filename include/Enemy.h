@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "ManagerAnimation.h"
+#include "Animation.h"
 #include "Character.h"
 #include "Player.h"
 
@@ -16,5 +16,4 @@ public:
   void Update(float deltaTime, Character* p);
   bool SeePlayer(Player p);
   float Attack(Player p);
-  //ManagerCollider GetManagerCollider() { return ManagerCollider(this->body); }
 };

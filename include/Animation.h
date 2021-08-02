@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class ManagerAnimation
+class Animation
 {
 private:
   
@@ -16,8 +16,8 @@ public:
   sf::IntRect uvRect;
 
 public:
-  ManagerAnimation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime);
-  ~ManagerAnimation();
+  Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime);
+  ~Animation();
 
   void Update(int row, float deltaTime, bool faceRight);
 };

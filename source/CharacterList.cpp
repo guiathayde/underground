@@ -94,7 +94,7 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms){
     {
         
         for(i = 0 ; i < ListCharacters.GetSize(); i++){
-            if ((*itPlatform)->GetManagerCollider().CheckCollision(ListCharacters[i]->GetManagerCollider(), direction, 0.1f)){
+            if ((*itPlatform)->GetCollider().CheckCollision(ListCharacters[i]->GetCollider(), direction, 0.1f)){
                 ListCharacters[i]->OnCollision(direction);      
             }
                 
@@ -103,7 +103,7 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms){
     
     for(i = 0; i < size; i++){
         for(j = i+1; j < size; j++){
-            if(ListCharacters[i]->GetManagerCollider().CheckCollision(ListCharacters[j]->GetManagerCollider(),direction,0.1f))
+            if(ListCharacters[i]->GetCollider().CheckCollision(ListCharacters[j]->GetCollider(),direction,0.1f))
                 ListCharacters[j]->OnCollision(direction);
 
         }

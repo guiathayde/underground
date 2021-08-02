@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "ManagerCollider.h"
+#include "Collider.h"
 
 class Entity
 {
@@ -20,6 +20,6 @@ public:
 
     void Drawn(sf::RenderWindow &window);
     virtual void OnCollision(sf::Vector2f direction) = 0;
-    ManagerCollider GetManagerCollider(){return ManagerCollider(body);}
+    Collider GetCollider(){return Collider(body);}
 };
 

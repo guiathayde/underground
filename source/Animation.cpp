@@ -1,6 +1,6 @@
-#include "ManagerAnimation.h"
+#include "Animation.h"
 
-ManagerAnimation::ManagerAnimation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime)
+Animation::Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime)
 {
   
   this->imageCount = imageCount;
@@ -13,11 +13,11 @@ ManagerAnimation::ManagerAnimation(sf::Texture *texture, sf::Vector2u imageCount
   uvRect.height = texture->getSize().y / float(imageCount.y);
 }
 
-ManagerAnimation::~ManagerAnimation()
+Animation::~Animation()
 {
 }
 
-void ManagerAnimation::Update(int row, float deltaTime, bool faceRight)
+void Animation::Update(int row, float deltaTime, bool faceRight)
 {
   currentImage.y = row;
   totalTime += deltaTime;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "ManagerCollider.h"
+#include "Collider.h"
 #include "Obstacle.h"
 
 class Platform:public Obstacle
@@ -18,5 +18,5 @@ public:
   void Draw(sf::RenderWindow &window);
   void OnCollision(sf::Vector2f direction);
 
-  ManagerCollider GetManagerCollider(){return ManagerCollider(body);}
+  Collider GetCollider(){return Collider(body);}
 };

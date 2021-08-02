@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "ManagerAnimation.h"
-#include "ManagerCollider.h"
+#include "Animation.h"
+#include "Collider.h"
 #include "Entity.h"
 
 class Character:public Entity
@@ -15,7 +15,7 @@ protected:
   
   sf::Vector2f velocity;
  
-  ManagerAnimation Animation;
+  Animation Animation;
   
   unsigned int row;
   int hearts;
@@ -39,7 +39,7 @@ public:
   float getVelocityX(){return velocity.x;}
 
   sf::Vector2f GetPosition() { return body.getPosition(); }
-  ManagerCollider GetManagerCollider() { return ManagerCollider(this->body); }
+  Collider GetCollider() { return Collider(this->body); }
  
   bool GetIsAlive(){return isAlive;}
   bool GetIsPlayer(){return isPlayer;}
