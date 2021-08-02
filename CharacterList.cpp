@@ -47,7 +47,7 @@ void CharacterList::InitializeCharacters(int enemiesNum)
 		printf("Error loading player texture\n");
 
 	Player *p = NULL;
-	p = new Player(&playerTexture, sf::Vector2u(4, 4), sf::Vector2f(0.0f, 200.0f), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+	p = new Player(&playerTexture, sf::Vector2u(4, 4), sf::Vector2f(0.0f, 0.0f), 0.30f, 200.0f, 200.0f, 300, true, true, true);
 	ListCharacters.Insert(p);
 
 	for (int i = 0; i < enemiesNum; i++)
@@ -92,7 +92,7 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
 
 	for (itPlatform = platforms.begin(); itPlatform != platforms.end(); itPlatform++)
 		for (i = 0; i < ListCharacters.GetSize(); i++)
-			if ((*itPlatform)->GetCollider().CheckCollision(ListCharacters[i]->GetCollider(), direction, 1.0f))
+			if ((*itPlatform)->GetCollider().CheckCollision(ListCharacters[i]->GetCollider(), direction, 10.0f))
 				ListCharacters[i]->OnCollision(direction);
 
 	for (i = 0; i < size; i++)

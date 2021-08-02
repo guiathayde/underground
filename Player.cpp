@@ -6,6 +6,8 @@ using std::endl;
 
 Player::Player(sf::Texture *texture, sf::Vector2u imageCount, sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer, bool isPlayerOne) : Character(texture, imageCount, origin, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer)
 {
+  this->velocity.x = 0.0f;
+  this->velocity.y = 0.0f;
   this->isPlayerOne = isPlayerOne;
 
   body.setSize(sf::Vector2f(60.0f, 70.0f));
@@ -62,6 +64,11 @@ void Player::Update(float deltaTime, Character *ini)
   animation.Update(row, deltaTime, faceRight);
   body.setTextureRect(animation.uvRect);
   body.move(velocity * deltaTime);
+}
+
+void Player::SetPosition(sf::Vector2f position)
+{
+  body.move(position);
 }
 
 void Player::GetDamage()

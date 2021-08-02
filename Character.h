@@ -33,7 +33,7 @@ public:
   virtual void Update(float deltaTime, Character *character) = 0;
   void Draw(sf::RenderWindow &window);
   void OnCollision(sf::Vector2f direction);
-  float getVelocityX() { return velocity.x; }
+  float GetVelocityX() { return velocity.x; }
 
   sf::Vector2f GetPosition() { return body.getPosition(); }
   Collider GetCollider() { return Collider(body); }

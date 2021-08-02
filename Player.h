@@ -15,5 +15,6 @@ public:
   ~Player();
 
   void Update(float deltaTime, Character *p);
+  void SetPosition(sf::Vector2f position);
   void GetDamage();
 };

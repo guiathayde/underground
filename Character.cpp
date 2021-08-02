@@ -2,6 +2,8 @@
 
 Character::Character(sf::Texture *texture, sf::Vector2u imageCount, sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer) : animation(texture, imageCount, switchTime)
 {
+  this->velocity.x = 0.0f;
+  this->velocity.y = 0.0f;
   this->speed = speed;
   this->jumpHeight = jumpHeight;
   this->hearts = hearts;
