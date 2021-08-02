@@ -1,7 +1,7 @@
 #include "Platform.h"
 
 Platform::Platform(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position)
-:Obstacle(texture,size,position,true)
+:Obstacle(true)
 {
 
   body.setSize(size);
@@ -19,5 +19,4 @@ void Platform::Draw(sf::RenderWindow &window)
 }
 
 void Platform::OnCollision(sf::Vector2f direction){
-
 }

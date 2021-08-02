@@ -9,9 +9,10 @@ protected:
     
     sf::RectangleShape body;
     bool isPlatform;
+
 public:
 
-    Entity(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position, bool isPlatform);
+    Entity(bool isPlatform);
     virtual ~Entity();
 
     void SetIsPlatfrom(bool b){isPlatform = b;}
@@ -19,6 +20,6 @@ public:
 
     void Drawn(sf::RenderWindow &window);
     virtual void OnCollision(sf::Vector2f direction) = 0;
-    virtual ManagerCollider GetManagerCollider() = 0;
+    ManagerCollider GetManagerCollider(){return ManagerCollider(body);}
 };
 

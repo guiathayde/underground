@@ -16,5 +16,5 @@ public:
   void Update(float deltaTime, Character* p);
   bool SeePlayer(Player p);
   float Attack(Player p);
-  ManagerCollider GetManagerCollider() { return ManagerCollider(this->body); }
+  //ManagerCollider GetManagerCollider() { return ManagerCollider(this->body); }
 };

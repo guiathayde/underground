@@ -23,11 +23,11 @@ void Level::Initialize(int enemiesNum)
     printf("Carregou plataforma\n");
 
   Platform *auxPlatform = NULL;
-  auxPlatform = new Platform(&platformTexture, sf::Vector2f(5000.0f, 600.0f), sf::Vector2f(200.0f, 600.0f));
-  Platform *auxPlatform2 = new Platform(&platformTexture, sf::Vector2f(800.0f, 200.0f), sf::Vector2f(100.0f, 600.0f));
+  auxPlatform = new Platform(&platformTexture, sf::Vector2f(5000.0f, 600.0f), sf::Vector2f(1000.0f, 1000.0f));
+  //Platform *auxPlatform2 = new Platform(&platformTexture, sf::Vector2f(800.0f, 200.0f), sf::Vector2f(600.0f, 600.0f));
   
   entities.InsertEntity(auxPlatform);
-  entities.InsertEntity(auxPlatform2);
+  ///entities.InsertEntity(auxPlatform2);
 
 }
 

@@ -1,13 +1,18 @@
 #pragma once
 
 #include "Entity.h"
+#include <iostream>
+using std::cout;
+using std::endl;
+
 class Obstacle:public Entity
 {
 private:
-    
+    bool isPlatform;
+
 public:
     
-    Obstacle(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position,bool IsPlatform);
+    Obstacle(bool isPlatform);
     virtual ~Obstacle();
 
     

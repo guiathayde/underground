@@ -39,7 +39,7 @@ public:
   float getVelocityX(){return velocity.x;}
 
   sf::Vector2f GetPosition() { return body.getPosition(); }
-  ManagerCollider GetManagerCollider() { return ManagerCollider(body); }
+  ManagerCollider GetManagerCollider() { return ManagerCollider(this->body); }
  
   bool GetIsAlive(){return isAlive;}
   bool GetIsPlayer(){return isPlayer;}

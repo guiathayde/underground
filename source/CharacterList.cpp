@@ -36,7 +36,7 @@ void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities){
         printf("Carregou jogador\n");
     
     Player* p = NULL; 
-    p = new Player(&playerTexture, sf::Vector2f(60, 40), sf::Vector2f(-200.0f, 200.0f),sf::Vector2u(4,4) ,0.30f, 200.0f, 200.0f, 300, true, true,true);
+    p = new Player(&playerTexture, sf::Vector2f(60, 40), sf::Vector2f(500.0f, 600.0f),sf::Vector2u(4,4) ,0.30f, 200.0f, 200.0f, 300, true, true,true);
     ListCharacters.Insert(p);
     entities->InsertEntity(p);
 
