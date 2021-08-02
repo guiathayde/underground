@@ -46,8 +46,8 @@ void Enemy::Update(float deltaTime,Character* character)
     }
 
     
-    Animation.Update(row, deltaTime, faceRight);
-    body.setTextureRect(Animation.uvRect);
+    animation.Update(row, deltaTime, faceRight);
+    body.setTextureRect(animation.uvRect);
     body.move(velocity * deltaTime);
 }
 

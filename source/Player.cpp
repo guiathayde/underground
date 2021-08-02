@@ -63,8 +63,8 @@ void Player::Update(float deltaTime, Character* ini)
   if(hearts <= 0)
     isAlive = false;
   
-  Animation.Update(row, deltaTime, faceRight);
-  body.setTextureRect(Animation.uvRect);
+  animation.Update(row, deltaTime, faceRight);
+  body.setTextureRect(animation.uvRect);
   body.move(velocity * deltaTime);
 }
 

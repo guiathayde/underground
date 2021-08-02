@@ -15,7 +15,7 @@ protected:
   
   sf::Vector2f velocity;
  
-  Animation Animation;
+  Animation animation;
   
   unsigned int row;
   int hearts;
