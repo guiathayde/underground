@@ -2,16 +2,21 @@
 
 #include <SFML/Graphics.hpp>
 #include "Collider.h"
+#include "Obstacle.h"
 
-class Platform
-{
+class Platform:public Obstacle
+{ 
 private:
-  sf::RectangleShape body;
+
+sf::Vector2f velocity;
 
 public:
+  
   Platform(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position);
   ~Platform();
 
   void Draw(sf::RenderWindow &window);
-  Collider GetCollider() { return Collider(body); }
+  void OnCollision(sf::Vector2f direction);
+
+  Collider GetCollider(){return Collider(body);}
 };

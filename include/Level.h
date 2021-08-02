@@ -8,36 +8,33 @@ using namespace std;
 #include "Platform.h"
 #include "Player.h"
 #include "CharacterList.h"
-#include "List.h"
+#include "EntityList.h"
 
 class Level
 {
 private:
+  
   int level;
-  float sizeX;
+  int n_entities;
 
   sf::Texture backgroundTexture;
   sf::Texture platformTexture;
-  sf::RectangleShape background;
-  sf::View *view;
 
+  EntityList entities;
   CharacterList characters;
 
-  list<Enemy *> enemies;
   list<Platform *> platforms;
   Player *playerOne;
 
 public:
-  Level(int level, sf::Texture backgroundTexture, sf::View *view, float sizeX);
+  Level(int level, sf::Texture backgroundTexture);
   ~Level();
 
-  void Initialize(int enimiesNum, sf::RenderWindow &window);
+  void Initialize(int enimiesNum);
   void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);
-
-  float GetSizeX() { return sizeX / 2.0f; }
-
-  Player *GetPlayer() { return static_cast<Player *>(characters.GetPlayer()); }
+  Player *GetPlayer() { return static_cast<Player*>(characters.GetPlayer()); }
   void SetPlayer(Player *p) { playerOne = p; };
+  void ClearAll();
 };

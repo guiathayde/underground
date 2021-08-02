@@ -23,7 +23,7 @@ public:
   void Draw(sf::RenderWindow &window, sf::View &view);
   void MoveUp();
   void MoveDown();
-  void SelectItem(sf::Event event, MainMenu &mainMenu);
+  void SelectItem(sf::Event event, MainMenu &mainMenu,Level &level);
 
   int GetPressedItem() { return selectedItemIndex; }
 

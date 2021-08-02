@@ -7,7 +7,7 @@ endif
 all: compile run
 
 compile:
-	g++ source/*.cpp -I"SFML/include" -I"include" -L"SFML/lib" -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -o main
+	g++ source/*.cpp -I"SFML/include" -I"include" -L"SFML\lib" -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -o main
 
 run:
 	$(EXECUTABLE)

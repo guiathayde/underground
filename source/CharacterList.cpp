@@ -2,101 +2,116 @@
 #include "Enemy.h"
 #include "Player.h"
 
-CharacterList::CharacterList()
-{
+CharacterList::CharacterList(){
+
 }
 
-CharacterList::~CharacterList()
-{
-	ListCharacters.ClearAll();
+CharacterList::~CharacterList(){
+    ListCharacters.ClearAll();
 }
 
-void CharacterList::InsertCharacter(Character *pC)
-{
-	if (pC != NULL)
-		ListCharacters.Insert(pC);
+void CharacterList::InsertCharacter(Character* pC){
+    if(pC != NULL)
+        ListCharacters.Insert(pC);
 }
 
-Character *CharacterList::GetPlayer()
-{
-	List<Character>::Element<Character> *tmp;
-	tmp = ListCharacters.GetFirstList();
-	while (tmp != NULL)
-	{
-		if (tmp->GetInfo()->GetIsPlayer())
-			return tmp->GetInfo();
-		tmp = ListCharacters.GetNextList(tmp);
-	}
-	cout << "Player not found" << endl;
-	return NULL;
+Character* CharacterList::GetPlayer(){
+    
+    return ListCharacters.GetFirstList();
 }
 
-void CharacterList::RemoveCharacter(Character *pR)
-{
-	ListCharacters.RemoveInfo(pR);
+void CharacterList::RemoveCharacter(Character *pR){
+    ListCharacters.RemoveInfo(pR);
 }
 
-void CharacterList::InitializeCharacters(int enemiesNum)
-{
-	static sf::Texture enemyTexture;
-	static sf::Texture playerTexture;
+void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities){
+    
+    //carrega as imagens
+    static sf::Texture enemyTexture;
+    static sf::Texture playerTexture;
+    
+    if(enemyTexture.loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
+        printf("Carregou inimigou\n");
+    if(playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png"))
+        printf("Carregou jogador\n");
+    
+    Player* p = NULL; 
+    p = new Player(&playerTexture, sf::Vector2f(60, 40), sf::Vector2f(500.0f, 600.0f),sf::Vector2u(4,4) ,0.30f, 200.0f, 200.0f, 300, true, true,true);
+    ListCharacters.Insert(p);
+    entities->InsertEntity(p);
 
-	if (!enemyTexture.loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
-		printf("Error loading enemy texture\n");
-	if (!playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png"))
-		printf("Error loading player texture\n");
+    
+    for(int i = 0; i < enemiesNum ; i++){
+        Enemy *aux = NULL;
+        aux = new Enemy(&enemyTexture, sf::Vector2f(100, 100), sf::Vector2f(i*100.0f, 200.0f),sf::Vector2u(6,2), 0.3f, 100.0f, 100.0f, 3, false,true);
+        ListCharacters.Insert(aux);
+        entities->InsertEntity(aux);
+    }
 
-	Player *p = NULL;
-	p = new Player(&playerTexture, sf::Vector2u(4, 4), sf::Vector2f(0.0f, 0.0f), 0.30f, 200.0f, 200.0f, 300, true, true, true);
-	ListCharacters.Insert(p);
-
-	for (int i = 0; i < enemiesNum; i++)
-	{
-		Enemy *aux = NULL;
-		aux = new Enemy(&enemyTexture, sf::Vector2u(6, 2), sf::Vector2f(i * 100.0f, 200.0f), 0.3f, 100.0f, 100.0f, 3, true, false);
-		ListCharacters.Insert(aux);
-	}
+    
 }
 
-void CharacterList::UpdateCharacter(float deltaTime)
-{
-	List<Character>::Element<Character> *tmp;
-	Character *p = GetPlayer();
+void CharacterList::UpdateCharacter(float deltaTime){
+    
+    Character* tmp;
+    
+    Character *p = ListCharacters.GetFirstList();
 
-	tmp = ListCharacters.GetFirstList();
+    tmp = ListCharacters.GetFirstList();
+    
+    while(tmp != NULL){
+        tmp->Update(deltaTime,p);
+        tmp = ListCharacters.GetNextList();
 
-	while (tmp != NULL)
-	{
-		tmp->GetInfo()->Update(deltaTime, p);
-		tmp = ListCharacters.GetNextList(tmp);
-	}
+    
+    }
+
 }
 
-void CharacterList::DrawCharacters(sf::RenderWindow &window)
-{
-	List<Character>::Element<Character> *tmp;
-	tmp = ListCharacters.GetFirstList();
-	while (tmp != NULL)
-	{
-		tmp->GetInfo()->Draw(window);
-		tmp = ListCharacters.GetNextList(tmp);
-	}
+void CharacterList::DrawCharacters(sf::RenderWindow &window){
+    
+    Character* tmp;
+    tmp = ListCharacters.GetFirstList();
+    while(tmp != NULL){
+        tmp->Draw(window);
+        tmp = ListCharacters.GetNextList();
+    
+    }
+    
+
 }
 
-void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
-{
-	sf::Vector2f direction;
-	std::list<Platform *>::iterator itPlatform;
-	int i, j;
-	int size = ListCharacters.GetSize();
+void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms){
 
-	for (itPlatform = platforms.begin(); itPlatform != platforms.end(); itPlatform++)
-		for (i = 0; i < ListCharacters.GetSize(); i++)
-			if ((*itPlatform)->GetCollider().CheckCollision(ListCharacters[i]->GetCollider(), direction, 10.0f))
-				ListCharacters[i]->OnCollision(direction);
+    sf::Vector2f direction;
+    std::list<Platform *>::iterator itPlatform;
+    
+    int i, j;
 
-	for (i = 0; i < size; i++)
-		for (j = i + 1; j < size; j++)
-			if (ListCharacters[i]->GetCollider().CheckCollision(ListCharacters[j]->GetCollider(), direction, 1.0f))
-				ListCharacters[j]->OnCollision(direction);
+    int size = ListCharacters.GetSize();
+    
+    for (itPlatform = platforms.begin(); itPlatform != platforms.end(); itPlatform++)
+    {
+        
+        for(i = 0 ; i < ListCharacters.GetSize(); i++){
+            if ((*itPlatform)->GetCollider().CheckCollision(ListCharacters[i]->GetCollider(), direction, 0.1f)){
+                ListCharacters[i]->OnCollision(direction);      
+            }
+                
+        }
+    }
+    
+    for(i = 0; i < size; i++){
+        for(j = i+1; j < size; j++){
+            if(ListCharacters[i]->GetCollider().CheckCollision(ListCharacters[j]->GetCollider(),direction,0.1f))
+                ListCharacters[j]->OnCollision(direction);
+
+        }
+    }
+
+
+
+}
+void CharacterList::DeleteCharacters(){
+    ListCharacters.ClearAll();
 }

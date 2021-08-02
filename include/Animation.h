@@ -5,8 +5,9 @@
 class Animation
 {
 private:
+  
   sf::Vector2u imageCount;
-  sf::Vector2u currentImage;
+  sf::Vector2f currentImage;
 
   float totalTime;
   float switchTime;

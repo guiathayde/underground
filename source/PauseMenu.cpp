@@ -58,7 +58,7 @@ void PauseMenu::MoveDown()
   }
 }
 
-void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu)
+void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level &level)
 {
   switch (event.key.code)
   {
@@ -80,6 +80,7 @@ void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu)
 
     case 1:
       cout << "Back to main menu pressed!" << endl;
+      level.ClearAll();
       mainMenu.SetPlaying(false);
       break;
 

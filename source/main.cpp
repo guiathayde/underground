@@ -1,3 +1,6 @@
+#include <vector>
+#include <list>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 #include "Level.h"
@@ -16,26 +19,6 @@ void ResizeView(const sf::RenderWindow &window, sf::View &view)
   view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
 }
 
-void SetViewCenter(sf::View &view, sf::Vector2f playerPosition, Level &level, sf::RenderWindow &window)
-{
-  // code to set the view to not extrapolate the level limits borders
-  sf::Vector2f viewCenter = level.GetPlayer()->GetPosition();
-
-  // set in Y
-  if (viewCenter.y + (view.getSize().y / 2.0f) >= static_cast<float>(window.getSize().y))
-    viewCenter.y = static_cast<float>(window.getSize().y) - (view.getSize().y / 2.0f);
-  if (viewCenter.y + (view.getSize().y / 2.0f) <= 0.0f)
-    viewCenter.y = (view.getSize().y / 2.0f);
-
-  // set in X
-  if (viewCenter.x - (view.getSize().x / 2.0f) <= 0.0f)
-    viewCenter.x = view.getSize().x / 2.0f;
-  if (viewCenter.x + (view.getSize().x / 2.0f) >= level.GetSizeX())
-    viewCenter.x = level.GetSizeX() - (view.getSize().x / 2.0f);
-
-  view.setCenter(viewCenter);
-}
-
 int main()
 {
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
@@ -45,8 +28,8 @@ int main()
   PauseMenu pauseMenu(window.getSize().x, window.getSize().y);
 
   sf::Texture background;
-  background.loadFromFile("assets/background/levelOne.png");
-  Level level(1, background, &view, 5000.0f);
+  Level level(1, background);
+  cout << "Judo" <<endl;
 
   float deltaTime = 0.0f;
   sf::Clock clock;
@@ -81,7 +64,7 @@ int main()
           mainMenu.SelectItem(event, window, level);
 
         if (pauseMenu.GetPause())
-          pauseMenu.SelectItem(event, mainMenu);
+          pauseMenu.SelectItem(event, mainMenu,level);
 
         break;
       }
@@ -102,9 +85,7 @@ int main()
     {
       level.Update(deltaTime);
       level.CheckCollison();
-
-      SetViewCenter(view, level.GetPlayer()->GetPosition(), level, window);
-
+      view.setCenter(level.GetPlayer()->GetPosition());
       level.Draw(window);
     }
     else if (!mainMenu.GetPlaying())
