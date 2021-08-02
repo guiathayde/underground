@@ -2,11 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 
-class Animation
+class ManagerAnimation
 {
 private:
+  
   sf::Vector2u imageCount;
-  sf::Vector2u currentImage;
+  sf::Vector2f currentImage;
 
   float totalTime;
   float switchTime;
@@ -15,8 +16,8 @@ public:
   sf::IntRect uvRect;
 
 public:
-  Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime);
-  ~Animation();
+  ManagerAnimation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime);
+  ~ManagerAnimation();
 
   void Update(int row, float deltaTime, bool faceRight);
 };

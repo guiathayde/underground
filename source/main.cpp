@@ -29,6 +29,7 @@ int main()
 
   sf::Texture background;
   Level level(1, background);
+  cout << "Judo" <<endl;
 
   float deltaTime = 0.0f;
   sf::Clock clock;
@@ -63,7 +64,7 @@ int main()
           mainMenu.SelectItem(event, window, level);
 
         if (pauseMenu.GetPause())
-          pauseMenu.SelectItem(event, mainMenu);
+          pauseMenu.SelectItem(event, mainMenu,level);
 
         break;
       }

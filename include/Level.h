@@ -8,19 +8,21 @@ using namespace std;
 #include "Platform.h"
 #include "Player.h"
 #include "CharacterList.h"
-#include "List.h"
+#include "EntityList.h"
 
 class Level
 {
 private:
+  
   int level;
+  int n_entities;
 
   sf::Texture backgroundTexture;
   sf::Texture platformTexture;
 
+  EntityList entities;
   CharacterList characters;
-  
-  list<Enemy *> enemies;
+
   list<Platform *> platforms;
   Player *playerOne;
 
@@ -34,4 +36,5 @@ public:
   void Draw(sf::RenderWindow &window);
   Player *GetPlayer() { return static_cast<Player*>(characters.GetPlayer()); }
   void SetPlayer(Player *p) { playerOne = p; };
+  void ClearAll();
 };

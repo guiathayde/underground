@@ -5,8 +5,8 @@ using std::cout;
 using std::endl;
 
 
-Player::Player(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed, float jumpHeight, int hearts,bool isAlive, bool isPlayer,bool isPlayerOne):
-Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer) 
+Player::Player(sf::Texture *texture, sf::Vector2f size,sf::Vector2f origin,sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts,bool isAlive, bool isPlayer,bool isPlayerOne):
+Character(texture,size,origin,imageCount,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer) 
 {
   
   this->isPlayerOne = isPlayerOne;
@@ -63,8 +63,8 @@ void Player::Update(float deltaTime, Character* ini)
   if(hearts <= 0)
     isAlive = false;
   
-  animation.Update(row, deltaTime, faceRight);
-  body.setTextureRect(animation.uvRect);
+  Animation.Update(row, deltaTime, faceRight);
+  body.setTextureRect(Animation.uvRect);
   body.move(velocity * deltaTime);
 }
 

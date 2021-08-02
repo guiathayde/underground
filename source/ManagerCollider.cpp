@@ -1,14 +1,14 @@
-#include "Collider.h"
+#include "ManagerCollider.h"
 
-Collider::Collider(sf::RectangleShape &body) : body(body)
+ManagerCollider::ManagerCollider(sf::RectangleShape &body) : body(body)
 {
 }
 
-Collider::~Collider()
+ManagerCollider::~ManagerCollider()
 {
 }
 
-bool Collider::CheckCollision(const Collider &other, sf::Vector2f &direction, float push)
+bool ManagerCollider::CheckCollision(const ManagerCollider &other, sf::Vector2f &direction, float push)
 {
   sf::Vector2f otherPosition = other.GetPosition();
   sf::Vector2f otherHalfSize = other.GetHalfSize();

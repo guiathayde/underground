@@ -130,6 +130,7 @@ void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window, Level &leve
 
     case 4:
       cout << "Quit pressed!" << endl;
+      level.ClearAll();
       window.close();
       break;
 

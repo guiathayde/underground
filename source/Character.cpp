@@ -2,7 +2,8 @@
 #include "Character.h"
 #include <list>
 
-Character::Character(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin ,float switchTime, float speed, float jumpHeight,int hearts, bool isAlive, bool isPlayer) : animation(texture, imageCount, switchTime)
+Character::Character(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive,bool isPlayer) 
+:Animation(texture, imageCount, switchTime),Entity(texture, size, origin,false)
 {
   this->speed = speed;
   this->jumpHeight = jumpHeight;
@@ -18,10 +19,10 @@ Character::~Character()
 {
 }
 
-void Character::Draw(sf::RenderWindow &window)
-{
+void Character::Draw(sf::RenderWindow &window){
   window.draw(body);
 }
+
 
 void Character::OnCollision(sf::Vector2f direction)
 {

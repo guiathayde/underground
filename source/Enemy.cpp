@@ -5,9 +5,9 @@ using std::cout;
 using std::endl;
 
 
-Enemy::Enemy(sf::Texture *texture, sf::Vector2u imageCount,sf::Vector2f origin, float switchTime, float speed,float jumoHeight,int hearts,bool isAlive,bool isPlayer):Character(texture,imageCount,origin,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer)
+Enemy::Enemy(sf::Texture *texture,sf::Vector2f size ,sf::Vector2f origin,sf::Vector2u imageCount, float switchTime, float speed,float jumoHeight,int hearts,bool isAlive,bool isPlayer):Character(texture,size,origin,imageCount,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer)
 {
-  body.setSize(sf::Vector2f(100.0f, 150.0f));
+  body.setSize(size);
   body.setOrigin(body.getSize() / 2.0f);
   body.setPosition(origin.x, origin.y);
   body.setTexture(texture);
@@ -46,8 +46,8 @@ void Enemy::Update(float deltaTime,Character* character)
     }
 
     
-    animation.Update(row, deltaTime, faceRight);
-    body.setTextureRect(animation.uvRect);
+    Animation.Update(row, deltaTime, faceRight);
+    body.setTextureRect(Animation.uvRect);
     body.move(velocity * deltaTime);
 }
 
