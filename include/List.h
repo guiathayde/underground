@@ -158,7 +158,8 @@ void List<T1>::ClearAll(){
     while(pFirst != NULL){
         Element<T1> *tmp = NULL;
         tmp = pFirst;
-        pFirst = pFirst->GetNext();
+        if(pFirst)
+            pFirst = pFirst->GetNext();
         delete(tmp);
     }
 

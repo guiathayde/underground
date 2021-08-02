@@ -52,7 +52,8 @@ int main()
 
   sf::Texture background;
   background.loadFromFile("assets/background/levelOne.png");
-  Level level(1, background, &view, 5000.0f);
+  
+  Level* level;
 
   float deltaTime = 0.0f;
   sf::Clock clock;
@@ -83,11 +84,12 @@ int main()
           pauseMenu.SetPause(false);
         else if (event.key.code == sf::Keyboard::Escape)
           pauseMenu.SetPause(true);
-        else if (!mainMenu.GetPlaying())
-          mainMenu.SelectItem(event, window, level);
-
+        else if (!mainMenu.GetPlaying()){  
+          level = new Level(1, background, &view, 5000.0f);
+          mainMenu.SelectItem(event, window, *level);
+        }
         if (pauseMenu.GetPause())
-          pauseMenu.SelectItem(event, mainMenu,level);
+          pauseMenu.SelectItem(event, mainMenu,*level);
 
         break;
       }
@@ -101,20 +103,21 @@ int main()
 
     if (pauseMenu.GetPause() && mainMenu.GetPlaying())
     {
-      level.Draw(window);
+      level->Draw(window);
       pauseMenu.Draw(window, view);
     }
     else if (mainMenu.GetPlaying())
     {
-      level.Update(deltaTime);
-      level.CheckCollison();
-      SetViewCenter(view, level.GetPlayer()->GetPosition(), level, window);
-      level.Draw(window);
+      level->Update(deltaTime);
+      level->CheckCollison();
+      SetViewCenter(view, level->GetPlayer()->GetPosition(), *level, window);
+      level->Draw(window);
     }
     else if (!mainMenu.GetPlaying())
     {
       view.setCenter(mainMenu.GetCenterPosition());
       mainMenu.Draw(window);
+
     }
 
     window.setView(view);

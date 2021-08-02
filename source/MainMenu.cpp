@@ -117,6 +117,7 @@ void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window, Level &leve
     case 1:
       cout << "Play pressed!" << endl;
       level.Initialize(2, window);
+      cout <<"Iniciou o leve"<<endl;
       SetPlaying(true);
       break;
 

@@ -22,7 +22,7 @@ public:
 
         cout <<"entou no delete "<<endl;
         ListEntities.ClearAll();
-        
+         cout <<"entou no delete "<<endl;
     }
     
     void InitializeEntitys(int enemiesNum);

@@ -81,6 +81,7 @@ void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level &level)
     case 1:
       cout << "Back to main menu pressed!" << endl;
       level.ClearAll();
+      delete(&level);
       mainMenu.SetPlaying(false);
       break;
 
