@@ -115,22 +115,17 @@ void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window, Level &leve
     switch (GetPressedItem())
     {
     case 1:
-      cout << "Play pressed!" << endl;
       level.Initialize(2, window);
-      cout <<"Iniciou o leve"<<endl;
       SetPlaying(true);
       break;
 
     case 2:
-      cout << "Chapters pressed!" << endl;
       break;
 
     case 3:
-      cout << "Ranking pressed!" << endl;
       break;
 
     case 4:
-      cout << "Quit pressed!" << endl;
       level.ClearAll();
       window.close();
       break;

@@ -39,9 +39,6 @@ void SetViewCenter(sf::View &view, sf::Vector2f playerPosition, Level &level, sf
   view.setCenter(viewCenter);
 }
 
-
-
-
 int main()
 {
   sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
@@ -52,8 +49,8 @@ int main()
 
   sf::Texture background;
   background.loadFromFile("assets/background/levelOne.png");
-  
-  Level* level;
+
+  Level *level;
 
   float deltaTime = 0.0f;
   sf::Clock clock;
@@ -84,12 +81,13 @@ int main()
           pauseMenu.SetPause(false);
         else if (event.key.code == sf::Keyboard::Escape)
           pauseMenu.SetPause(true);
-        else if (!mainMenu.GetPlaying()){  
+        else if (!mainMenu.GetPlaying())
+        {
           level = new Level(1, background, &view, 5000.0f);
           mainMenu.SelectItem(event, window, *level);
         }
         if (pauseMenu.GetPause())
-          pauseMenu.SelectItem(event, mainMenu,*level);
+          pauseMenu.SelectItem(event, mainMenu, *level);
 
         break;
       }
@@ -117,7 +115,6 @@ int main()
     {
       view.setCenter(mainMenu.GetCenterPosition());
       mainMenu.Draw(window);
-
     }
 
     window.setView(view);

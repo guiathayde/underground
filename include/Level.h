@@ -13,7 +13,6 @@ using namespace std;
 class Level
 {
 private:
-  
   int level;
   int n_entities;
 
@@ -38,8 +37,8 @@ public:
   void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);
-  Player *GetPlayer() { return static_cast<Player*>(characters.GetPlayer()); }
+  Player *GetPlayer() { return static_cast<Player *>(characters.GetPlayer()); }
   void SetPlayer(Player *p) { playerOne = p; };
   void ClearAll();
-  float GetSizeX() { return sizeX / 2.0f; }
+  float GetSizeX() { return sizeX; }
 };
