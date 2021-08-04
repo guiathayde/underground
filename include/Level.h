@@ -12,12 +12,9 @@ using namespace std;
 
 class Level
 {
-private:
+protected:
   int level;
   int n_entities;
-
-  sf::Texture backgroundTexture;
-  sf::Texture platformTexture;
 
   EntityList entities;
   CharacterList characters;
@@ -30,10 +27,10 @@ private:
   Player *playerOne;
 
 public:
-  Level(int level, sf::Texture backgroundTexture, sf::View *view, float sizeX);
+  Level(int level, sf::View *view);
   ~Level();
 
-  void Initialize(int enimiesNum, sf::RenderWindow &window);
+  virtual void Initialize(sf::RenderWindow &window, map<const char *, sf::Texture *> *textures) = 0;
   void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);

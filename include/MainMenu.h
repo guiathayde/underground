@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Level.h"
+#include "LevelSewer.h"
 
 #define MAINMENU_MAX_ITEMS 5
 
@@ -15,7 +15,6 @@ private:
   sf::Vector2f centerPosition;
   sf::Font titleFont;
   sf::Font itemFont;
-  sf::Texture backgroundTexture;
   sf::RectangleShape background;
   sf::Text menu[MAINMENU_MAX_ITEMS];
 
@@ -26,8 +25,8 @@ public:
   void Draw(sf::RenderWindow &window);
   void MoveUp();
   void MoveDown();
-  void SelectItem(sf::Event event, sf::RenderWindow &window, Level &level);
 
+  int SelectItem(sf::Event event);
   int GetPressedItem() { return selectedItemIndex; }
 
   void SetPlaying(bool state) { isPlaying = state; }

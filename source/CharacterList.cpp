@@ -31,30 +31,22 @@ void CharacterList::RemoveCharacter(Character *pR)
     ListCharacters.RemoveInfo(pR);
 }
 
-void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities)
+void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, map<const char *, sf::Texture *> *textures)
 {
 
     //carrega as imagens
-    static sf::Texture enemyTexture;
-    static sf::Texture playerTexture;
-
-    if (!enemyTexture.loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
-        cerr << "Error loading enemy texture" << endl;
-    if (!playerTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png"))
-        cerr << "Error loading player texture" << endl;
-
     Player *p = NULL;
-    p = new Player(&playerTexture, sf::Vector2f(60, 40), sf::Vector2f(500.0f, 600.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+    p = new Player(textures->find("playerOne")->second, sf::Vector2f(60.0f, 40.0f), sf::Vector2f(500.0f, 600.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
     ListCharacters.Insert(p);
     entities->InsertEntity(p);
 
-    for (int i = 0; i < enemiesNum; i++)
-    {
-        Enemy *aux = NULL;
-        aux = new Enemy(&enemyTexture, sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 3, false, true);
-        ListCharacters.Insert(aux);
-        entities->InsertEntity(aux);
-    }
+    // for (int i = 0; i < enemiesNum; i++)
+    // {
+    //     Enemy *aux = NULL;
+    //     aux = new Enemy(&enemyTexture, sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 3, false, true);
+    //     ListCharacters.Insert(aux);
+    //     entities->InsertEntity(aux);
+    // }
 }
 
 void CharacterList::UpdateCharacter(float deltaTime)

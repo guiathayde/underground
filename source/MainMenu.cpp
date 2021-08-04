@@ -17,9 +17,6 @@ MainMenu::MainMenu(float width, float height)
   if (!itemFont.loadFromFile("assets/fonts/DarkMage.ttf"))
     cerr << "Error loading item DarkMage font!" << endl;
 
-  if (!backgroundTexture.loadFromFile("assets/background/mainMenuBackground.png"))
-    cerr << "Error loading background texture!" << endl;
-
   sf::FloatRect textRect;
 
   menu[0].setFont(titleFont);
@@ -69,6 +66,9 @@ MainMenu::~MainMenu()
 
 void MainMenu::Draw(sf::RenderWindow &window)
 {
+  static sf::Texture backgroundTexture;
+  backgroundTexture.loadFromFile("assets/background/mainMenuBackground.png");
+
   sf::Vector2f rectangleSize = static_cast<sf::Vector2f>(window.getSize());
   background.setSize(rectangleSize);
   background.setTexture(&backgroundTexture);
@@ -99,7 +99,7 @@ void MainMenu::MoveDown()
   }
 }
 
-void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window, Level &level)
+int MainMenu::SelectItem(sf::Event event)
 {
   switch (event.key.code)
   {
@@ -115,20 +115,17 @@ void MainMenu::SelectItem(sf::Event event, sf::RenderWindow &window, Level &leve
     switch (GetPressedItem())
     {
     case 1:
-      level.Initialize(2, window);
       SetPlaying(true);
-      break;
+      return 1;
 
     case 2:
-      break;
+      return 2;
 
     case 3:
-      break;
+      return 3;
 
     case 4:
-      level.ClearAll();
-      window.close();
-      break;
+      return 4;
 
     default:
       break;
