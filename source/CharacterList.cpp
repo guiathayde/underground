@@ -22,7 +22,6 @@ void CharacterList::InsertCharacter(Character *pC)
 
 Character *CharacterList::GetPlayer()
 {
-
     return ListCharacters.GetFirstList();
 }
 

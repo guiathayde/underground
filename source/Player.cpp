@@ -23,7 +23,6 @@ Player::~Player()
 void Player::Update(float deltaTime, Character *ini)
 {
   velocity.x *= 0.5f; // time to stop action walk (slow down)
-  //cout << deltaTime <<endl;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     velocity.x -= speed;
 

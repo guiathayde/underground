@@ -105,17 +105,16 @@ int MainMenu::SelectItem(sf::Event event)
   {
   case sf::Keyboard::Up:
     MoveUp();
-    break;
+    return 0;
 
   case sf::Keyboard::Down:
     MoveDown();
-    break;
+    return 0;
 
   case sf::Keyboard::Return:
     switch (GetPressedItem())
     {
     case 1:
-      SetPlaying(true);
       return 1;
 
     case 2:
@@ -128,10 +127,10 @@ int MainMenu::SelectItem(sf::Event event)
       return 4;
 
     default:
-      break;
+      return 0;
     }
 
   default:
-    break;
+    return 0;
   }
 }

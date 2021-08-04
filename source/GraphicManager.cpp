@@ -8,6 +8,8 @@ GraphicManager::GraphicManager()
   mainMenu = new MainMenu(window->getSize().x, window->getSize().y);
   pauseMenu = new PauseMenu(window->getSize().x, window->getSize().y);
   playerOne = NULL;
+
+  LoadTexture();
 }
 
 GraphicManager::~GraphicManager()
@@ -24,6 +26,7 @@ void GraphicManager::SetViewCenter()
 {
   // code to set the view to not extrapolate the level limits borders
   sf::Vector2f viewCenter = playerOne->GetPosition();
+  cout << playerOne->GetIsPlayer() << endl;
 
   // set in Y
   if (viewCenter.y + (view->getSize().y / 2.0f) >= static_cast<float>(window->getSize().y))
@@ -47,37 +50,39 @@ void GraphicManager::InsertTexture(const char *name, sf::Texture *texture)
 
 sf::Texture *GraphicManager::GetTexture(const char *name)
 {
-  map<const char *, sf::Texture *>::iterator itr = textures.find(name);
 
+  map<const char *, sf::Texture *>::iterator itr = textures.find(name);
   return itr->second;
 }
 
 void GraphicManager::LoadTexture()
 {
-  static sf::Texture basePlataformTexture;
-  if (!basePlataformTexture.loadFromFile("assets/background/Plataforms/teste.png"))
+  sf::Texture *basePlataformTexture = new sf::Texture();
+  if (!basePlataformTexture->loadFromFile("assets/background/Plataforms/teste.png"))
     cerr << "Error loading platform texture" << endl;
-  InsertTexture("basePlataformTexture", &basePlataformTexture);
+  InsertTexture("basePlataformTexture", basePlataformTexture);
 
-  static sf::Texture spikesTexture;
-  if (!spikesTexture.loadFromFile("assets/background/spikes.png"))
+  sf::Texture *spikesTexture = new sf::Texture();
+  if (!spikesTexture->loadFromFile("assets/background/spikes.png"))
     cerr << "Erro loading spikes texture" << endl;
-  InsertTexture("spikesTexture", &spikesTexture);
+  InsertTexture("spikesTexture", spikesTexture);
 
-  static sf::Texture sewerBackground;
-  if (!sewerBackground.loadFromFile("assets/background/levelOne.png"))
+  sf::Texture *sewerBackground = new sf::Texture();
+  if (!sewerBackground->loadFromFile("assets/background/levelOne.png"))
     cerr << "Erro loading sewerBackground texture" << endl;
-  InsertTexture("LevelSewerBackground", &sewerBackground);
+  InsertTexture("LevelSewerBackground", sewerBackground);
 
-  static sf::Texture enemyMeleeTexture;
-  if (!enemyMeleeTexture.loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
+  sf::Texture *enemyMeleeTexture = new sf::Texture();
+  if (!enemyMeleeTexture->loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
     cerr << "Error loading enemyMeleeTexture texture" << endl;
-  InsertTexture("enemyMelee", &enemyMeleeTexture);
+  InsertTexture("enemyMelee", enemyMeleeTexture);
 
-  static sf::Texture playerOneTexture;
-  if (!playerOneTexture.loadFromFile("assets/characters/PlayerOne/playerV2.png"))
+  sf::Texture *playerOneTexture = new sf::Texture();
+  if (!playerOneTexture->loadFromFile("assets/characters/PlayerOne/playerV2.png"))
     cerr << "Error loading playerOneTexture texture" << endl;
-  InsertTexture("playerOne", &playerOneTexture);
+  InsertTexture("playerOne", playerOneTexture);
+
+  cout << "Carregou as texturas" << endl;
 }
 
 void GraphicManager::Draw()
