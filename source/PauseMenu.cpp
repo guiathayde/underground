@@ -2,6 +2,8 @@
 using namespace std;
 
 #include "PauseMenu.h"
+#include "MainMenu.h"
+#include "Level.h"
 
 PauseMenu::PauseMenu(float width, float height)
 {

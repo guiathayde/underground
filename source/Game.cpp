@@ -2,6 +2,12 @@
 
 Game::Game()
 {
+  graphicManager = new GraphicManager();
+  printf("ponteiro em CONSTRUTORA GAME: %p\n", graphicManager);
+  mainMenu = new MainMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
+  pauseMenu = new PauseMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
+
+
 }
 
 Game::~Game()
@@ -13,7 +19,7 @@ void Game::Execute()
   float deltaTime = 0.0f;
   sf::Clock clock;
 
-  while (window->isOpen())
+  while (graphicManager->WindowisOpen())
   {
 
     deltaTime = clock.restart().asSeconds();
@@ -22,17 +28,17 @@ void Game::Execute()
       deltaTime = 1.0f / 20.0f;
 
     sf::Event event;
-    while (window->pollEvent(event))
+    while (graphicManager->GetWindow()->pollEvent(event))
     {
       switch (event.type)
       {
 
       case sf::Event::Closed:
-        window->close();
+        graphicManager->GetWindow()->close();
         break;
 
       case sf::Event::Resized:
-        ResizeView();
+        graphicManager->ResizeView();
         break;
 
       case sf::Event::KeyPressed:
@@ -47,10 +53,11 @@ void Game::Execute()
           cout << numberAction << endl;
           if (numberAction == 1)
           {
-            LevelSewer *levelsewer = new LevelSewer(view, window);
-            levelsewer->Initialize(*window, &textures);
-            SetPlayerOne(levelsewer->GetPlayer());
-            SetCurrentLevel(levelsewer);
+            LevelSewer *levelsewer = new LevelSewer(graphicManager);
+            levelsewer->Initialize();
+            graphicManager->SetPlayerOne(levelsewer->GetPlayer());
+            graphicManager->SetCurrentLevel(levelsewer);
+            
             mainMenu->SetPlaying(true);
           }
 
@@ -64,12 +71,12 @@ void Game::Execute()
           }
           else if (numberAction == 4)
           {
-            currentLevel->ClearAll();
-            window->close();
+            graphicManager->GetCurrentLevel()->ClearAll();
+            graphicManager->GetWindow()->close();
           }
         }
         if (pauseMenu->GetPause())
-          pauseMenu->SelectItem(event, *mainMenu, *currentLevel);
+          pauseMenu->SelectItem(event, *mainMenu, *graphicManager->GetCurrentLevel());
 
         break;
       }
@@ -79,27 +86,27 @@ void Game::Execute()
       }
     }
 
-    window->clear();
+    graphicManager->GetWindow()->clear();
 
     if (pauseMenu->GetPause() && mainMenu->GetPlaying())
     {
-      currentLevel->Draw(*window);
-      pauseMenu->Draw(*window, *view);
+      graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
+      pauseMenu->Draw( *graphicManager->GetWindow(), *graphicManager->GetView());
     }
     else if (mainMenu->GetPlaying())
     {
-      currentLevel->Update(deltaTime);
-      currentLevel->CheckCollison();
-      SetViewCenter();
-      currentLevel->Draw(*window);
+      graphicManager->GetCurrentLevel()->Update(deltaTime);
+      graphicManager->GetCurrentLevel()->CheckCollison();
+      graphicManager->SetViewCenter();
+      graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
     }
     else if (!mainMenu->GetPlaying())
     {
-      view->setCenter(mainMenu->GetCenterPosition());
-      mainMenu->Draw(*window);
+      graphicManager->GetView()->setCenter(mainMenu->GetCenterPosition());
+      mainMenu->Draw(*graphicManager->GetWindow());
     }
 
-    window->setView(*view);
-    window->display();
+    graphicManager->GetWindow()->setView(*graphicManager->GetView());
+    graphicManager->GetWindow()->display();
   }
 }

@@ -1,14 +1,9 @@
 #pragma once
 
-#include <map>
-#include <iostream>
-using namespace std;
-
-#include <SFML/Graphics.hpp>
-
-#include "MainMenu.h"
-#include "PauseMenu.h"
+#include "stdfx.h"
 #include "Player.h"
+
+using namespace std;
 
 static const float VIEW_WIDTH = 1280.0f;
 static const float VIEW_HEIGHT = 720.0f;
@@ -22,10 +17,8 @@ protected:
 
   map<const char *, sf::Texture *> textures;
 
-  MainMenu *mainMenu;
-  PauseMenu *pauseMenu;
-
   Level *currentLevel;
+  
   Player *playerOne;
   Player *playerTwo;
 
@@ -44,8 +37,11 @@ public:
   void SetPlayerOne(Player *player) { playerOne = player; }
   void SetPlayerTwo(Player *player) { playerTwo = player; }
 
+  bool WindowisOpen(){return window->isOpen();}
+
   sf::RenderWindow *GetWindow() { return window; }
   sf::View *GetView() { return view; }
+  Level* GetCurrentLevel(){return currentLevel;}
 
   void Draw();
 };

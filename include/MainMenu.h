@@ -1,8 +1,5 @@
 #pragma once
-
-#include <SFML/Graphics.hpp>
-
-#include "LevelSewer.h"
+#include "stdfx.h"
 
 #define MAINMENU_MAX_ITEMS 5
 

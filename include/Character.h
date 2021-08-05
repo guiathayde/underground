@@ -1,9 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "stdfx.h"
+#include "Entity.h"
 #include "Animation.h"
 #include "Collider.h"
-#include "Entity.h"
 
 class Character:public Entity
 {

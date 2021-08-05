@@ -1,9 +1,8 @@
 #pragma once
 
+#include "stdfx.h"
 #include "Entity.h"
-#include <iostream>
-using std::cout;
-using std::endl;
+
 
 class Obstacle:public Entity
 {

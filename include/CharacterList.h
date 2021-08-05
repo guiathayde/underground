@@ -1,11 +1,9 @@
 #pragma once
 
 #include "List.h"
-#include "Character.h"
-#include "Platform.h"
 #include "EntityList.h"
-
-#include <list>
+#include "GraphicManager.h"
+#include "Platform.h"
 
 class CharacterList
 {
@@ -20,7 +18,7 @@ public:
     void InsertCharacter(Character *pC);
     void RemoveCharacter(Character *pR);
     void DeleteCharacters();
-    void InitializeCharacters(int enemiesNum, EntityList *entities, map<const char *, sf::Texture *> *textures);
+    void InitializeCharacters(int enemiesNum, EntityList *entities, GraphicManager *graphicManager);
     void UpdateCharacter(float deltaTime);
     void DrawCharacters(sf::RenderWindow &window);
 

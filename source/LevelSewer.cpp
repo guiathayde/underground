@@ -1,21 +1,23 @@
 #include "LevelSewer.h"
+#include "GraphicManager.h"
 
-LevelSewer::LevelSewer(sf::View *view, sf::RenderWindow *window) : Level(level, view)
+LevelSewer::LevelSewer(GraphicManager *graphicManager) : Level()
 {
-  enemiesNum = 6;
+  sizeX = 5000.0f;
+  this->graphicManager = graphicManager;
+  enemiesNum = 0;
 }
 
 LevelSewer::~LevelSewer()
 {
 }
 
-void LevelSewer::Initialize(sf::RenderWindow &window, map<const char *, sf::Texture *> *textures)
+void LevelSewer::Initialize()
 {
-  characters.InitializeCharacters(enemiesNum, &entities, textures);
-
-  sf::Texture *backgroundTexture = textures->find("LevelSewerBackground")->second;
-
-  sf::Vector2u windowSize = window.getSize();
+  characters.InitializeCharacters(enemiesNum, &entities, graphicManager);
+  //printf("ponteiro em LevelSewer: %p\n", graphicManager);  
+  sf::Texture *backgroundTexture = graphicManager->GetTexture("levelOne");
+  sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
 
   sf::Vector2f backgroundSize;
   backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
@@ -25,7 +27,7 @@ void LevelSewer::Initialize(sf::RenderWindow &window, map<const char *, sf::Text
 
   playerOne = static_cast<Player *>(characters.GetPlayer());
 
-  static sf::Texture *plataformTexture = textures->find("basePlatformTexture")->second;
+  static sf::Texture *plataformTexture = graphicManager->GetTexture("basePlatformTexture");
 
   sf::Vector2f basePlatformPosition;
   basePlatformPosition.x = 0.0f;
@@ -39,11 +41,11 @@ void LevelSewer::Initialize(sf::RenderWindow &window, map<const char *, sf::Text
   entities.InsertEntity(limitBorderYLeft);
   entities.InsertEntity(limitBorderYRight);
 
-  playerOne->SetPosition(sf::Vector2f(31.0f, static_cast<float>(window.getSize().y) - 36.0f));
+  playerOne->SetPosition(sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 36.0f));
 
   /* --------------------------------------------------------- SetUp Spikes --------------------------------------------------------- */
 
-  static sf::Texture *spikesTexture = textures->find("spikesTexture")->second;
+  static sf::Texture *spikesTexture = graphicManager->GetTexture("spikesTexture");
 
   Platform *spikes1 = new Platform(spikesTexture, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(300.0f, basePlatformPosition.y - (static_cast<float>(spikesTexture->getSize().y) / 2.0f)));
   Platform *spikes2 = new Platform(spikesTexture, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(364.0f, basePlatformPosition.y - (static_cast<float>(spikesTexture->getSize().y) / 2.0f)));

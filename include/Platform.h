@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "Collider.h"
+#include "stdfix.h"
 #include "Obstacle.h"
 
 class Platform:public Obstacle

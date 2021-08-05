@@ -1,9 +1,8 @@
 #include "Level.h"
+#include "CharacterList.h"
 
-Level::Level(int level, sf::View *view) : entities(n_entities, true)
+Level::Level() : entities(n_entities, true)
 {
-  this->level = level;
-  this->view = view;
 }
 
 Level::~Level()
@@ -31,3 +30,5 @@ void Level::ClearAll()
 {
   entities.DeleteEntitys();
 }
+Player *Level::GetPlayer()
+{ return static_cast<Player *>(characters.GetPlayer()); }

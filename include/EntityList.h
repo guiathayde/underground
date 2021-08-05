@@ -1,7 +1,8 @@
 #pragma once
+
+#include "stdfx.h"
 #include "List.h"
 #include "Entity.h"
-#include "Collider.h"
 
 class EntityList
 {

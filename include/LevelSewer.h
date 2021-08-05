@@ -1,15 +1,18 @@
 #pragma once
 
 #include "Level.h"
+#include "GraphicManager.h"
 
 class LevelSewer : public Level
 {
 private:
   int enemiesNum;
+  GraphicManager *graphicManager;
 
 public:
-  LevelSewer(sf::View *view, sf::RenderWindow *window);
+  LevelSewer(GraphicManager *graphicManager);
   ~LevelSewer();
 
-  void Initialize(sf::RenderWindow &window, map<const char *, sf::Texture *> *textures);
+  void Initialize();
+  float GetSizeX() { return sizeX; }
 };

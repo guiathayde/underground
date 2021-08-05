@@ -1,10 +1,12 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "stdfx.h"
 
-#include "MainMenu.h"
+
 
 #define MENU_MAX_ITEMS 2
+class MainMenu;
+class Level;
 
 class PauseMenu
 {

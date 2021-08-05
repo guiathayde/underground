@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-using namespace std;
+#include "stdfix.h"
 
 template <class T1>
 class List

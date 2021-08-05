@@ -1,10 +1,7 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "Animation.h"
-#include "Character.h"
+#include "stdfx.h"
 #include "Player.h"
-
 class Enemy: public Character
 {
 private:

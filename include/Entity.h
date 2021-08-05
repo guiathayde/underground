@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "stdfix.h"
 #include "Collider.h"
 
 class Entity

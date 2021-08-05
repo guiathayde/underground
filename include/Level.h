@@ -1,12 +1,7 @@
 #pragma once
 
-#include <list>
-using namespace std;
+#include "stdfx.h"
 
-#include <SFML/Graphics.hpp>
-#include "Enemy.h"
-#include "Platform.h"
-#include "Player.h"
 #include "CharacterList.h"
 #include "EntityList.h"
 
@@ -27,15 +22,15 @@ protected:
   Player *playerOne;
 
 public:
-  Level(int level, sf::View *view);
+  Level();
   ~Level();
 
-  virtual void Initialize(sf::RenderWindow &window, map<const char *, sf::Texture *> *textures) = 0;
+  virtual void Initialize() = 0;
   void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);
-  Player *GetPlayer() { return static_cast<Player *>(characters.GetPlayer()); }
+  Player *GetPlayer();
   void SetPlayer(Player *p) { playerOne = p; };
   void ClearAll();
-  float GetSizeX() { return sizeX; }
+  virtual float GetSizeX() { return sizeX; }
 };

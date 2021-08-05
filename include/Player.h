@@ -3,8 +3,7 @@
 #include <list>
 #include <SFML/Graphics.hpp>
 
-#include "Animation.h"
-#include "Collider.h"
+#include "stdfix.h"
 #include "Character.h"
 
 class Player : public Character

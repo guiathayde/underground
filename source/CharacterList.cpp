@@ -22,6 +22,16 @@ void CharacterList::InsertCharacter(Character *pC)
 
 Character *CharacterList::GetPlayer()
 {
+    Character* player;
+    player = ListCharacters.GetFirstList();
+    while(player != NULL){
+        if(player->GetIsPlayer()){
+            cout <<"Achaou o player"<<endl;
+            return player;
+        }
+        player = ListCharacters.GetNextList();
+    }
+    cout <<"Não achou o player"<<endl;
     return ListCharacters.GetFirstList();
 }
 
@@ -30,22 +40,24 @@ void CharacterList::RemoveCharacter(Character *pR)
     ListCharacters.RemoveInfo(pR);
 }
 
-void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, map<const char *, sf::Texture *> *textures)
+void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, GraphicManager *graphicManager)
 {
 
     //carrega as imagens
     Player *p = NULL;
-    p = new Player(textures->find("playerOne")->second, sf::Vector2f(60.0f, 40.0f), sf::Vector2f(500.0f, 600.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+    cout <<"Criou player, ponteiro textura player"<< graphicManager->GetTexture("playerOne") <<endl;
+    p = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(0.0f, 600.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
     ListCharacters.Insert(p);
     entities->InsertEntity(p);
-
-    // for (int i = 0; i < enemiesNum; i++)
-    // {
-    //     Enemy *aux = NULL;
-    //     aux = new Enemy(&enemyTexture, sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 3, false, true);
-    //     ListCharacters.Insert(aux);
-    //     entities->InsertEntity(aux);
-    // }
+    //cout <<p->GetIsPlayer()<<endl;
+    for (int i = 0; i < enemiesNum; i++)
+    {
+         Enemy *aux = NULL;
+         aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 3, false, true);
+        //cout <<"Criou characters"<<endl;
+         ListCharacters.Insert(aux);
+         entities->InsertEntity(aux);
+    }
 }
 
 void CharacterList::UpdateCharacter(float deltaTime)
