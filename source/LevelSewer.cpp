@@ -15,7 +15,6 @@ LevelSewer::~LevelSewer()
 void LevelSewer::Initialize()
 {
   characters.InitializeCharacters(enemiesNum, &entities, graphicManager);
-  //printf("ponteiro em LevelSewer: %p\n", graphicManager);  
   sf::Texture *backgroundTexture = graphicManager->GetTexture("levelOne");
   sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
 

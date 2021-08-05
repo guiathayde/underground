@@ -7,16 +7,11 @@ using std::endl;
 
 Player::Player(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer, bool isPlayerOne) : Character(texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer)
 {
-
-  printf("ponteiro player: %p\n", texture);
-
   this->isPlayerOne = isPlayerOne;
   this->isPlayer = isPlayer;
   body.setSize(sf::Vector2f(60.0f, 70.0f));
   body.setOrigin(body.getSize() / 2.0f);
   body.setPosition(origin.x, origin.y);
-  if(!texture)
-    cout <<"Não achou"<<endl;
   body.setTexture(texture);
 }
 

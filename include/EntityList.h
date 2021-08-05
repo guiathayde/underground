@@ -17,16 +17,16 @@ public:
 
     void InsertEntity(Entity *pC);
     void RemoveEntity(Entity *pR);
-    void DeleteEntitys()
+    void DeleteEntities()
     {
         ListEntities.ClearAll();
     }
 
-    void InitializeEntitys(int enemiesNum);
+    void InitializeEntities(int enemiesNum);
     void UpdateEntity(float deltaTime);
-    void DrawEntitys(sf::RenderWindow &window);
+    void DrawEntities(sf::RenderWindow &window);
 
-    void CheckEntitysCollision();
+    void CheckEntitiesCollision();
 
     List<Entity> *GetList() { return &ListEntities; }
     Entity *GetPlayer();

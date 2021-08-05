@@ -12,13 +12,13 @@ Level::~Level()
 
 void Level::CheckCollison()
 {
-  entities.CheckEntitysCollision();
+  entities.CheckEntitiesCollision();
 }
 
 void Level::Draw(sf::RenderWindow &window)
 {
   window.draw(background);
-  entities.DrawEntitys(window);
+  entities.DrawEntities(window);
 }
 
 void Level::Update(float deltaTime)
@@ -28,7 +28,9 @@ void Level::Update(float deltaTime)
 
 void Level::ClearAll()
 {
-  entities.DeleteEntitys();
+  entities.DeleteEntities();
 }
 Player *Level::GetPlayer()
-{ return static_cast<Player *>(characters.GetPlayer()); }
+{
+  return static_cast<Player *>(characters.GetPlayer());
+}

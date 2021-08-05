@@ -6,7 +6,6 @@ GraphicManager::GraphicManager()
   window = new sf::RenderWindow(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
   view = new sf::View(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(1280.0f, 720.0f));
 
-  
   playerOne = NULL;
 
   LoadTexture();
@@ -26,9 +25,7 @@ void GraphicManager::SetViewCenter()
 {
   // code to set the view to not extrapolate the level limits borders
   sf::Vector2f viewCenter = playerOne->GetPosition();
-  //cout << playerOne->GetPosition().x << " "<< playerOne->GetPosition().y << endl;
-  //cout << playerOne->GetIsPlayer() << endl;
-  
+
   // set in Y
   if (viewCenter.y + (view->getSize().y / 2.0f) >= static_cast<float>(window->getSize().y))
     viewCenter.y = static_cast<float>(window->getSize().y) - (view->getSize().y / 2.0f);
@@ -40,29 +37,24 @@ void GraphicManager::SetViewCenter()
     viewCenter.x = view->getSize().x / 2.0f;
   if (viewCenter.x + (view->getSize().x / 2.0f) >= currentLevel->GetSizeX())
     viewCenter.x = currentLevel->GetSizeX() - (view->getSize().x / 2.0f);
-  
+
   view->setCenter(viewCenter);
   window->setView(*view);
-  
 }
 
 void GraphicManager::InsertTexture(const char *name, sf::Texture *texture)
 {
-  //printf("%s inserttexture: %p\n", name,texture);
-  textures.emplace(name,texture);
+  textures.emplace(name, texture);
 }
 
 sf::Texture *GraphicManager::GetTexture(const char *name)
 {
   map<const char *, sf::Texture *>::iterator itr = textures.begin();
 
-  while(itr != textures.end()) {
-    //printf("nome procurado %s\n", name);
-    if(!strcmp(itr->first,name)){
-      //printf("achou\n");
-      //printf("%s nome que procura e ponteiro achado: %p\n", itr->first,itr->second);
+  while (itr != textures.end())
+  {
+    if (!strcmp(itr->first, name))
       return itr->second;
-    }
     itr++;
   }
   return NULL;
@@ -94,14 +86,11 @@ void GraphicManager::LoadTexture()
   if (!playerOneTexture->loadFromFile("assets/characters/PlayerOne/playerV2.png"))
     cerr << "Error loading playerOneTexture texture" << endl;
   InsertTexture("playerOne", playerOneTexture);
-  
-  sf::Texture *sewerbackgroundTexture = new sf::Texture();
-  if(!sewerbackgroundTexture->loadFromFile("assets/background/levelOne.png"));
-    cerr <<"Erro loading backgroundTexture"<<endl;
-  InsertTexture("levelOne", sewerbackgroundTexture);
-  //printf("ponteiro em loadTexture: %p\n", playerOneTexture);
 
-  cout << "Carregou as texturas" << endl;
+  sf::Texture *sewerBackgroundTexture = new sf::Texture();
+  if (!sewerBackgroundTexture->loadFromFile("assets/background/levelOne.png"))
+    cerr << "Erro loading backgroundTexture" << endl;
+  InsertTexture("levelOne", sewerBackgroundTexture);
 }
 
 void GraphicManager::Draw()

@@ -9,10 +9,8 @@ public:
     class Element
     {
     private:
-        //aqui guarda a informação
         T2 *info;
 
-        //ponteiros para a lista duplamente encadeada
         Element<T2> *pNext;
         Element<T2> *pPrev;
 
@@ -32,7 +30,6 @@ public:
             pPrev = NULL;
         }
 
-        //funções set
         void SetInfo(T2 *in)
         {
             if (in != NULL)
@@ -49,7 +46,6 @@ public:
             pPrev = pP;
         }
 
-        //funções get
         T2 *GetInfo() { return info; }
         Element<T2> *GetNext() { return pNext; }
         Element<T2> *GetPrev() { return pPrev; }

@@ -3,11 +3,8 @@
 Game::Game()
 {
   graphicManager = new GraphicManager();
-  printf("ponteiro em CONSTRUTORA GAME: %p\n", graphicManager);
   mainMenu = new MainMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
   pauseMenu = new PauseMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
-
-
 }
 
 Game::~Game()
@@ -50,14 +47,13 @@ void Game::Execute()
         else if (!mainMenu->GetPlaying())
         {
           int numberAction = mainMenu->SelectItem(event);
-          cout << numberAction << endl;
           if (numberAction == 1)
           {
             LevelSewer *levelsewer = new LevelSewer(graphicManager);
             levelsewer->Initialize();
             graphicManager->SetPlayerOne(levelsewer->GetPlayer());
             graphicManager->SetCurrentLevel(levelsewer);
-            
+
             mainMenu->SetPlaying(true);
           }
 
@@ -91,7 +87,7 @@ void Game::Execute()
     if (pauseMenu->GetPause() && mainMenu->GetPlaying())
     {
       graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
-      pauseMenu->Draw( *graphicManager->GetWindow(), *graphicManager->GetView());
+      pauseMenu->Draw(*graphicManager->GetWindow(), *graphicManager->GetView());
     }
     else if (mainMenu->GetPlaying())
     {
