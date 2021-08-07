@@ -26,7 +26,7 @@ Character *CharacterList::GetPlayer()
     player = ListCharacters.GetFirstList();
     while(player != NULL){
         if(player->GetIsPlayer()){
-            cout <<"Achaou o player"<<endl;
+            //cout <<"Achaou o player"<<endl;
             return player;
         }
         player = ListCharacters.GetNextList();
@@ -45,7 +45,7 @@ void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, G
 
     //carrega as imagens
     Player *p = NULL;
-    cout <<"Criou player, ponteiro textura player"<< graphicManager->GetTexture("playerOne") <<endl;
+    //cout <<"Criou player, ponteiro textura player"<< graphicManager->GetTexture("playerOne") <<endl;
     p = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(0.0f, 600.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
     ListCharacters.Insert(p);
     entities->InsertEntity(p);
@@ -53,7 +53,7 @@ void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, G
     for (int i = 0; i < enemiesNum; i++)
     {
          Enemy *aux = NULL;
-         aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 3, false, true);
+         aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f((1+i)*1000.0f, 600.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 5.0f, 3, 5, false, true);
         //cout <<"Criou characters"<<endl;
          ListCharacters.Insert(aux);
          entities->InsertEntity(aux);
@@ -88,7 +88,7 @@ void CharacterList::DrawCharacters(sf::RenderWindow &window)
     }
 }
 
-void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
+/*void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
 {
 
     sf::Vector2f direction;
@@ -119,6 +119,7 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
         }
     }
 }
+*/
 void CharacterList::DeleteCharacters()
 {
     ListCharacters.ClearAll();

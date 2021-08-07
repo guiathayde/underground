@@ -8,7 +8,7 @@
 class Level
 {
 protected:
-  int level;
+  int level;;
   int n_entities;
 
   EntityList entities;
@@ -23,14 +23,16 @@ protected:
 
 public:
   Level();
-  ~Level();
+  virtual ~Level();
 
   virtual void Initialize() = 0;
   void CheckCollison();
   void Update(float deltaTime);
   void Draw(sf::RenderWindow &window);
-  Player *GetPlayer();
   void SetPlayer(Player *p) { playerOne = p; };
   void ClearAll();
+  
   virtual float GetSizeX() { return sizeX; }
+  
+  Player *GetPlayer();
 };

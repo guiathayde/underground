@@ -80,11 +80,6 @@ void GraphicManager::LoadTexture()
     cerr << "Erro loading spikes texture" << endl;
   InsertTexture("spikesTexture", spikesTexture);
 
-  sf::Texture *sewerBackground = new sf::Texture();
-  if (!sewerBackground->loadFromFile("assets/background/levelOne.png"))
-    cerr << "Erro loading sewerBackground texture" << endl;
-  InsertTexture("LevelSewerBackground", sewerBackground);
-
   sf::Texture *enemyMeleeTexture = new sf::Texture();
   if (!enemyMeleeTexture->loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
     cerr << "Error loading enemyMeleeTexture texture" << endl;

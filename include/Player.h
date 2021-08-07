@@ -17,5 +17,6 @@ public:
 
   void Update(float deltaTime, Character *p);
   void SetPosition(sf::Vector2f position) { body.setPosition(position); }
+  int GetHearts(){return hearts;}
   void GetDamage();
 };

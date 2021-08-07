@@ -5,8 +5,14 @@ using std::cout;
 using std::endl;
 
 
-Enemy::Enemy(sf::Texture *texture,sf::Vector2f size ,sf::Vector2f origin,sf::Vector2u imageCount, float switchTime, float speed,float jumoHeight,int hearts,bool isAlive,bool isPlayer):Character(texture,size,origin,imageCount,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer)
+Enemy::Enemy(sf::Texture *texture,sf::Vector2f size ,sf::Vector2f origin,sf::Vector2u imageCount, float switchTime, float speed,float totalStunTime,float jumoHeight,int hearts,bool isAlive,bool isPlayer):Character(texture,size,origin,imageCount,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer)
+,totalStunTime(totalStunTime)
 {
+  
+  
+  isStunned = false;
+  coolDown = 0.0f;
+
   body.setSize(size);
   body.setOrigin(body.getSize() / 2.0f);
   body.setPosition(origin.x, origin.y);
@@ -19,11 +25,27 @@ Enemy::~Enemy()
 
 void Enemy::Update(float deltaTime,Character* character)
 {
+    sf::Vector2f direction;
+    float push = 0.1f;
+    
     Player *p;
     p = static_cast<Player*>(character);    
     
+
+    //cout<<"CoolDown " <<coolDown <<endl;
+    //cout<<"TotalStunTime " << totalStunTime <<endl;
+
+    if(isStunned && coolDown > totalStunTime){
+        cout <<"pogchamp"<<endl;
+        isStunned = false;
+        cout <<coolDown << deltaTime<<endl;
+        
+    }
+    coolDown += deltaTime;
+    
     velocity.x *= 0.5f; // time to stop action walk (slow down)
-    if(SeePlayer(*p)){
+    if(!isStunned && SeePlayer(*p)){
+        coolDown = 0;
         velocity.x = Attack(*p);
     }
 
@@ -45,7 +67,15 @@ void Enemy::Update(float deltaTime,Character* character)
         isAlive = false;
     }
 
-    
+    if(GetCollider().CheckOnHeadCollision(p->GetCollider(),direction,push)){
+        row = 0;
+        isStunned = true;
+    }
+
+    if(!GetCollider().CheckOnHeadCollision(p->GetCollider(),direction,push) && GetCollider().CheckCollision(p->GetCollider(),direction,push) && !isStunned){
+        //cout <<p->GetHearts()<<endl;
+        p->GetDamage();
+    }
     animation.Update(row, deltaTime, faceRight);
     body.setTextureRect(animation.uvRect);
     body.move(velocity * deltaTime);

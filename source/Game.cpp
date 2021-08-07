@@ -3,7 +3,7 @@
 Game::Game()
 {
   graphicManager = new GraphicManager();
-  printf("ponteiro em CONSTRUTORA GAME: %p\n", graphicManager);
+  //printf("ponteiro em CONSTRUTORA GAME: %p\n", graphicManager);
   mainMenu = new MainMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
   pauseMenu = new PauseMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
 
@@ -38,6 +38,7 @@ void Game::Execute()
         break;
 
       case sf::Event::Resized:
+        //cout <<"resized"<<endl;
         graphicManager->ResizeView();
         break;
 
@@ -50,14 +51,13 @@ void Game::Execute()
         else if (!mainMenu->GetPlaying())
         {
           int numberAction = mainMenu->SelectItem(event);
-          cout << numberAction << endl;
+          //cout << numberAction << endl;
           if (numberAction == 1)
           {
             LevelSewer *levelsewer = new LevelSewer(graphicManager);
             levelsewer->Initialize();
             graphicManager->SetPlayerOne(levelsewer->GetPlayer());
             graphicManager->SetCurrentLevel(levelsewer);
-            
             mainMenu->SetPlaying(true);
           }
 
@@ -71,13 +71,24 @@ void Game::Execute()
           }
           else if (numberAction == 4)
           {
-            graphicManager->GetCurrentLevel()->ClearAll();
             graphicManager->GetWindow()->close();
           }
         }
-        if (pauseMenu->GetPause())
-          pauseMenu->SelectItem(event, *mainMenu, *graphicManager->GetCurrentLevel());
-
+        //cout <<mainMenu->GetPlaying()<<endl;
+        
+        if (pauseMenu->GetPause()){
+          //cout <<"Não era para entrar aqui"<<endl;
+          pauseMenu->SelectItem(event, *mainMenu, graphicManager->GetCurrentLevel());
+        }
+        
+        else if(mainMenu->GetPlaying()&&!graphicManager->GetCurrentLevel()->GetPlayer()->GetIsAlive())
+        {
+          //cout <<"Não era para entrar aqui"<<endl;
+          graphicManager->GetCurrentLevel()->ClearAll();
+          delete (graphicManager->GetCurrentLevel());
+          mainMenu->SetPlaying(false);
+        }
+        
         break;
       }
 

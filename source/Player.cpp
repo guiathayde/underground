@@ -8,7 +8,7 @@ using std::endl;
 Player::Player(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer, bool isPlayerOne) : Character(texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer)
 {
 
-  printf("ponteiro player: %p\n", texture);
+  //printf("ponteiro player: %p\n", texture);
 
   this->isPlayerOne = isPlayerOne;
   this->isPlayer = isPlayer;
@@ -26,6 +26,10 @@ Player::~Player()
 
 void Player::Update(float deltaTime, Character *ini)
 {
+  if(hearts<= 0){
+    SetIsAlive(false);
+    //cout<<"esta vivo"<<GetIsAlive()<<endl;
+  }
   velocity.x *= 0.5f; // time to stop action walk (slow down)
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     velocity.x -= speed;

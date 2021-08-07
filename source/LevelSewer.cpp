@@ -5,7 +5,7 @@ LevelSewer::LevelSewer(GraphicManager *graphicManager) : Level()
 {
   sizeX = 5000.0f;
   this->graphicManager = graphicManager;
-  enemiesNum = 0;
+  enemiesNum = 1;
 }
 
 LevelSewer::~LevelSewer()
