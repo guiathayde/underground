@@ -13,8 +13,7 @@ private:
 public:
     CharacterList();
     ~CharacterList();
-
-    void ListAll();
+ 
     void InsertCharacter(Character *pC);
     void RemoveCharacter(Character *pR);
     void DeleteCharacters();
@@ -22,6 +21,9 @@ public:
     void UpdateCharacter(float deltaTime);
     void DrawCharacters(sf::RenderWindow &window);
 
-    void CheckCharactersCollision(std::list<Platform *> platforms);
+    //void CheckCharactersCollision(std::list<Platform *> platforms);
     Character *GetPlayer();
+
+    int GetSize() { return ListCharacters.GetSize(); }
+    Character *operator[](int x);
 };

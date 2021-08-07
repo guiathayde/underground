@@ -60,7 +60,7 @@ void PauseMenu::MoveDown()
   }
 }
 
-void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level &level)
+void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level *level)
 {
   switch (event.key.code)
   {
@@ -80,8 +80,8 @@ void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level &level)
       break;
 
     case 1:
-      level.ClearAll();
-      delete (&level);
+      level->ClearAll();
+      delete (level);
       mainMenu.SetPlaying(false);
       break;
 

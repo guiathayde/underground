@@ -21,6 +21,11 @@ Player::~Player()
 
 void Player::Update(float deltaTime, Character *ini)
 {
+  if (hearts <= 0)
+  {
+    SetIsAlive(false);
+    //cout<<"esta vivo"<<GetIsAlive()<<endl;
+  }
   velocity.x *= 0.5f; // time to stop action walk (slow down)
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     velocity.x -= speed;

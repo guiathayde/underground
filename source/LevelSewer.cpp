@@ -1,11 +1,12 @@
 #include "LevelSewer.h"
 #include "GraphicManager.h"
+#include "Enemy.h"
 
 LevelSewer::LevelSewer(GraphicManager *graphicManager) : Level()
 {
   sizeX = 5000.0f;
   this->graphicManager = graphicManager;
-  enemiesNum = 0;
+  enemiesNum = 6;
 }
 
 LevelSewer::~LevelSewer()
@@ -39,6 +40,8 @@ void LevelSewer::Initialize()
   entities.InsertEntity(basePlatform);
   entities.InsertEntity(limitBorderYLeft);
   entities.InsertEntity(limitBorderYRight);
+
+  /* --------------------------------------------------------- SetUp Position Player --------------------------------------------------------- */
 
   playerOne->SetPosition(sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 36.0f));
 
@@ -245,4 +248,26 @@ void LevelSewer::Initialize()
   Platform *door = new Platform(&doorTexture, sf::Vector2f(69.0f, 113.0f), sf::Vector2f(4931.0f, basePlatformPosition.y - 424.5f));
 
   entities.InsertEntity(door);
+
+  /* --------------------------------------------------------- SetUp Enemies Position --------------------------------------------------------- */
+
+  int i = 0, j = 0;
+  for (i = 0; i < characters.GetSize(); i++)
+    if (!characters[i]->GetIsPlayer())
+    {
+      j++;
+
+      if (i == 1)
+        static_cast<Enemy *>(characters[i])->SetPosition(sf::Vector2f(1200.0f, basePlatformPosition.y - 45.0f));
+      else if (i == 2)
+        static_cast<Enemy *>(characters[i])->SetPosition(sf::Vector2f(1500.0f, basePlatformPosition.y - 45.0f));
+      else if (i == 3)
+        static_cast<Enemy *>(characters[i])->SetPosition(sf::Vector2f(2486.0f, basePlatformPosition.y - 377.0f));
+      else if (i == 4)
+        static_cast<Enemy *>(characters[i])->SetPosition(sf::Vector2f(3500.0f, basePlatformPosition.y - 45.0f));
+      else if (i == 5)
+        static_cast<Enemy *>(characters[i])->SetPosition(sf::Vector2f(3900.0f, basePlatformPosition.y - 45.0f));
+      else if (i == 6)
+        static_cast<Enemy *>(characters[i])->SetPosition(sf::Vector2f(4701.0f, basePlatformPosition.y - 406.0f));
+    }
 }

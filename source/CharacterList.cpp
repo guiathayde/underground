@@ -48,7 +48,7 @@ void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, G
     for (int i = 0; i < enemiesNum; i++)
     {
         Enemy *aux = NULL;
-        aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 3, false, true);
+        aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 5.0f, 3, false, true);
         ListCharacters.Insert(aux);
         entities->InsertEntity(aux);
     }
@@ -81,7 +81,7 @@ void CharacterList::DrawCharacters(sf::RenderWindow &window)
     }
 }
 
-void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
+/*void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
 {
 
     sf::Vector2f direction;
@@ -112,7 +112,17 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
         }
     }
 }
+*/
 void CharacterList::DeleteCharacters()
 {
     ListCharacters.ClearAll();
+}
+
+Character *CharacterList::operator[](int x)
+{
+    if (ListCharacters[x] != NULL)
+        return ListCharacters[x];
+
+    cerr << "Error trying get character in ListCharacter out of range" << endl;
+    return NULL;
 }

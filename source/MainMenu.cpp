@@ -5,7 +5,7 @@ using namespace std;
 
 MainMenu::MainMenu(float width, float height)
 {
-  selectedItemIndex = 0;
+  selectedItemIndex = 1;
   isPlaying = false;
 
   centerPosition.x = width / 2;

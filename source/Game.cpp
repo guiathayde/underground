@@ -35,6 +35,7 @@ void Game::Execute()
         break;
 
       case sf::Event::Resized:
+        //cout <<"resized"<<endl;
         graphicManager->ResizeView();
         break;
 
@@ -53,8 +54,8 @@ void Game::Execute()
             levelsewer->Initialize();
             graphicManager->SetPlayerOne(levelsewer->GetPlayer());
             graphicManager->SetCurrentLevel(levelsewer);
-
             mainMenu->SetPlaying(true);
+            cout << "Criou level" << endl;
           }
 
           else if (numberAction == 2)
@@ -67,12 +68,24 @@ void Game::Execute()
           }
           else if (numberAction == 4)
           {
-            graphicManager->GetCurrentLevel()->ClearAll();
             graphicManager->GetWindow()->close();
           }
         }
+        //cout <<mainMenu->GetPlaying()<<endl;
+
         if (pauseMenu->GetPause())
-          pauseMenu->SelectItem(event, *mainMenu, *graphicManager->GetCurrentLevel());
+        {
+          //cout <<"Não era para entrar aqui"<<endl;
+          pauseMenu->SelectItem(event, *mainMenu, graphicManager->GetCurrentLevel());
+        }
+
+        else if (mainMenu->GetPlaying() && !graphicManager->GetCurrentLevel()->GetPlayer()->GetIsAlive())
+        {
+          //cout <<"Não era para entrar aqui"<<endl;
+          graphicManager->GetCurrentLevel()->ClearAll();
+          delete (graphicManager->GetCurrentLevel());
+          mainMenu->SetPlaying(false);
+        }
 
         break;
       }
