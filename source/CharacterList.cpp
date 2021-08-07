@@ -22,16 +22,18 @@ void CharacterList::InsertCharacter(Character *pC)
 
 Character *CharacterList::GetPlayer()
 {
-    Character* player;
+    Character *player;
     player = ListCharacters.GetFirstList();
-    while(player != NULL){
-        if(player->GetIsPlayer()){
+    while (player != NULL)
+    {
+        if (player->GetIsPlayer())
+        {
             //cout <<"Achaou o player"<<endl;
             return player;
         }
         player = ListCharacters.GetNextList();
     }
-    cout <<"Não achou o player"<<endl;
+    cout << "Não achou o player" << endl;
     return ListCharacters.GetFirstList();
 }
 
@@ -52,11 +54,11 @@ void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, G
     //cout <<p->GetIsPlayer()<<endl;
     for (int i = 0; i < enemiesNum; i++)
     {
-         Enemy *aux = NULL;
-         aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f((1+i)*1000.0f, 600.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 5.0f, 3, 5, false, true);
+        Enemy *aux = NULL;
+        aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f((1 + i) * 1000.0f, 600.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 5.0f, 3, 5, false, true);
         //cout <<"Criou characters"<<endl;
-         ListCharacters.Insert(aux);
-         entities->InsertEntity(aux);
+        ListCharacters.Insert(aux);
+        entities->InsertEntity(aux);
     }
 }
 
@@ -123,4 +125,13 @@ void CharacterList::DrawCharacters(sf::RenderWindow &window)
 void CharacterList::DeleteCharacters()
 {
     ListCharacters.ClearAll();
+}
+
+Character *CharacterList::operator[](int x)
+{
+    if (ListCharacters[x] != NULL)
+        return ListCharacters[x];
+
+    cerr << "Error trying get character in ListCharacter out of range" << endl;
+    return NULL;
 }

@@ -6,8 +6,6 @@ Game::Game()
   //printf("ponteiro em CONSTRUTORA GAME: %p\n", graphicManager);
   mainMenu = new MainMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
   pauseMenu = new PauseMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
-
-
 }
 
 Game::~Game()
@@ -59,6 +57,7 @@ void Game::Execute()
             graphicManager->SetPlayerOne(levelsewer->GetPlayer());
             graphicManager->SetCurrentLevel(levelsewer);
             mainMenu->SetPlaying(true);
+            cout << "Criou level" << endl;
           }
 
           else if (numberAction == 2)
@@ -75,20 +74,21 @@ void Game::Execute()
           }
         }
         //cout <<mainMenu->GetPlaying()<<endl;
-        
-        if (pauseMenu->GetPause()){
+
+        if (pauseMenu->GetPause())
+        {
           //cout <<"Não era para entrar aqui"<<endl;
           pauseMenu->SelectItem(event, *mainMenu, graphicManager->GetCurrentLevel());
         }
-        
-        else if(mainMenu->GetPlaying()&&!graphicManager->GetCurrentLevel()->GetPlayer()->GetIsAlive())
+
+        else if (mainMenu->GetPlaying() && !graphicManager->GetCurrentLevel()->GetPlayer()->GetIsAlive())
         {
           //cout <<"Não era para entrar aqui"<<endl;
           graphicManager->GetCurrentLevel()->ClearAll();
           delete (graphicManager->GetCurrentLevel());
           mainMenu->SetPlaying(false);
         }
-        
+
         break;
       }
 
@@ -102,7 +102,7 @@ void Game::Execute()
     if (pauseMenu->GetPause() && mainMenu->GetPlaying())
     {
       graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
-      pauseMenu->Draw( *graphicManager->GetWindow(), *graphicManager->GetView());
+      pauseMenu->Draw(*graphicManager->GetWindow(), *graphicManager->GetView());
     }
     else if (mainMenu->GetPlaying())
     {

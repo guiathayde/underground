@@ -23,4 +23,7 @@ public:
 
     //void CheckCharactersCollision(std::list<Platform *> platforms);
     Character *GetPlayer();
+
+    int GetSize() { return ListCharacters.GetSize(); }
+    Character *operator[](int x);
 };
