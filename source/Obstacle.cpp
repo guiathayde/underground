@@ -1,13 +1,14 @@
 #include "Obstacle.h"
- 
- Obstacle::Obstacle(bool isPlatform)
- :Entity(isPlatform)
+
+Obstacle::Obstacle(bool isPlatform)
+    : DynamicEntity(isPlatform)
 {
-
 }
 
-Obstacle::~Obstacle(){ 
+Obstacle::~Obstacle()
+{
 }
-void Obstacle::Draw(sf::RenderWindow &window){
+void Obstacle::Draw(sf::RenderWindow &window)
+{
     window.draw(body);
 }

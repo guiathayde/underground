@@ -2,10 +2,9 @@
 using namespace std;
 
 #include "PauseMenu.h"
-#include "MainMenu.h"
 #include "Level.h"
 
-PauseMenu::PauseMenu(float width, float height)
+PauseMenu::PauseMenu(float width, float height) : Menu(width, height)
 {
   selectedItemIndex = 0;
   isPaused = false;
@@ -60,7 +59,7 @@ void PauseMenu::MoveDown()
   }
 }
 
-void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level &level)
+void PauseMenu::SelectItem(sf::Event event, Level *level)
 {
   switch (event.key.code)
   {
@@ -80,9 +79,9 @@ void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level &level)
       break;
 
     case 1:
-      level.ClearAll();
-      delete (&level);
-      mainMenu.SetPlaying(false);
+      level->ClearAll();
+      delete (level);
+      SetPlaying(false);
       break;
 
     default:

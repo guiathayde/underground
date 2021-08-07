@@ -1,23 +1,18 @@
 #pragma once
 
 #include "stdfx.h"
-#include "Entity.h"
+#include "DynamicEntity.h"
 
-
-class Obstacle:public Entity
+class Obstacle : public DynamicEntity
 {
 private:
     bool isPlatform;
 
 public:
-    
     Obstacle(bool isPlatform);
     virtual ~Obstacle();
 
-    
     void Draw(sf::RenderWindow &window);
     virtual void OnCollision(sf::Vector2f direction) = 0;
-    virtual Collider GetCollider(){return Collider(body);};
-
+    virtual ColliderManager GetColliderManager() { return ColliderManager(body); };
 };
-

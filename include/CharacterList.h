@@ -1,7 +1,7 @@
 #pragma once
 
 #include "List.h"
-#include "EntityList.h"
+#include "DynamicEntityList.h"
 #include "GraphicManager.h"
 #include "Platform.h"
 
@@ -14,11 +14,10 @@ public:
     CharacterList();
     ~CharacterList();
 
-    void ListAll();
     void InsertCharacter(Character *pC);
     void RemoveCharacter(Character *pR);
     void DeleteCharacters();
-    void InitializeCharacters(int enemiesNum, EntityList *entities, GraphicManager *graphicManager);
+    void InitializeCharacters(int enemiesNum, DynamicEntityList *entities, GraphicManager *graphicManager);
     void UpdateCharacter(float deltaTime);
     void DrawCharacters(sf::RenderWindow &window);
 

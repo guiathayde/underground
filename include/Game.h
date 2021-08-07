@@ -1,17 +1,20 @@
 #pragma once
 
 #include "GraphicManager.h"
+#include "ColliderManager.h"
 #include "MainMenu.h"
 #include "PauseMenu.h"
-#include "LevelSewer.h"
+#include "Level.h"
 
 class Game
 {
 private:
-  
-  GraphicManager *graphicManager;
+    GraphicManager *graphicManager;
+  ColliderManager *colliderManager;
+
   MainMenu *mainMenu;
   PauseMenu *pauseMenu;
+  Level *level;
 
 public:
   Game();

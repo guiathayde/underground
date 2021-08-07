@@ -2,18 +2,20 @@
 
 #include "stdfx.h"
 
-class Collider
+class ColliderManager
 {
 private:
   sf::RectangleShape &body;
 
 public:
-  Collider(sf::RectangleShape &body);
-  ~Collider();
+  ColliderManager(sf::RectangleShape &body);
+  ~ColliderManager();
 
   void Move(float dx, float dy) const { body.move(dx, dy); }
 
-  bool CheckCollision(const Collider &other, sf::Vector2f &direction, float push);
+  bool CheckCollision(const ColliderManager &other, sf::Vector2f &direction, float push);
+  bool CheckOnHeadCollision(const ColliderManager &other, sf::Vector2f &direction, float push);
+
   sf::Vector2f GetPosition() const { return body.getPosition(); }
   sf::Vector2f GetHalfSize() const { return body.getSize() / 2.0f; }
 };

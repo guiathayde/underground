@@ -3,7 +3,7 @@ using namespace std;
 
 #include "MainMenu.h"
 
-MainMenu::MainMenu(float width, float height)
+MainMenu::MainMenu(float width, float height) : Menu(width, height)
 {
   selectedItemIndex = 0;
   isPlaying = false;
@@ -73,6 +73,7 @@ void MainMenu::Draw(sf::RenderWindow &window)
   background.setSize(rectangleSize);
   background.setTexture(&backgroundTexture);
   background.setOrigin(0.0f, 0.0f);
+
   window.draw(background);
 
   for (int i = 0; i < MAINMENU_MAX_ITEMS; i++)
@@ -99,7 +100,7 @@ void MainMenu::MoveDown()
   }
 }
 
-int MainMenu::SelectItem(sf::Event event)
+int MainMenu::SelectItem(sf::Event event, Level *level)
 {
   switch (event.key.code)
   {

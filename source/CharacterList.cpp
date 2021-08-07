@@ -39,18 +39,18 @@ void CharacterList::RemoveCharacter(Character *pR)
     ListCharacters.RemoveInfo(pR);
 }
 
-void CharacterList::InitializeCharacters(int enemiesNum, EntityList *entities, GraphicManager *graphicManager)
+void CharacterList::InitializeCharacters(int enemiesNum, DynamicEntityList *entities, GraphicManager *graphicManager)
 {
     Player *p = NULL;
     p = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(0.0f, 600.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
     ListCharacters.Insert(p);
-    entities->InsertEntity(p);
+    entities->InsertDynamicEntity(p);
     for (int i = 0; i < enemiesNum; i++)
     {
         Enemy *aux = NULL;
         aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), sf::Vector2f(i * 100.0f, 200.0f), sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 3, false, true);
         ListCharacters.Insert(aux);
-        entities->InsertEntity(aux);
+        entities->InsertDynamicEntity(aux);
     }
 }
 
@@ -96,7 +96,7 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
 
         for (i = 0; i < ListCharacters.GetSize(); i++)
         {
-            if ((*itPlatform)->GetCollider().CheckCollision(ListCharacters[i]->GetCollider(), direction, 0.1f))
+            if ((*itPlatform)->GetColliderManager().CheckCollision(ListCharacters[i]->GetColliderManager(), direction, 0.1f))
             {
                 ListCharacters[i]->OnCollision(direction);
             }
@@ -107,7 +107,7 @@ void CharacterList::CheckCharactersCollision(std::list<Platform *> platforms)
     {
         for (j = i + 1; j < size; j++)
         {
-            if (ListCharacters[i]->GetCollider().CheckCollision(ListCharacters[j]->GetCollider(), direction, 0.1f))
+            if (ListCharacters[i]->GetColliderManager().CheckCollision(ListCharacters[j]->GetColliderManager(), direction, 0.1f))
                 ListCharacters[j]->OnCollision(direction);
         }
     }

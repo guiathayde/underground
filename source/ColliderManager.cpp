@@ -1,14 +1,14 @@
-#include "Collider.h"
+#include "ColliderManager.h"
 
-Collider::Collider(sf::RectangleShape &body) : body(body)
+ColliderManager::ColliderManager(sf::RectangleShape &body) : body(body)
 {
 }
 
-Collider::~Collider()
+ColliderManager::~ColliderManager()
 {
 }
 
-bool Collider::CheckCollision(const Collider &other, sf::Vector2f &direction, float push)
+bool ColliderManager::CheckCollision(const ColliderManager &other, sf::Vector2f &direction, float push)
 {
   sf::Vector2f otherPosition = other.GetPosition();
   sf::Vector2f otherHalfSize = other.GetHalfSize();
@@ -68,4 +68,28 @@ bool Collider::CheckCollision(const Collider &other, sf::Vector2f &direction, fl
   }
 
   return false;
+}
+
+bool ColliderManager::CheckOnHeadCollision(const ColliderManager &other, sf::Vector2f &direction, float push)
+{
+  sf::Vector2f otherPosition = other.GetPosition();
+  sf::Vector2f otherHalfSize = other.GetHalfSize();
+  sf::Vector2f thisPosition = GetPosition();
+  sf::Vector2f thisHalfSize = GetHalfSize();
+
+  float deltaY = abs(otherPosition.y - thisPosition.y);
+  float xThisBegin = abs(thisPosition.x - thisHalfSize.x);
+  float xThisEnd = abs(thisPosition.x + thisHalfSize.x);
+
+  float sizeY = abs(otherHalfSize.y + thisHalfSize.y);
+  float copm = deltaY - sizeY;
+
+  //cout <<"copm"<< copm << endl;
+  //cout <<"other position" <<otherPosition.x << "this Begin" << xThisBegin << endl;
+
+  if (otherPosition.x >= xThisBegin && otherPosition.x <= xThisEnd && copm <= 0)
+    return true;
+
+  else
+    return false;
 }
