@@ -13,6 +13,9 @@ GraphicManager::GraphicManager()
 
 GraphicManager::~GraphicManager()
 {
+  delete(window);
+  delete(view);
+
 }
 
 void GraphicManager::ResizeView()

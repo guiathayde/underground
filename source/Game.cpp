@@ -13,6 +13,7 @@ Game::~Game()
   delete (graphicManager);
   delete (mainMenu);
   delete (pauseMenu);
+  delete(level);
 }
 
 void Game::Execute()
@@ -84,7 +85,6 @@ void Game::Execute()
           else if (numberAction == 1)
           {
             level->ClearAll();
-            delete (level);
             mainMenu->SetPlaying(false);
           }
         }
