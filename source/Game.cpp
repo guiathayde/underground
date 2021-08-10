@@ -1,3 +1,4 @@
+#include "stdfx.h"
 #include "Game.h"
 
 Game::Game()
@@ -9,6 +10,9 @@ Game::Game()
 
 Game::~Game()
 {
+  delete (graphicManager);
+  delete (mainMenu);
+  delete (pauseMenu);
 }
 
 void Game::Execute()
@@ -46,15 +50,16 @@ void Game::Execute()
           pauseMenu->SetPause(true);
         else if (!mainMenu->GetPlaying())
         {
-          int numberAction = mainMenu->SelectItem(event);
+          int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
-            LevelSewer *levelsewer = new LevelSewer(graphicManager);
+            LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
             levelsewer->Initialize();
             graphicManager->SetPlayerOne(levelsewer->GetPlayer());
             graphicManager->SetCurrentLevel(levelsewer);
-
             mainMenu->SetPlaying(true);
+
+            level = levelsewer;
           }
 
           else if (numberAction == 2)
@@ -67,12 +72,22 @@ void Game::Execute()
           }
           else if (numberAction == 4)
           {
-            graphicManager->GetCurrentLevel()->ClearAll();
             graphicManager->GetWindow()->close();
           }
         }
+
         if (pauseMenu->GetPause())
-          pauseMenu->SelectItem(event, *mainMenu, *graphicManager->GetCurrentLevel());
+        {
+          int numberAction = pauseMenu->SelectItem(event, level);
+          if (numberAction == 0)
+            pauseMenu->SetPause(false);
+          else if (numberAction == 1)
+          {
+            level->ClearAll();
+            delete (level);
+            mainMenu->SetPlaying(false);
+          }
+        }
 
         break;
       }
@@ -81,28 +96,30 @@ void Game::Execute()
         break;
       }
     }
-
-    graphicManager->GetWindow()->clear();
+    if (graphicManager)
+      graphicManager->GetWindow()->clear();
 
     if (pauseMenu->GetPause() && mainMenu->GetPlaying())
     {
       graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
-      pauseMenu->Draw(*graphicManager->GetWindow(), *graphicManager->GetView());
+      pauseMenu->Draw(graphicManager->GetWindow(), graphicManager->GetView());
     }
     else if (mainMenu->GetPlaying())
     {
-      graphicManager->GetCurrentLevel()->Update(deltaTime);
-      graphicManager->GetCurrentLevel()->CheckCollison();
+      level->CheckCollison();
+      level->Update(deltaTime);
+      level->Draw(*graphicManager->GetWindow());
       graphicManager->SetViewCenter();
-      graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
     }
-    else if (!mainMenu->GetPlaying())
+    else if (!mainMenu->GetPlaying() && graphicManager)
     {
       graphicManager->GetView()->setCenter(mainMenu->GetCenterPosition());
-      mainMenu->Draw(*graphicManager->GetWindow());
+      mainMenu->Draw(graphicManager->GetWindow(), NULL);
     }
-
-    graphicManager->GetWindow()->setView(*graphicManager->GetView());
-    graphicManager->GetWindow()->display();
+    if (graphicManager)
+    {
+      graphicManager->GetWindow()->setView(*graphicManager->GetView());
+      graphicManager->GetWindow()->display();
+    }
   }
 }

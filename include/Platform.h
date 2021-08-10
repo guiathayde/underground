@@ -15,5 +15,4 @@ public:
   void Draw(sf::RenderWindow &window);
   void OnCollision(sf::Vector2f direction);
 
-  ColliderManager GetColliderManager() { return ColliderManager(body); }
 };

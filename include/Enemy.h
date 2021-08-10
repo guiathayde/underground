@@ -2,15 +2,20 @@
 
 #include "stdfx.h"
 #include "Player.h"
-class Enemy: public Character
+
+class Enemy : public Character
 {
 private:
+  bool isStunned;
+  float coolDown;
+  const float totalStunTime;
 
 public:
-  Enemy(sf::Texture *texture, sf::Vector2f size,sf::Vector2f origin,sf::Vector2u imageCount, float switchTime, float speed,float jumpHeight,int hearts,bool isAlive,bool isPlayer);
+  Enemy(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer);
   ~Enemy();
-  
-  void Update(float deltaTime, Character* p);
+
+  void Update(float deltaTime, Character *p);
   bool SeePlayer(Player p);
   float Attack(Player p);
+  void SetStunned() { isStunned = true; };
 };

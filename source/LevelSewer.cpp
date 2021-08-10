@@ -16,7 +16,7 @@ LevelSewer::~LevelSewer()
 void LevelSewer::InitializeCharacters()
 {
   Player *p = NULL;
-  p = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(0.0f, 600.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+  p = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
   playerOne = p;
   characters.push_back(p);
   entities->InsertDynamicEntity(p);
@@ -24,11 +24,12 @@ void LevelSewer::InitializeCharacters()
   for (int i = 0; i < enemiesNum; i++)
   {
     sf::Vector2f enemyPosistion;
-    enemyPosistion.x = static_cast<float>((rand() % 1200) + 4701);
+    enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion.y = 0.0f;
 
     Enemy *aux = NULL;
-    aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), enemyPosistion, sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 5.0f, 3, false, true);
+    //Enemy(sf::Texture *texture, sf::Vector2f size,sf::Vector2f origin,sf::Vector2u imageCount, float switchTime, float speed,float jumpHeight,int hearts,bool isAlive,bool isPlayer)
+    aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), enemyPosistion, sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 5.0f, false, true);
     characters.push_back(aux);
     entities->InsertDynamicEntity(aux);
   }
@@ -37,6 +38,7 @@ void LevelSewer::InitializeCharacters()
 void LevelSewer::Initialize()
 {
   //InitializObstacle();
+
   sf::Texture *backgroundTexture = graphicManager->GetTexture("levelOne");
   sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
 
@@ -52,15 +54,16 @@ void LevelSewer::Initialize()
   basePlatformPosition.x = 0.0f;
   basePlatformPosition.y = static_cast<float>(windowSize.y);
 
-  Platform *basePlatform = new Platform(plataformTexture, sf::Vector2f(5000.0f, 100.0f), sf::Vector2f(basePlatformPosition.x + 2500.0f, basePlatformPosition.y + 50.0f));
+  Platform *basePlatform = new Platform(plataformTexture, sf::Vector2f(5000.0f, 200.0f), sf::Vector2f(basePlatformPosition.x + 2500.0f, basePlatformPosition.y + 100.0f));
   Platform *limitBorderYLeft = new Platform(plataformTexture, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(basePlatformPosition.x, basePlatformPosition.y / 2.0f));
   Platform *limitBorderYRight = new Platform(plataformTexture, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(5000.0f, basePlatformPosition.y / 2.0f));
 
   entities->InsertDynamicEntity(basePlatform);
+  platforms.push_back(basePlatform);
   entities->InsertDynamicEntity(limitBorderYLeft);
+  platforms.push_back(limitBorderYLeft);
   entities->InsertDynamicEntity(limitBorderYRight);
-
-  playerOne->SetPosition(sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 36.0f));
+  platforms.push_back(limitBorderYRight);
 
   /* --------------------------------------------------------- SetUp Spikes --------------------------------------------------------- */
 
@@ -76,13 +79,21 @@ void LevelSewer::Initialize()
   Platform *spikes8 = new Platform(spikesTexture, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(748.0f, basePlatformPosition.y - (static_cast<float>(spikesTexture->getSize().y) / 2.0f)));
 
   entities->InsertDynamicEntity(spikes1);
+  platforms.push_back(spikes1);
   entities->InsertDynamicEntity(spikes2);
+  platforms.push_back(spikes2);
   entities->InsertDynamicEntity(spikes3);
+  platforms.push_back(spikes3);
   entities->InsertDynamicEntity(spikes4);
+  platforms.push_back(spikes4);
   entities->InsertDynamicEntity(spikes5);
+  platforms.push_back(spikes5);
   entities->InsertDynamicEntity(spikes6);
+  platforms.push_back(spikes6);
   entities->InsertDynamicEntity(spikes7);
+  platforms.push_back(spikes7);
   entities->InsertDynamicEntity(spikes8);
+  platforms.push_back(spikes8);
 
   /* --------------------------------------------------------- SetUp First Air Platform --------------------------------------------------------- */
 
@@ -98,11 +109,17 @@ void LevelSewer::Initialize()
   Platform *airPlatform6 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(978.0f, basePlatformPosition.y - 50.0f));
 
   entities->InsertDynamicEntity(airPlatform1);
+  platforms.push_back(airPlatform1);
   entities->InsertDynamicEntity(airPlatform2);
+  platforms.push_back(airPlatform2);
   entities->InsertDynamicEntity(airPlatform3);
+  platforms.push_back(airPlatform3);
   entities->InsertDynamicEntity(airPlatform4);
+  platforms.push_back(airPlatform4);
   entities->InsertDynamicEntity(airPlatform5);
+  platforms.push_back(airPlatform5);
   entities->InsertDynamicEntity(airPlatform6);
+  platforms.push_back(airPlatform6);
 
   /* --------------------------------------------------------- SetUp Platform to Stair --------------------------------------------------------- */
 
@@ -114,11 +131,17 @@ void LevelSewer::Initialize()
   Platform *airPlatform12 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(2308.0f, basePlatformPosition.y - 150.0f));
 
   entities->InsertDynamicEntity(airPlatform7);
+  platforms.push_back(airPlatform7);
   entities->InsertDynamicEntity(airPlatform8);
+  platforms.push_back(airPlatform8);
   entities->InsertDynamicEntity(airPlatform9);
+  platforms.push_back(airPlatform9);
   entities->InsertDynamicEntity(airPlatform10);
+  platforms.push_back(airPlatform10);
   entities->InsertDynamicEntity(airPlatform11);
+  platforms.push_back(airPlatform11);
   entities->InsertDynamicEntity(airPlatform12);
+  platforms.push_back(airPlatform12);
 
   static sf::Texture wallPlatformTexture;
   if (!wallPlatformTexture.loadFromFile("assets/background/air_platform.png"))
@@ -130,9 +153,13 @@ void LevelSewer::Initialize()
   Platform *wallPlatform4 = new Platform(&airPlatformTexture, sf::Vector2f(16.0f, 46.0f), sf::Vector2f(2322.0f, basePlatformPosition.y - 316.0f));
 
   entities->InsertDynamicEntity(wallPlatform1);
+  platforms.push_back(wallPlatform1);
   entities->InsertDynamicEntity(wallPlatform2);
+  platforms.push_back(wallPlatform2);
   entities->InsertDynamicEntity(wallPlatform3);
+  platforms.push_back(wallPlatform3);
   entities->InsertDynamicEntity(wallPlatform4);
+  platforms.push_back(wallPlatform4);
 
   Platform *airPlatform13 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(2351.5f, basePlatformPosition.y - 332.0f));
   Platform *airPlatform14 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(2397.5f, basePlatformPosition.y - 332.0f));
@@ -142,11 +169,17 @@ void LevelSewer::Initialize()
   Platform *airPlatform18 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(2581.5f, basePlatformPosition.y - 332.0f));
 
   entities->InsertDynamicEntity(airPlatform13);
+  platforms.push_back(airPlatform13);
   entities->InsertDynamicEntity(airPlatform14);
+  platforms.push_back(airPlatform14);
   entities->InsertDynamicEntity(airPlatform15);
+  platforms.push_back(airPlatform15);
   entities->InsertDynamicEntity(airPlatform16);
+  platforms.push_back(airPlatform16);
   entities->InsertDynamicEntity(airPlatform17);
+  platforms.push_back(airPlatform17);
   entities->InsertDynamicEntity(airPlatform18);
+  platforms.push_back(airPlatform18);
 
   static sf::Texture stairTexture;
   if (!stairTexture.loadFromFile("assets/background/stair1.png"))
@@ -155,6 +188,7 @@ void LevelSewer::Initialize()
   Platform *stair = new Platform(&stairTexture, sf::Vector2f(35.0f, 39.0f), sf::Vector2f(2581.5f, basePlatformPosition.y - 372.0f));
 
   entities->InsertDynamicEntity(stair);
+  platforms.push_back(stair);
 
   /* --------------------------------------------------------- SetUp Spikes and AirPlatform --------------------------------------------------------- */
 
@@ -172,17 +206,29 @@ void LevelSewer::Initialize()
   Platform *spikes20 = new Platform(spikesTexture, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3308.5f, basePlatformPosition.y - (static_cast<float>(spikesTexture->getSize().y) / 2.0f)));
 
   entities->InsertDynamicEntity(spikes9);
+  platforms.push_back(spikes9);
   entities->InsertDynamicEntity(spikes10);
+  platforms.push_back(spikes10);
   entities->InsertDynamicEntity(spikes11);
+  platforms.push_back(spikes11);
   entities->InsertDynamicEntity(spikes12);
+  platforms.push_back(spikes12);
   entities->InsertDynamicEntity(spikes13);
+  platforms.push_back(spikes13);
   entities->InsertDynamicEntity(spikes14);
+  platforms.push_back(spikes14);
   entities->InsertDynamicEntity(spikes15);
+  platforms.push_back(spikes15);
   entities->InsertDynamicEntity(spikes16);
+  platforms.push_back(spikes16);
   entities->InsertDynamicEntity(spikes17);
+  platforms.push_back(spikes17);
   entities->InsertDynamicEntity(spikes18);
+  platforms.push_back(spikes18);
   entities->InsertDynamicEntity(spikes19);
+  platforms.push_back(spikes19);
   entities->InsertDynamicEntity(spikes20);
+  platforms.push_back(spikes20);
 
   Platform *airPlatform19 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(3180.5f, basePlatformPosition.y - 30.0f));
   Platform *airPlatform20 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(3226.5f, basePlatformPosition.y - 30.0f));
@@ -191,10 +237,15 @@ void LevelSewer::Initialize()
   Platform *airPlatform23 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(3364.5f, basePlatformPosition.y - 30.0f));
 
   entities->InsertDynamicEntity(airPlatform19);
+  platforms.push_back(airPlatform19);
   entities->InsertDynamicEntity(airPlatform20);
+  platforms.push_back(airPlatform20);
   entities->InsertDynamicEntity(airPlatform21);
+  platforms.push_back(airPlatform21);
   entities->InsertDynamicEntity(airPlatform22);
+  platforms.push_back(airPlatform22);
   entities->InsertDynamicEntity(airPlatform23);
+  platforms.push_back(airPlatform23);
 
   /* --------------------------------------------------------- SetUp Exit Platform --------------------------------------------------------- */
 
@@ -204,9 +255,13 @@ void LevelSewer::Initialize()
   Platform *wallPlatform8 = new Platform(&airPlatformTexture, sf::Vector2f(16.0f, 46.0f), sf::Vector2f(4164.0f, basePlatformPosition.y - 161.0f));
 
   entities->InsertDynamicEntity(wallPlatform5);
+  platforms.push_back(wallPlatform5);
   entities->InsertDynamicEntity(wallPlatform6);
+  platforms.push_back(wallPlatform6);
   entities->InsertDynamicEntity(wallPlatform7);
+  platforms.push_back(wallPlatform7);
   entities->InsertDynamicEntity(wallPlatform8);
+  platforms.push_back(wallPlatform8);
 
   Platform *airPlatform24 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(4195.5f, basePlatformPosition.y - 177.0f));
   Platform *airPlatform25 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(4241.5f, basePlatformPosition.y - 177.0f));
@@ -215,10 +270,15 @@ void LevelSewer::Initialize()
   Platform *airPlatform28 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(4379.5f, basePlatformPosition.y - 177.0f));
 
   entities->InsertDynamicEntity(airPlatform24);
+  platforms.push_back(airPlatform24);
   entities->InsertDynamicEntity(airPlatform25);
+  platforms.push_back(airPlatform25);
   entities->InsertDynamicEntity(airPlatform26);
+  platforms.push_back(airPlatform26);
   entities->InsertDynamicEntity(airPlatform27);
+  platforms.push_back(airPlatform27);
   entities->InsertDynamicEntity(airPlatform28);
+  platforms.push_back(airPlatform28);
 
   Platform *wallPlatform9 = new Platform(&airPlatformTexture, sf::Vector2f(16.0f, 46.0f), sf::Vector2f(4394.0f, basePlatformPosition.y - 207.0f));
   Platform *wallPlatform10 = new Platform(&airPlatformTexture, sf::Vector2f(16.0f, 46.0f), sf::Vector2f(4394.0f, basePlatformPosition.y - 253.0f));
@@ -226,9 +286,13 @@ void LevelSewer::Initialize()
   Platform *wallPlatform12 = new Platform(&airPlatformTexture, sf::Vector2f(16.0f, 46.0f), sf::Vector2f(4394.0f, basePlatformPosition.y - 345.0f));
 
   entities->InsertDynamicEntity(wallPlatform9);
+  platforms.push_back(wallPlatform9);
   entities->InsertDynamicEntity(wallPlatform10);
+  platforms.push_back(wallPlatform10);
   entities->InsertDynamicEntity(wallPlatform11);
+  platforms.push_back(wallPlatform11);
   entities->InsertDynamicEntity(wallPlatform12);
+  platforms.push_back(wallPlatform12);
 
   Platform *airPlatform29 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(4425.0f, basePlatformPosition.y - 361.0f));
   Platform *airPlatform30 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(4471.0f, basePlatformPosition.y - 361.0f));
@@ -245,18 +309,31 @@ void LevelSewer::Initialize()
   Platform *airPlatform41 = new Platform(&airPlatformTexture, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(4977.0f, basePlatformPosition.y - 361.0f));
 
   entities->InsertDynamicEntity(airPlatform29);
+  platforms.push_back(airPlatform29);
   entities->InsertDynamicEntity(airPlatform30);
+  platforms.push_back(airPlatform30);
   entities->InsertDynamicEntity(airPlatform31);
+  platforms.push_back(airPlatform31);
   entities->InsertDynamicEntity(airPlatform32);
+  platforms.push_back(airPlatform32);
   entities->InsertDynamicEntity(airPlatform33);
+  platforms.push_back(airPlatform33);
   entities->InsertDynamicEntity(airPlatform34);
+  platforms.push_back(airPlatform34);
   entities->InsertDynamicEntity(airPlatform35);
+  platforms.push_back(airPlatform35);
   entities->InsertDynamicEntity(airPlatform36);
+  platforms.push_back(airPlatform36);
   entities->InsertDynamicEntity(airPlatform37);
+  platforms.push_back(airPlatform37);
   entities->InsertDynamicEntity(airPlatform38);
+  platforms.push_back(airPlatform38);
   entities->InsertDynamicEntity(airPlatform39);
+  platforms.push_back(airPlatform39);
   entities->InsertDynamicEntity(airPlatform40);
+  platforms.push_back(airPlatform40);
   entities->InsertDynamicEntity(airPlatform41);
+  platforms.push_back(airPlatform41);
 
   static sf::Texture doorTexture;
   if (!doorTexture.loadFromFile("assets/background/door.png"))
@@ -265,6 +342,7 @@ void LevelSewer::Initialize()
   Platform *door = new Platform(&doorTexture, sf::Vector2f(69.0f, 113.0f), sf::Vector2f(4931.0f, basePlatformPosition.y - 424.5f));
 
   entities->InsertDynamicEntity(door);
+  platforms.push_back(door);
 
   /* --------------------------------------------------------- SetUp Enemies Position --------------------------------------------------------- */
 

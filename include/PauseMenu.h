@@ -18,8 +18,8 @@ public:
   PauseMenu(float width, float height);
   ~PauseMenu();
 
-  void Draw(sf::RenderWindow &window, sf::View &view);
+  void Draw(sf::RenderWindow *window, sf::View *view);
   void MoveUp();
   void MoveDown();
-  void SelectItem(sf::Event event, Level *level);
+  int SelectItem(sf::Event event, Level *level);
 };

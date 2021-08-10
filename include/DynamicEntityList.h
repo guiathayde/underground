@@ -7,7 +7,7 @@
 class DynamicEntityList
 {
 private:
-	List<DynamicEntity *> ListEntities;
+	List<DynamicEntity> ListEntities;
 
 public:
 	DynamicEntityList();
@@ -17,5 +17,12 @@ public:
 	void RemoveDynamicEntity(DynamicEntity *pR);
 	void DeleteEntities() { ListEntities.ClearAll(); }
 
-	List<DynamicEntity *> *GetList() { return &ListEntities; }
+	void CheckEntitiesCollision();
+	void DrawEntities(sf::RenderWindow &window);
+	bool GetIsObstacle(int x) { return ListEntities[x]->GetIsObstacle(); }
+
+	DynamicEntity *operator[](int x) { return ListEntities[x]; }
+
+	int GetSize(){return ListEntities.GetSize();}
+	DynamicEntityList *GetList() { return this;}
 };

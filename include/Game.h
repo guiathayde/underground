@@ -4,12 +4,12 @@
 #include "ColliderManager.h"
 #include "MainMenu.h"
 #include "PauseMenu.h"
-#include "Level.h"
+#include "LevelSewer.h"
 
 class Game
 {
 private:
-    GraphicManager *graphicManager;
+  GraphicManager *graphicManager;
   ColliderManager *colliderManager;
 
   MainMenu *mainMenu;

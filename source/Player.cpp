@@ -1,8 +1,3 @@
-#include <cmath>
-#include <iostream>
-using std::cout;
-using std::endl;
-
 #include "Player.h"
 
 Player::Player(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer, bool isPlayerOne) : Character(texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer)

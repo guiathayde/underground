@@ -107,7 +107,6 @@ void List<T1>::Insert(T1 *pnew)
 
     Element<T1> *tmp = NULL;
     tmp = new Element<T1>(pnew);
-
     if (pFirst == NULL)
     {
         pFirst = tmp;
@@ -129,7 +128,6 @@ void List<T1>::Insert(T1 *pnew)
 template <class T1>
 void List<T1>::ClearAll()
 {
-
     while (pFirst != NULL)
     {
         Element<T1> *tmp = NULL;
@@ -173,6 +171,7 @@ T1 *List<T1>::operator[](int x)
             return pA->GetInfo();
     }
     else
-        cerr << "Error using operator of the List" << endl;
+        cerr << "Error using operator of the List"
+             << "o n de elementos" << n_elementos << " o x " << x << endl;
     return NULL;
 }

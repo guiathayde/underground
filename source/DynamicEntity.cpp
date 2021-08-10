@@ -3,7 +3,9 @@
 
 DynamicEntity::DynamicEntity(bool isObstacle)
 {
+
 	this->isObstacle = isObstacle;
+
 }
 
 DynamicEntity::~DynamicEntity()

@@ -30,13 +30,13 @@ PauseMenu::~PauseMenu()
 {
 }
 
-void PauseMenu::Draw(sf::RenderWindow &window, sf::View &view)
+void PauseMenu::Draw(sf::RenderWindow *window, sf::View *view)
 {
-  menu[0].setPosition(view.getCenter().x - 500.0f, view.getCenter().y - 200.0f);
-  menu[1].setPosition(view.getCenter().x - 500.0f, view.getCenter().y - 100.0f);
+  menu[0].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 200.0f);
+  menu[1].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 100.0f);
 
   for (int i = 0; i < MENU_MAX_ITEMS; i++)
-    window.draw(menu[i]);
+    window->draw(menu[i]);
 }
 
 void PauseMenu::MoveUp()
@@ -59,36 +59,34 @@ void PauseMenu::MoveDown()
   }
 }
 
-void PauseMenu::SelectItem(sf::Event event, Level *level)
+int PauseMenu::SelectItem(sf::Event event, Level *level)
 {
   switch (event.key.code)
   {
   case sf::Keyboard::Up:
     MoveUp();
-    break;
+    return -1;
 
   case sf::Keyboard::Down:
     MoveDown();
-    break;
+    return -1;
 
   case sf::Keyboard::Return:
     switch (GetPressedItem())
     {
     case 0:
-      SetPause(false);
-      break;
+      return 0;
 
     case 1:
-      level->ClearAll();
-      delete (level);
-      SetPlaying(false);
-      break;
+      return 1;
 
     default:
-      break;
+      return -1;
     }
 
   default:
-    break;
+    return -1;
   }
+  
+  return -1;
 }

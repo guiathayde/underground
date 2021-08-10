@@ -3,10 +3,9 @@
 #include "ColliderManager.h"
 
 Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager)
+    : graphicManager(graphicManager), colliderManager(colliderManager)
 {
-
-  this->graphicManager = graphicManager;
-  this->colliderManager = colliderManager;
+  entities = new DynamicEntityList();
 }
 
 Level::~Level()
@@ -23,7 +22,8 @@ void Level::Update(float deltaTime)
 
 void Level::CheckCollison()
 {
-  entities->CheckEntitiesCollision();
+  colliderManager->CheckEntitiesCollison(entities, platforms, characters);
+  colliderManager->CheckPlayerOnHead(characters, playerOne, NULL);
 }
 
 void Level::Draw(sf::RenderWindow &window)

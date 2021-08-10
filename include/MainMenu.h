@@ -7,6 +7,7 @@
 class MainMenu : public Menu
 {
 private:
+  
   sf::Font titleFont;
   sf::Font itemFont;
   sf::RectangleShape background;
@@ -16,7 +17,7 @@ public:
   MainMenu(float width, float height);
   ~MainMenu();
 
-  void Draw(sf::RenderWindow &window);
+  void Draw(sf::RenderWindow *window,sf::View *view);
 
   void MoveUp();
   void MoveDown();

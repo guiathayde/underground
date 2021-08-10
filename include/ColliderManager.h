@@ -1,21 +1,21 @@
 #pragma once
 
+#include "DynamicEntityList.h"
 #include "stdfx.h"
+#include "Character.h"
+#include "Platform.h"
 
+class Player;
 class ColliderManager
 {
-private:
-  sf::RectangleShape &body;
-
 public:
-  ColliderManager(sf::RectangleShape &body);
+  ColliderManager();
   ~ColliderManager();
 
-  void Move(float dx, float dy) const { body.move(dx, dy); }
+  bool CheckCollision(sf::RectangleShape &body, sf::RectangleShape &otherBody, sf::Vector2f &direction, float push);
+  bool CheckOnHeadCollision(sf::RectangleShape &body, sf::RectangleShape &otherBody);
 
-  bool CheckCollision(const ColliderManager &other, sf::Vector2f &direction, float push);
-  bool CheckOnHeadCollision(const ColliderManager &other, sf::Vector2f &direction, float push);
-
-  sf::Vector2f GetPosition() const { return body.getPosition(); }
-  sf::Vector2f GetHalfSize() const { return body.getSize() / 2.0f; }
+  void OnCollision(sf::Vector2f direction, DynamicEntity *character);
+  void CheckEntitiesCollison(DynamicEntityList *entities, list<Obstacle *> platforms, list<Character *> character);
+  void CheckPlayerOnHead(list<Character *> characters, Player *playerOne, Player *playerTwo);
 };

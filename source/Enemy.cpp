@@ -4,7 +4,8 @@
 using std::cout;
 using std::endl;
 
-Enemy::Enemy(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumoHeight, int hearts, bool isAlive, bool isPlayer) : Character(texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer)
+Enemy::Enemy(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer)
+    : Character(texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer), totalStunTime(5.0f)
 {
     body.setSize(size);
     body.setOrigin(body.getSize() / 2.0f);
@@ -18,12 +19,20 @@ Enemy::~Enemy()
 
 void Enemy::Update(float deltaTime, Character *character)
 {
+
     Player *p;
     p = static_cast<Player *>(character);
 
-    velocity.x *= 0.5f; // time to stop action walk (slow down)
-    if (SeePlayer(*p))
+    if (isStunned && coolDown > totalStunTime)
     {
+        isStunned = false;
+    }
+    coolDown += deltaTime;
+
+    velocity.x *= 0.5f; // time to stop action walk (slow down)
+    if (!isStunned && SeePlayer(*p))
+    {
+        coolDown = 0;
         velocity.x = Attack(*p);
     }
 
@@ -45,17 +54,6 @@ void Enemy::Update(float deltaTime, Character *character)
         isAlive = false;
     }
 
-    if (GetColliderManager().CheckOnHeadCollision(p->GetColliderManager(), direction, push))
-    {
-        row = 0;
-        isStunned = true;
-    }
-
-    if (!GetColliderManager().CheckOnHeadCollision(p->GetColliderManager(), direction, push) && GetColliderManager().CheckCollision(p->GetColliderManager(), direction, push) && !isStunned)
-    {
-        //cout <<p->GetHearts()<<endl;
-        p->GetDamage();
-    }
     animation.Update(row, deltaTime, faceRight);
     body.setTextureRect(animation.uvRect);
     body.move(velocity * deltaTime);

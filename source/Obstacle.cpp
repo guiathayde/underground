@@ -1,7 +1,7 @@
 #include "Obstacle.h"
 
 Obstacle::Obstacle(bool isPlatform)
-    : DynamicEntity(isPlatform)
+: DynamicEntity(isPlatform)
 {
 }
 

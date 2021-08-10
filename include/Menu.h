@@ -16,12 +16,12 @@ public:
   Menu(float width, float height);
   ~Menu();
 
-  virtual void Draw(sf::RenderWindow &window, sf::View &view) = 0;
+  virtual void Draw(sf::RenderWindow *window, sf::View *view) = 0;
 
   virtual void MoveUp() = 0;
   virtual void MoveDown() = 0;
 
-  virtual int SelectItem(sf::Event event, Level &level) = 0;
+  virtual int SelectItem(sf::Event event, Level *level) = 0;
   int GetPressedItem() { return selectedItemIndex; }
 
   void SetPlaying(bool state) { isPlaying = state; }

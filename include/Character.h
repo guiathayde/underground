@@ -3,7 +3,6 @@
 #include "stdfx.h"
 #include "DynamicEntity.h"
 #include "Animation.h"
-#include "ColliderManager.h"
 
 class Character : public DynamicEntity
 {
@@ -33,11 +32,10 @@ public:
 
   virtual void Update(float deltaTime, Character *character) = 0;
   void Draw(sf::RenderWindow &window);
-  void OnCollision(sf::Vector2f direction);
   float getVelocityX() { return velocity.x; }
+  void OnCollision(sf::Vector2f direction);
 
   sf::Vector2f GetPosition() { return body.getPosition(); }
-  ColliderManager GetColliderManager() { return ColliderManager(this->body); }
 
   bool GetIsAlive() { return isAlive; }
   bool GetIsPlayer() { return isPlayer; }

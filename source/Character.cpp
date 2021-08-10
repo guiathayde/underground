@@ -3,7 +3,7 @@
 #include <list>
 
 Character::Character(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer)
-    : animation(texture, imageCount, switchTime), DynamicEntity(false)
+    : DynamicEntity(false), animation(texture, imageCount, switchTime)
 {
   this->speed = speed;
   this->jumpHeight = jumpHeight;

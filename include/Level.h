@@ -1,11 +1,12 @@
 #pragma once
 
 #include "stdfx.h"
+#include "Player.h"
 #include "DynamicEntityList.h"
-#include "Entity.h"
+#include "Obstacle.h"
 
 class GraphicManager;
-class GraphicCollider;
+class ColliderManager;
 class Level : public Entity
 {
 protected:
@@ -14,8 +15,13 @@ protected:
 
   DynamicEntityList *entities;
   list<Character *> characters;
+  list<Obstacle *> platforms;
 
   Player *playerOne;
+  
+  ColliderManager *colliderManager;
+  GraphicManager *graphicManager;
+  
 
   sf::RectangleShape background;
 
@@ -30,11 +36,12 @@ public:
   void Update(float deltaTime);
   void CheckCollison();
   void Draw(sf::RenderWindow &window);
-  Player *GetPlayer();
+  
+  Player *GetPlayer(){return playerOne;};
   void SetPlayer(Player *p) { playerOne = p; };
+  
   void ClearAll();
 
   virtual float GetSizeX() { return sizeX; }
 
-  Player *GetPlayer();
 };

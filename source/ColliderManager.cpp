@@ -1,6 +1,10 @@
+#include "stdfx.h"
 #include "ColliderManager.h"
+#include "DynamicEntityList.h"
+#include "Player.h"
+#include "Enemy.h"
 
-ColliderManager::ColliderManager(sf::RectangleShape &body) : body(body)
+ColliderManager::ColliderManager()
 {
 }
 
@@ -8,12 +12,12 @@ ColliderManager::~ColliderManager()
 {
 }
 
-bool ColliderManager::CheckCollision(const ColliderManager &other, sf::Vector2f &direction, float push)
+bool ColliderManager::CheckCollision(sf::RectangleShape &body, sf::RectangleShape &otherBody, sf::Vector2f &direction, float push)
 {
-  sf::Vector2f otherPosition = other.GetPosition();
-  sf::Vector2f otherHalfSize = other.GetHalfSize();
-  sf::Vector2f thisPosition = GetPosition();
-  sf::Vector2f thisHalfSize = GetHalfSize();
+  sf::Vector2f otherPosition = otherBody.getPosition();
+  sf::Vector2f otherHalfSize = otherBody.getSize() / 2.0f;
+  sf::Vector2f thisPosition = body.getPosition();
+  sf::Vector2f thisHalfSize = body.getSize() / 2.0f;
 
   float deltaX = otherPosition.x - thisPosition.x;
   float deltaY = otherPosition.y - thisPosition.y;
@@ -29,16 +33,14 @@ bool ColliderManager::CheckCollision(const ColliderManager &other, sf::Vector2f 
     {
       if (deltaX > 0.0f)
       {
-        // Move(intersectX * (1.0f - push), 0.0f);
-        other.Move(-intersectX * push, 0.0f);
+        otherBody.move(-intersectX * push, 0.0f);
 
         direction.x = 1.0f;
         direction.y = 0.0f;
       }
       else
       {
-        // Move(-intersectX * (1.0f - push), 0.0f);
-        other.Move(intersectX * push, 0.0f);
+        otherBody.move(intersectX * push, 0.0f);
 
         direction.x = -1.0f;
         direction.y = 0.0f;
@@ -48,16 +50,14 @@ bool ColliderManager::CheckCollision(const ColliderManager &other, sf::Vector2f 
     {
       if (deltaY > 0.0f)
       {
-        // Move(0.0f, intersectY * (1.0f - push));
-        other.Move(0.0f, -intersectY * push);
+        otherBody.move(0.0f, -intersectY * push);
 
         direction.x = 0.0f;
         direction.y = 1.0f;
       }
       else
       {
-        // Move(0.0f, -intersectY * (1.0f - push));
-        other.Move(0.0f, intersectY * push);
+        otherBody.move(0.0f, intersectY * push);
 
         direction.x = 0.0f;
         direction.y = -1.0f;
@@ -70,12 +70,12 @@ bool ColliderManager::CheckCollision(const ColliderManager &other, sf::Vector2f 
   return false;
 }
 
-bool ColliderManager::CheckOnHeadCollision(const ColliderManager &other, sf::Vector2f &direction, float push)
+bool ColliderManager::CheckOnHeadCollision(sf::RectangleShape &body, sf::RectangleShape &otherBody)
 {
-  sf::Vector2f otherPosition = other.GetPosition();
-  sf::Vector2f otherHalfSize = other.GetHalfSize();
-  sf::Vector2f thisPosition = GetPosition();
-  sf::Vector2f thisHalfSize = GetHalfSize();
+  sf::Vector2f otherPosition = otherBody.getPosition();
+  sf::Vector2f otherHalfSize = otherBody.getSize() / 2.0f;
+  sf::Vector2f thisPosition = body.getPosition();
+  sf::Vector2f thisHalfSize = body.getSize() / 2.0f;
 
   float deltaY = abs(otherPosition.y - thisPosition.y);
   float xThisBegin = abs(thisPosition.x - thisHalfSize.x);
@@ -84,12 +84,40 @@ bool ColliderManager::CheckOnHeadCollision(const ColliderManager &other, sf::Vec
   float sizeY = abs(otherHalfSize.y + thisHalfSize.y);
   float copm = deltaY - sizeY;
 
-  //cout <<"copm"<< copm << endl;
-  //cout <<"other position" <<otherPosition.x << "this Begin" << xThisBegin << endl;
-
   if (otherPosition.x >= xThisBegin && otherPosition.x <= xThisEnd && copm <= 0)
     return true;
 
   else
     return false;
+}
+
+void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Obstacle *> platforms, list<Character *> characters)
+{
+  sf::Vector2f direction;
+  list<Obstacle *>::iterator itPlatforms;
+  list<Character *>::iterator itCharacters;
+
+  for (itPlatforms = platforms.begin(); itPlatforms != platforms.end(); itPlatforms++)
+    for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
+      if (CheckCollision((*(*itPlatforms)->GetBody()), (*(*itCharacters)->GetBody()), direction, 1.0f))
+        (*itCharacters)->OnCollision(direction);
+
+  for (int i = 0; i < entities->GetSize(); i++)
+    for (int j = 0; j < entities->GetSize(); j++)
+      if (i != j && !(*entities)[i]->GetIsObstacle() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
+        (*entities)[j]->OnCollision(direction);
+}
+
+void ColliderManager::CheckPlayerOnHead(list<Character *> characters, Player *playerOne, Player *playerTwo)
+{
+  list<Character *>::iterator itCharacters;
+
+  for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
+    if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerOne->GetBody(), (*(*itCharacters)->GetBody())))
+      static_cast<Enemy *>((*itCharacters))->SetStunned();
+
+  if (playerTwo)
+    for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
+      if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerTwo->GetBody(), (*(*itCharacters)->GetBody())))
+        static_cast<Enemy *>((*itCharacters))->SetStunned();
 }
