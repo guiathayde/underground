@@ -23,6 +23,6 @@ public:
 
 	DynamicEntity *operator[](int x) { return ListEntities[x]; }
 
-	int GetSize(){return ListEntities.GetSize();}
-	DynamicEntityList *GetList() { return this;}
+	int GetSize() { return ListEntities.GetSize(); }
+	DynamicEntityList *GetList() { return this; }
 };

@@ -13,9 +13,8 @@ GraphicManager::GraphicManager()
 
 GraphicManager::~GraphicManager()
 {
-  delete(window);
-  delete(view);
-
+  delete (window);
+  delete (view);
 }
 
 void GraphicManager::ResizeView()
@@ -73,12 +72,7 @@ void GraphicManager::LoadTexture()
   sf::Texture *spikesTexture = new sf::Texture();
   if (!spikesTexture->loadFromFile("assets/background/spikes.png"))
     cerr << "Erro loading spikes texture" << endl;
-  InsertTexture("spikesTexture", spikesTexture);
-
-  sf::Texture *sewerBackground = new sf::Texture();
-  if (!sewerBackground->loadFromFile("assets/background/levelOne.png"))
-    cerr << "Erro loading sewerBackground texture" << endl;
-  InsertTexture("LevelSewerBackground", sewerBackground);
+  InsertTexture("spikes", spikesTexture);
 
   sf::Texture *enemyMeleeTexture = new sf::Texture();
   if (!enemyMeleeTexture->loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
@@ -92,8 +86,43 @@ void GraphicManager::LoadTexture()
 
   sf::Texture *sewerBackgroundTexture = new sf::Texture();
   if (!sewerBackgroundTexture->loadFromFile("assets/background/levelOne.png"))
-    cerr << "Erro loading backgroundTexture" << endl;
+    cerr << "Erro loading sewerBackgroundTexture" << endl;
   InsertTexture("levelOne", sewerBackgroundTexture);
+
+  sf::Texture *subwayBackgroundTexture = new sf::Texture();
+  if (!subwayBackgroundTexture->loadFromFile("assets/background/levelTwo.png"))
+    cerr << "Erro loading subwayBackgroundTexture" << endl;
+  InsertTexture("levelTwo", subwayBackgroundTexture);
+
+  sf::Texture *airPlatformTexture = new sf::Texture();
+  if (!airPlatformTexture->loadFromFile("assets/background/air_platform.png"))
+    cerr << "Erro loading airPlatformTexture" << endl;
+  InsertTexture("airPlatform", airPlatformTexture);
+
+  sf::Texture *wallPlatformTexture = new sf::Texture();
+  if (!wallPlatformTexture->loadFromFile("assets/background/wall_platform.png"))
+    cerr << "Erro loading wallPlatformTexture" << endl;
+  InsertTexture("wallPlatform", wallPlatformTexture);
+
+  sf::Texture *doorTexture = new sf::Texture();
+  if (!doorTexture->loadFromFile("assets/background/door.png"))
+    cerr << "Erro loading doorTexture" << endl;
+  InsertTexture("door", doorTexture);
+
+  sf::Texture *trapPlatformTexture = new sf::Texture();
+  if (!trapPlatformTexture->loadFromFile("assets/background/trap_platform.png"))
+    cerr << "Erro loading trapPlatformTexture" << endl;
+  InsertTexture("trapPlatform", trapPlatformTexture);
+
+  sf::Texture *stair2Texture = new sf::Texture();
+  if (!stair2Texture->loadFromFile("assets/background/stair2.png"))
+    cerr << "Erro loading stair2Texture" << endl;
+  InsertTexture("stair2", stair2Texture);
+
+  sf::Texture *spikesFisrtSubway = new sf::Texture();
+  if (!spikesFisrtSubway->loadFromFile("assets/background/spikes_first_subway.png"))
+    cerr << "Erro loading spikesFisrtSubway" << endl;
+  InsertTexture("spikesFisrtSubway", spikesFisrtSubway);
 }
 
 void GraphicManager::Draw()

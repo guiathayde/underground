@@ -1,5 +1,7 @@
 #include "stdfx.h"
 #include "Game.h"
+#include "LevelSewer.h"
+#include "LevelSubway.h"
 
 Game::Game()
 {
@@ -13,7 +15,7 @@ Game::~Game()
   delete (graphicManager);
   delete (mainMenu);
   delete (pauseMenu);
-  delete(level);
+  delete (level);
 }
 
 void Game::Execute()
@@ -54,7 +56,7 @@ void Game::Execute()
           int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
-            LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
+            LevelSubway *levelsewer = new LevelSubway(graphicManager, colliderManager);
             levelsewer->Initialize();
             graphicManager->SetPlayerOne(levelsewer->GetPlayer());
             graphicManager->SetCurrentLevel(levelsewer);

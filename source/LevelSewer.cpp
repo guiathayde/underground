@@ -67,7 +67,7 @@ void LevelSewer::Initialize()
 
   /* --------------------------------------------------------- SetUp Spikes --------------------------------------------------------- */
 
-  static sf::Texture *spikesTexture = graphicManager->GetTexture("spikesTexture");
+  static sf::Texture *spikesTexture = graphicManager->GetTexture("spikes");
 
   Platform *spikes1 = new Platform(spikesTexture, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(300.0f, basePlatformPosition.y - (static_cast<float>(spikesTexture->getSize().y) / 2.0f)));
   Platform *spikes2 = new Platform(spikesTexture, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(364.0f, basePlatformPosition.y - (static_cast<float>(spikesTexture->getSize().y) / 2.0f)));
