@@ -3,7 +3,7 @@
 
 Chapters::Chapters(GraphicManager *graphicManager) : Menu(graphicManager)
 {
-  selectedItemIndex = 0;
+  selectedItemIndex = 1;
   isPlaying = false;
   isPaused = false;
   isChapters = false;
@@ -91,7 +91,7 @@ void Chapters::Draw(sf::RenderWindow *window, sf::View *view)
 
 void Chapters::MoveUp()
 {
-  if (selectedItemIndex - 1 >= 0)
+  if (selectedItemIndex - 1 >= 1)
   {
     menu[selectedItemIndex].setFillColor(sf::Color::Black);
     selectedItemIndex--;
