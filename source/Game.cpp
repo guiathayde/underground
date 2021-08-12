@@ -7,8 +7,10 @@
 Game::Game()
 {
   graphicManager = new GraphicManager();
-  mainMenu = new MainMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
-  pauseMenu = new PauseMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
+  mainMenu = new MainMenu(graphicManager);
+  pauseMenu = new PauseMenu(graphicManager);
+  chapters = new Chapters(graphicManager);
+  level = NULL;
 }
 
 Game::~Game()
@@ -16,6 +18,7 @@ Game::~Game()
   delete (graphicManager);
   delete (mainMenu);
   delete (pauseMenu);
+  delete (chapters);
   delete (level);
 }
 
@@ -52,23 +55,60 @@ void Game::Execute()
           pauseMenu->SetPause(false);
         else if (event.key.code == sf::Keyboard::Escape)
           pauseMenu->SetPause(true);
+        else if (chapters->GetChapters())
+        {
+          int numberAction = chapters->SelectItem(event, NULL);
+          if (numberAction == 0)
+          {
+            chapters->SetChapters(false);
+          }
+          else if (numberAction == 1)
+          {
+            LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
+            levelSewer->Initialize();
+            graphicManager->SetPlayerOne(levelSewer->GetPlayer());
+            graphicManager->SetCurrentLevel(levelSewer);
+            level = levelSewer;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
+          }
+          else if (numberAction == 2)
+          {
+            LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
+            levelSubway->Initialize();
+            graphicManager->SetPlayerOne(levelSubway->GetPlayer());
+            graphicManager->SetCurrentLevel(levelSubway);
+            level = levelSubway;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
+          }
+          else if (numberAction == 3)
+          {
+            LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
+            levelOverground->Initialize();
+            graphicManager->SetPlayerOne(levelOverground->GetPlayer());
+            graphicManager->SetCurrentLevel(levelOverground);
+            level = levelOverground;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
+          }
+        }
         else if (!mainMenu->GetPlaying())
         {
           int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
-            LevelOverground *levelsewer = new LevelOverground(graphicManager, colliderManager);
-            levelsewer->Initialize();
-            graphicManager->SetPlayerOne(levelsewer->GetPlayer());
-            graphicManager->SetCurrentLevel(levelsewer);
+            LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
+            levelSewer->Initialize();
+            graphicManager->SetPlayerOne(levelSewer->GetPlayer());
+            graphicManager->SetCurrentLevel(levelSewer);
             mainMenu->SetPlaying(true);
-
-            level = levelsewer;
+            level = levelSewer;
           }
 
           else if (numberAction == 2)
           {
-            // chapters
+            chapters->SetChapters(true);
           }
           else if (numberAction == 3)
           {
@@ -99,28 +139,34 @@ void Game::Execute()
         break;
       }
     }
+
     if (graphicManager)
+    {
       graphicManager->GetWindow()->clear();
 
-    if (pauseMenu->GetPause() && mainMenu->GetPlaying())
-    {
-      graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
-      pauseMenu->Draw(graphicManager->GetWindow(), graphicManager->GetView());
-    }
-    else if (mainMenu->GetPlaying())
-    {
-      level->CheckCollison();
-      level->Update(deltaTime);
-      level->Draw(*graphicManager->GetWindow());
-      graphicManager->SetViewCenter();
-    }
-    else if (!mainMenu->GetPlaying() && graphicManager)
-    {
-      graphicManager->GetView()->setCenter(mainMenu->GetCenterPosition());
-      mainMenu->Draw(graphicManager->GetWindow(), NULL);
-    }
-    if (graphicManager)
-    {
+      if (pauseMenu->GetPause() && mainMenu->GetPlaying())
+      {
+        graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
+        pauseMenu->Draw(graphicManager->GetWindow(), graphicManager->GetView());
+      }
+      else if (mainMenu->GetPlaying())
+      {
+        level->CheckCollison();
+        level->Update(deltaTime);
+        level->Draw(*graphicManager->GetWindow());
+        graphicManager->SetViewCenter();
+      }
+      else if (!mainMenu->GetPlaying() && chapters->GetChapters())
+      {
+        graphicManager->GetView()->setCenter(chapters->GetCenterPosition());
+        chapters->Draw(graphicManager->GetWindow(), graphicManager->GetView());
+      }
+      else if (!mainMenu->GetPlaying() && !chapters->GetChapters())
+      {
+        graphicManager->GetView()->setCenter(mainMenu->GetCenterPosition());
+        mainMenu->Draw(graphicManager->GetWindow(), NULL);
+      }
+
       graphicManager->GetWindow()->setView(*graphicManager->GetView());
       graphicManager->GetWindow()->display();
     }

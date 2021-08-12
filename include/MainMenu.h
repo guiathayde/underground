@@ -1,23 +1,24 @@
 #pragma once
-#include "stdfx.h"
 
-#define MAINMENU_MAX_ITEMS 5
+#include "stdfx.h"
 #include "Menu.h"
 
+#define MAINMENU_MAX_ITEMS 5
+
+class GraphicManager;
 class MainMenu : public Menu
 {
 private:
-  
   sf::Font titleFont;
   sf::Font itemFont;
   sf::RectangleShape background;
   sf::Text menu[MAINMENU_MAX_ITEMS];
 
 public:
-  MainMenu(float width, float height);
+  MainMenu(GraphicManager *graphicManager);
   ~MainMenu();
 
-  void Draw(sf::RenderWindow *window,sf::View *view);
+  void Draw(sf::RenderWindow *window, sf::View *view);
 
   void MoveUp();
   void MoveDown();

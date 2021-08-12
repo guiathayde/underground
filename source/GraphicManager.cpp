@@ -64,6 +64,26 @@ sf::Texture *GraphicManager::GetTexture(const char *name)
 
 void GraphicManager::LoadTexture()
 {
+  sf::Texture *mainMenuBackgroundTexture = new sf::Texture();
+  if (!mainMenuBackgroundTexture->loadFromFile("assets/background/mainMenuBackground.png"))
+    cerr << "Error loading mainMenuBackgroundTexture" << endl;
+  InsertTexture("mainMenuBackgroundTexture", mainMenuBackgroundTexture);
+
+  sf::Texture *levelOneThumbTexture = new sf::Texture();
+  if (!levelOneThumbTexture->loadFromFile("assets/background/levelOneThumb.png"))
+    cerr << "Error loading levelOneThumbTexture" << endl;
+  InsertTexture("levelOneThumbTexture", levelOneThumbTexture);
+
+  sf::Texture *levelTwoThumbTexture = new sf::Texture();
+  if (!levelTwoThumbTexture->loadFromFile("assets/background/levelTwoThumb.png"))
+    cerr << "Error loading levelTwoThumbTexture" << endl;
+  InsertTexture("levelTwoThumbTexture", levelTwoThumbTexture);
+
+  sf::Texture *levelThreeThumbTexture = new sf::Texture();
+  if (!levelThreeThumbTexture->loadFromFile("assets/background/levelThreeThumb.png"))
+    cerr << "Error loading levelThreeThumbTexture" << endl;
+  InsertTexture("levelThreeThumbTexture", levelThreeThumbTexture);
+
   sf::Texture *basePlataformTexture = new sf::Texture();
   if (!basePlataformTexture->loadFromFile("assets/background/Plataforms/teste.png"))
     cerr << "Error loading platform texture" << endl;

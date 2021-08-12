@@ -3,14 +3,19 @@ using namespace std;
 
 #include "PauseMenu.h"
 #include "Level.h"
+#include "GraphicManager.h"
 
-PauseMenu::PauseMenu(float width, float height) : Menu(width, height)
+PauseMenu::PauseMenu(GraphicManager *graphicManager) : Menu(graphicManager)
 {
   selectedItemIndex = 0;
+  isPlaying = false;
   isPaused = false;
+  isChapters = false;
 
-  centerPosition.x = width / 2;
-  centerPosition.y = height / 2;
+  sf::Vector2f windowSize = static_cast<sf::Vector2f>(graphicManager->GetWindow()->getSize());
+
+  centerPosition.x = windowSize.x / 2.0f;
+  centerPosition.y = windowSize.y / 2.0f;
 
   if (!font.loadFromFile("assets/fonts/DarkMage.ttf"))
     cerr << "Error loading DarkMage font!" << endl;
@@ -87,6 +92,6 @@ int PauseMenu::SelectItem(sf::Event event, Level *level)
   default:
     return -1;
   }
-  
+
   return -1;
 }

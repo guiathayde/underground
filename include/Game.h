@@ -4,6 +4,7 @@
 #include "ColliderManager.h"
 #include "MainMenu.h"
 #include "PauseMenu.h"
+#include "Chapters.h"
 
 class Game
 {
@@ -13,6 +14,7 @@ private:
 
   MainMenu *mainMenu;
   PauseMenu *pauseMenu;
+  Chapters *chapters;
   Level *level;
 
 public:
