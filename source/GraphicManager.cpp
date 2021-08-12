@@ -119,10 +119,15 @@ void GraphicManager::LoadTexture()
     cerr << "Erro loading stair2Texture" << endl;
   InsertTexture("stair2", stair2Texture);
 
-  sf::Texture *spikesFisrtSubway = new sf::Texture();
-  if (!spikesFisrtSubway->loadFromFile("assets/background/spikes_first_subway.png"))
-    cerr << "Erro loading spikesFisrtSubway" << endl;
-  InsertTexture("spikesFisrtSubway", spikesFisrtSubway);
+  sf::Texture *overgroundBackgroundTexture = new sf::Texture();
+  if (!overgroundBackgroundTexture->loadFromFile("assets/background/levelThree.png"))
+    cerr << "Erro loading overgroundBackgroundTexture" << endl;
+  InsertTexture("levelThree", overgroundBackgroundTexture);
+
+  sf::Texture *stair3Texture = new sf::Texture();
+  if (!stair3Texture->loadFromFile("assets/background/stair3.png"))
+    cerr << "Erro loading stair2Texture" << endl;
+  InsertTexture("stair3", stair3Texture);
 }
 
 void GraphicManager::Draw()

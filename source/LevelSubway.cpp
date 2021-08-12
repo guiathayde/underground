@@ -42,14 +42,13 @@ void LevelSubway::Initialize()
   sf::Texture *airPlatformTexture = graphicManager->GetTexture("airPlatform");
   sf::Texture *trapPlatformTexture = graphicManager->GetTexture("trapPlatform");
   sf::Texture *spikesTexture = graphicManager->GetTexture("spikes");
-  sf::Texture *spikesFisrtSubwayTexture = graphicManager->GetTexture("spikesFisrtSubway");
   sf::Texture *stairTexture = graphicManager->GetTexture("stair2");
   sf::Texture *wallPlatformTexture = graphicManager->GetTexture("wallPlatform");
   sf::Texture *doorTexture = graphicManager->GetTexture("door");
 
   /* ------------------------------------------------------------------------------------------------------------------------------------- */
 
-  /* --------------------------------------------------------- SetUp base platform and limits -------------------------------------------- */
+  /* --------------------------------------------------------- SetUp base platforms ------------------------------------------------------ */
 
   Platform *airPlatformBase = new Platform(airPlatformTexture, static_cast<sf::Vector2f>(airPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
   Platform *trapPlatformBase = new Platform(trapPlatformTexture, static_cast<sf::Vector2f>(trapPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
@@ -240,6 +239,11 @@ void LevelSubway::Initialize()
   platforms.push_back(door);
 
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
+
+  delete airPlatformBase;
+  delete trapPlatformBase;
+  delete spikesBase;
+  delete wallPlatformBase;
 
   InitializeCharacters();
 }

@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "LevelSewer.h"
 #include "LevelSubway.h"
+#include "LevelOverground.h"
 
 Game::Game()
 {
@@ -56,7 +57,7 @@ void Game::Execute()
           int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
-            LevelSubway *levelsewer = new LevelSubway(graphicManager, colliderManager);
+            LevelOverground *levelsewer = new LevelOverground(graphicManager, colliderManager);
             levelsewer->Initialize();
             graphicManager->SetPlayerOne(levelsewer->GetPlayer());
             graphicManager->SetCurrentLevel(levelsewer);
