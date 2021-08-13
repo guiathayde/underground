@@ -4,10 +4,11 @@
 #include "Platform.h"
 #include "WelderEnemy.h"
 #include "HollowHatEnemy.h"
+#include "Item.h"
 
 LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
-  enemiesNum =2;
+  enemiesNum = 2;
 }
 
 LevelSewer::~LevelSewer()
@@ -16,13 +17,10 @@ LevelSewer::~LevelSewer()
 
 void LevelSewer::InitializeCharacters()
 {
-  cout << "Inicializou characters" <<endl;
-  Player *p = NULL;
-  p = new Player(graphicManager, sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
-  playerOne = p;
-  characters.push_back(p);
-  entities->InsertDynamicEntity(p);
-  
+  Player *playerOne = new Player(graphicManager, sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+  characters.push_back(playerOne);
+  entities->InsertDynamicEntity(playerOne);
+  SetPlayerOne(playerOne);
 
   for (int i = 0; i < enemiesNum; i++)
   {
@@ -37,22 +35,30 @@ void LevelSewer::InitializeCharacters()
     WelderEnemy *aux1 = NULL;
     HollowHatEnemy *aux2 = NULL;
 
-    aux1 = new WelderEnemy(graphicManager, enemyPosistion,entities);
+    aux1 = new WelderEnemy(graphicManager, enemyPosistion, entities);
     characters.push_back(aux1);
     entities->InsertDynamicEntity(aux1);
 
     aux2 = new HollowHatEnemy(graphicManager, enemyPosistion1);
     characters.push_back(aux2);
     entities->InsertDynamicEntity(aux2);
-
   }
 }
 
 void LevelSewer::Initialize()
 {
-
+  /* --------------------------------------------------------- Getting textures --------------------------------------------------------- */
 
   sf::Texture *backgroundTexture = graphicManager->GetTexture("levelOne");
+  sf::Texture *plataformTexture = graphicManager->GetTexture("basePlatformTexture");
+  sf::Texture *airPlatformTexture = graphicManager->GetTexture("airPlatform");
+  sf::Texture *spikesTexture = graphicManager->GetTexture("spikes");
+  sf::Texture *stairTexture = graphicManager->GetTexture("stair1");
+  sf::Texture *wallPlatformTexture = graphicManager->GetTexture("wallPlatform");
+  sf::Texture *doorTexture = graphicManager->GetTexture("door");
+
+  /* ------------------------------------------------------------------------------------------------------------------------------------- */
+
   sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
   sf::Vector2f backgroundSize;
   backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
@@ -60,7 +66,6 @@ void LevelSewer::Initialize()
   background.setSize(backgroundSize);
   background.setTexture(backgroundTexture);
 
- 
   sf::Vector2f basePlatformPosition;
   basePlatformPosition.x = 0.0f;
   basePlatformPosition.y = static_cast<float>(windowSize.y);
@@ -77,7 +82,6 @@ void LevelSewer::Initialize()
   platforms.push_back(limitBorderYRight);
 
   /* --------------------------------------------------------- SetUp Spikes --------------------------------------------------------- */
-
 
   //Platform *spikes1 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(300.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
   //Platform *spikes2 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(364.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
@@ -106,7 +110,6 @@ void LevelSewer::Initialize()
   platforms.push_back(spikes8);
   */
   /* --------------------------------------------------------- SetUp First Air Platform --------------------------------------------------------- */
-
 
   Platform *airPlatform1 = new Platform(graphicManager, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(748.0f, basePlatformPosition.y - 50.0f));
   Platform *airPlatform2 = new Platform(graphicManager, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(794.0f, basePlatformPosition.y - 50.0f));
@@ -184,11 +187,11 @@ void LevelSewer::Initialize()
   entities->InsertDynamicEntity(airPlatform18);
   platforms.push_back(airPlatform18);
 
-
-  Platform *stair = new Platform(graphicManager, sf::Vector2f(35.0f, 39.0f), sf::Vector2f(2581.5f, basePlatformPosition.y - 372.0f));
+  Item *stair = new Item(stairTexture, sf::Vector2f(35.0f, 39.0f), sf::Vector2f(2581.5f, basePlatformPosition.y - 372.0f));
+  stair->SetStair(true);
 
   entities->InsertDynamicEntity(stair);
-  platforms.push_back(stair);
+  items.push_back(stair);
 
   /* --------------------------------------------------------- SetUp Spikes and AirPlatform --------------------------------------------------------- 
 
@@ -335,16 +338,11 @@ void LevelSewer::Initialize()
   entities->InsertDynamicEntity(airPlatform41);
   platforms.push_back(airPlatform41);
 
-  static sf::Texture doorTexture;
-  if (!doorTexture.loadFromFile("assets/background/door.png"))
-    cerr << "Error loading door texture" << endl;
-
-  Platform *door = new Platform(graphicManager, sf::Vector2f(69.0f, 113.0f), sf::Vector2f(4931.0f, basePlatformPosition.y - 424.5f));
+  Item *door = new Item(doorTexture, sf::Vector2f(69.0f, 113.0f), sf::Vector2f(4931.0f, basePlatformPosition.y - 424.5f));
+  door->SetDoor(true);
 
   entities->InsertDynamicEntity(door);
-  platforms.push_back(door);
-
-  /* --------------------------------------------------------- SetUp Enemies Position --------------------------------------------------------- */
+  items.push_back(door);
 
   InitializeCharacters();
 }

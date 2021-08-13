@@ -9,25 +9,33 @@
 
 class Player;
 class Obstacle;
-
+class Item;
+class GraphicManager;
+class ColliderManager;
 class Level : public Entity
 {
 protected:
   int level;
   int n_entities;
+  int score;
+
+  sf::Font font;
+  sf::Text scoreText[2];
 
   DynamicEntityList *entities;
   list<Character *> characters;
   list<Obstacle *> platforms;
+  list<Item *> items;
 
   Player *playerOne;
-  
+  Player *playerTwo;
 
-  ColliderManager *colliderManager;  
+  ColliderManager *colliderManager;
+  GraphicManager *graphicManager;
 
   sf::RectangleShape background;
   sf::View *view;
-  sf::RenderWindow* window;
+  sf::RenderWindow *window;
 
   float sizeX;
 
@@ -40,14 +48,14 @@ public:
   void Update(float deltaTime);
   void CheckCollison();
   void Draw(sf::RenderWindow &window);
-  
-  Player *GetPlayer(){return playerOne;};
-  void SetPlayer(Player *p) { playerOne = p; };
-  
+
+  Player *GetPlayer() { return playerOne; };
+  void SetPlayerOne(Player *p) { playerOne = p; };
+  void SetPlayerTwo(Player *p) { playerTwo = p; };
+
   void SetViewCenter();
 
   void ClearAll();
 
   virtual float GetSizeX() { return sizeX; }
-
 };

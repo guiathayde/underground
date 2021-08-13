@@ -18,5 +18,7 @@ public:
   void Update(float deltaTime, Character *p);
   bool SeePlayer(Player p);
   float Attack(Player p);
+
   void SetStunned() { isStunned = true; };
+  bool GetStunned() { return isStunned; }
 };

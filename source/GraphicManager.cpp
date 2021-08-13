@@ -1,3 +1,4 @@
+#include "stdfx.h"
 #include "GraphicManager.h"
 #include "Level.h"
 #include "Player.h"
@@ -12,9 +13,8 @@ GraphicManager::GraphicManager()
 
 GraphicManager::~GraphicManager()
 {
-  delete(window);
-  delete(view);
-
+  delete (window);
+  delete (view);
 }
 
 void GraphicManager::InsertTexture(const char *name, sf::Texture *texture)
@@ -42,6 +42,26 @@ void GraphicManager::ResizeView()
 
 void GraphicManager::LoadTexture()
 {
+  sf::Texture *mainMenuBackgroundTexture = new sf::Texture();
+  if (!mainMenuBackgroundTexture->loadFromFile("assets/background/mainMenuBackground.png"))
+    cerr << "Error loading mainMenuBackgroundTexture" << endl;
+  InsertTexture("mainMenuBackgroundTexture", mainMenuBackgroundTexture);
+
+  sf::Texture *levelOneThumbTexture = new sf::Texture();
+  if (!levelOneThumbTexture->loadFromFile("assets/background/levelOneThumb.png"))
+    cerr << "Error loading levelOneThumbTexture" << endl;
+  InsertTexture("levelOneThumbTexture", levelOneThumbTexture);
+
+  sf::Texture *levelTwoThumbTexture = new sf::Texture();
+  if (!levelTwoThumbTexture->loadFromFile("assets/background/levelTwoThumb.png"))
+    cerr << "Error loading levelTwoThumbTexture" << endl;
+  InsertTexture("levelTwoThumbTexture", levelTwoThumbTexture);
+
+  sf::Texture *levelThreeThumbTexture = new sf::Texture();
+  if (!levelThreeThumbTexture->loadFromFile("assets/background/levelThreeThumb.png"))
+    cerr << "Error loading levelThreeThumbTexture" << endl;
+  InsertTexture("levelThreeThumbTexture", levelThreeThumbTexture);
+
   sf::Texture *basePlataformTexture = new sf::Texture();
   if (!basePlataformTexture->loadFromFile("assets/background/Plataforms/teste.png"))
     cerr << "Error loading platform texture" << endl;
@@ -50,12 +70,7 @@ void GraphicManager::LoadTexture()
   sf::Texture *spikesTexture = new sf::Texture();
   if (!spikesTexture->loadFromFile("assets/background/spikes.png"))
     cerr << "Erro loading spikes texture" << endl;
-  InsertTexture("spikesTexture", spikesTexture);
-
-  sf::Texture *sewerBackground = new sf::Texture();
-  if (!sewerBackground->loadFromFile("assets/background/levelOne.png"))
-    cerr << "Erro loading sewerBackground texture" << endl;
-  InsertTexture("LevelSewerBackground", sewerBackground);
+  InsertTexture("spikes", spikesTexture);
 
   sf::Texture *enemyMeleeTexture = new sf::Texture();
   if (!enemyMeleeTexture->loadFromFile("assets/characters/EnemyMelee/enemy_melee.png"))
@@ -74,21 +89,66 @@ void GraphicManager::LoadTexture()
 
   sf::Texture *sewerBackgroundTexture = new sf::Texture();
   if (!sewerBackgroundTexture->loadFromFile("assets/background/levelOne.png"))
-    cerr << "Erro loading sewrbackgroundTexture" << endl;
+    cerr << "Erro loading sewerBackgroundTexture" << endl;
   InsertTexture("levelOne", sewerBackgroundTexture);
 
+  sf::Texture *subwayBackgroundTexture = new sf::Texture();
+  if (!subwayBackgroundTexture->loadFromFile("assets/background/levelTwo.png"))
+    cerr << "Erro loading subwayBackgroundTexture" << endl;
+  InsertTexture("levelTwo", subwayBackgroundTexture);
+
+  sf::Texture *airPlatformTexture = new sf::Texture();
+  if (!airPlatformTexture->loadFromFile("assets/background/air_platform.png"))
+    cerr << "Erro loading airPlatformTexture" << endl;
+  InsertTexture("airPlatform", airPlatformTexture);
+
+  sf::Texture *wallPlatformTexture = new sf::Texture();
+  if (!wallPlatformTexture->loadFromFile("assets/background/wall_platform.png"))
+    cerr << "Erro loading wallPlatformTexture" << endl;
+  InsertTexture("wallPlatform", wallPlatformTexture);
+
+  sf::Texture *doorTexture = new sf::Texture();
+  if (!doorTexture->loadFromFile("assets/background/door.png"))
+    cerr << "Erro loading doorTexture" << endl;
+  InsertTexture("door", doorTexture);
+
+  sf::Texture *trapPlatformTexture = new sf::Texture();
+  if (!trapPlatformTexture->loadFromFile("assets/background/trap_platform.png"))
+    cerr << "Erro loading trapPlatformTexture" << endl;
+  InsertTexture("trapPlatform", trapPlatformTexture);
+
+  sf::Texture *stair1Texture = new sf::Texture();
+  if (!stair1Texture->loadFromFile("assets/background/stair1.png"))
+    cerr << "Erro loading stair1Texture" << endl;
+  InsertTexture("stair1", stair1Texture);
+
+  sf::Texture *stair2Texture = new sf::Texture();
+  if (!stair2Texture->loadFromFile("assets/background/stair2.png"))
+    cerr << "Erro loading stair2Texture" << endl;
+  InsertTexture("stair2", stair2Texture);
+
+  sf::Texture *overgroundBackgroundTexture = new sf::Texture();
+  if (!overgroundBackgroundTexture->loadFromFile("assets/background/levelThree.png"))
+    cerr << "Erro loading overgroundBackgroundTexture" << endl;
+  InsertTexture("levelThree", overgroundBackgroundTexture);
+
+  sf::Texture *stair3Texture = new sf::Texture();
+  if (!stair3Texture->loadFromFile("assets/background/stair3.png"))
+    cerr << "Erro loading stair2Texture" << endl;
+  InsertTexture("stair3", stair3Texture);
+
   sf::Texture *backgroundTexture = new sf::Texture();
-  if(!backgroundTexture->loadFromFile("assets/background/mainMenuBackground.png"));
-    cerr << "Error loading mainmenu background texture"<<endl;
+  if (!backgroundTexture->loadFromFile("assets/background/mainMenuBackground.png"))
+    cerr << "Error loading mainmenu background texture" << endl;
   InsertTexture("backgroundTexture", backgroundTexture);
 
-  sf::Texture* platform = new sf::Texture();
-  if(!platform->loadFromFile("assets/background/air_platform.png"))
-    cerr <<"Error loading platform texture"<<endl;
+  sf::Texture *platform = new sf::Texture();
+  if (!platform->loadFromFile("assets/background/air_platform.png"))
+    cerr << "Error loading platform texture" << endl;
   InsertTexture("platform", platform);
 
-  sf::Texture* projectile = new sf::Texture();
-  if(!projectile->loadFromFile("assets/background/projectile.png"))
-    cerr << "Error loading pojectile" <<endl;
+  sf::Texture *projectile = new sf::Texture();
+  if (!projectile->loadFromFile("assets/background/projectile.png"))
+    cerr << "Error loading pojectile" << endl;
   InsertTexture("projectile", projectile);
 }

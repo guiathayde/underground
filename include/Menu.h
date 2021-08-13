@@ -3,20 +3,20 @@
 #include "stdfx.h"
 #include "Entity.h"
 
-
+class GraphicManager;
 class Level;
-class Menu: public Entity
+class Menu : public Entity
 {
 protected:
-  
   int selectedItemIndex;
   bool isPlaying;
   bool isPaused;
+  bool isChapters;
 
   sf::Vector2f centerPosition;
 
 public:
-  Menu(GraphicManager* graphicManager,float width, float height);
+  Menu(GraphicManager *graphicManager);
   ~Menu();
 
   virtual void Draw(sf::RenderWindow *window, sf::View *view) = 0;
@@ -32,6 +32,9 @@ public:
 
   void SetPause(bool state) { isPaused = state; }
   bool GetPause() { return isPaused; }
+
+  void SetChapters(bool state) { isChapters = state; }
+  bool GetChapters() { return isChapters; }
 
   sf::Vector2f GetCenterPosition() { return centerPosition; }
 };
