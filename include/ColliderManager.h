@@ -18,6 +18,6 @@ public:
 
   void OnCollision(sf::Vector2f direction, DynamicEntity *character);
   void CheckEntitiesCollison(DynamicEntityList *entities, list<Obstacle *> platforms, list<Character *> character);
-  void CheckPlayerOnHead(list<Character *> characters, Player *playerOne, Player *playerTwo);
+  void CheckPlayerOnHead(int &score, list<Character *> characters, Player *playerOne, Player *playerTwo);
   void CheckItemCollision(list<Item *> items, Player *playerOne, Player *playerTwo);
 };

@@ -13,6 +13,10 @@ class Level : public Entity
 protected:
   int level;
   int n_entities;
+  int score;
+
+  sf::Font font;
+  sf::Text scoreText[2];
 
   DynamicEntityList *entities;
   list<Character *> characters;

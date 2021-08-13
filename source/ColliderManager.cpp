@@ -109,18 +109,28 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
         (*entities)[j]->OnCollision(direction);
 }
 
-void ColliderManager::CheckPlayerOnHead(list<Character *> characters, Player *playerOne, Player *playerTwo)
+void ColliderManager::CheckPlayerOnHead(int &score, list<Character *> characters, Player *playerOne, Player *playerTwo)
 {
   list<Character *>::iterator itCharacters;
 
   for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
     if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerOne->GetBody(), (*(*itCharacters)->GetBody())))
+    {
+      if (!static_cast<Enemy *>((*itCharacters))->GetStunned())
+        score += 10;
+
       static_cast<Enemy *>((*itCharacters))->SetStunned();
+    }
 
   if (playerTwo)
     for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
       if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerTwo->GetBody(), (*(*itCharacters)->GetBody())))
+      {
+        if (!static_cast<Enemy *>((*itCharacters))->GetStunned())
+          score += 10;
+
         static_cast<Enemy *>((*itCharacters))->SetStunned();
+      }
 }
 
 void ColliderManager::CheckItemCollision(list<Item *> items, Player *playerOne, Player *playerTwo)

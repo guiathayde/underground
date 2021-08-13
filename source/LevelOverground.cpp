@@ -7,7 +7,7 @@
 LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
   sizeX = 5400.0f;
-  enemiesNum = 0;
+  enemiesNum = 6;
 }
 
 LevelOverground::~LevelOverground()
