@@ -5,6 +5,7 @@
 #include "DynamicEntityList.h"
 #include "Obstacle.h"
 
+class Item;
 class GraphicManager;
 class ColliderManager;
 class Level : public Entity
@@ -16,12 +17,13 @@ protected:
   DynamicEntityList *entities;
   list<Character *> characters;
   list<Obstacle *> platforms;
+  list<Item *> items;
 
   Player *playerOne;
-  
+  Player *playerTwo;
+
   ColliderManager *colliderManager;
   GraphicManager *graphicManager;
-  
 
   sf::RectangleShape background;
 
@@ -36,12 +38,12 @@ public:
   void Update(float deltaTime);
   void CheckCollison();
   void Draw(sf::RenderWindow &window);
-  
-  Player *GetPlayer(){return playerOne;};
-  void SetPlayer(Player *p) { playerOne = p; };
-  
+
+  Player *GetPlayer() { return playerOne; };
+  void SetPlayerOne(Player *p) { playerOne = p; };
+  void SetPlayerTwo(Player *p) { playerTwo = p; };
+
   void ClearAll();
 
   virtual float GetSizeX() { return sizeX; }
-
 };

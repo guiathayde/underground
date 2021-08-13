@@ -2,6 +2,7 @@
 #include "GraphicManager.h"
 #include "Enemy.h"
 #include "Platform.h"
+#include "Item.h"
 
 LevelSubway::LevelSubway(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
@@ -15,10 +16,10 @@ LevelSubway::~LevelSubway()
 
 void LevelSubway::InitializeCharacters()
 {
-  Player *p = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
-  playerOne = p;
-  characters.push_back(p);
-  entities->InsertDynamicEntity(p);
+  Player *playerOne = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+  characters.push_back(playerOne);
+  entities->InsertDynamicEntity(playerOne);
+  SetPlayerOne(playerOne);
 
   for (int i = 0; i < enemiesNum; i++)
   {
@@ -90,7 +91,9 @@ void LevelSubway::Initialize()
   Platform *airPlatform3 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(static_cast<float>(airPlatformTexture->getSize().x) / 2.0f, basePlatformPosition.y - 450.0f));
   Platform *trapPlatform1 = new Platform(trapPlatformTexture, trapPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 6.0f, basePlatformPosition.y - 600.0f));
   Platform *airPlatform4 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f));
-  Platform *stair = new Platform(stairTexture, static_cast<sf::Vector2f>(stairTexture->getSize()), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f - airPlatform4->GetHalfSize().y - (stairTexture->getSize().y / 2.0f)));
+
+  Item *stair = new Item(stairTexture, static_cast<sf::Vector2f>(stairTexture->getSize()), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f - airPlatform4->GetHalfSize().y - (stairTexture->getSize().y / 2.0f)));
+  stair->SetStair(true);
 
   entities->InsertDynamicEntity(airPlatform1);
   platforms.push_back(airPlatform1);
@@ -102,8 +105,9 @@ void LevelSubway::Initialize()
   platforms.push_back(trapPlatform1);
   entities->InsertDynamicEntity(airPlatform4);
   platforms.push_back(airPlatform4);
+
   entities->InsertDynamicEntity(stair);
-  platforms.push_back(stair);
+  items.push_back(stair);
 
   /* ----------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -234,9 +238,10 @@ void LevelSubway::Initialize()
     platforms.push_back(wallPlatformLast);
   }
 
-  Platform *door = new Platform(doorTexture, static_cast<sf::Vector2f>(doorTexture->getSize()), sf::Vector2f(airPlatformFirst->GetPosition().x + airPlatformBase->GetHalfSize().x, wallPlatformFirst->GetPosition().y + wallPlatformBase->GetHalfSize().y - ((float)doorTexture->getSize().y / 2.0f)));
+  Item *door = new Item(doorTexture, static_cast<sf::Vector2f>(doorTexture->getSize()), sf::Vector2f(airPlatformFirst->GetPosition().x + airPlatformBase->GetHalfSize().x, wallPlatformFirst->GetPosition().y + wallPlatformBase->GetHalfSize().y - ((float)doorTexture->getSize().y / 2.0f)));
+  door->SetDoor(true);
   entities->InsertDynamicEntity(door);
-  platforms.push_back(door);
+  items.push_back(door);
 
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
 

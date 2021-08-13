@@ -134,6 +134,11 @@ void GraphicManager::LoadTexture()
     cerr << "Erro loading trapPlatformTexture" << endl;
   InsertTexture("trapPlatform", trapPlatformTexture);
 
+  sf::Texture *stair1Texture = new sf::Texture();
+  if (!stair1Texture->loadFromFile("assets/background/stair1.png"))
+    cerr << "Erro loading stair1Texture" << endl;
+  InsertTexture("stair1", stair1Texture);
+
   sf::Texture *stair2Texture = new sf::Texture();
   if (!stair2Texture->loadFromFile("assets/background/stair2.png"))
     cerr << "Erro loading stair2Texture" << endl;

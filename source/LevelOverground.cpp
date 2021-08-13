@@ -2,6 +2,7 @@
 #include "GraphicManager.h"
 #include "Enemy.h"
 #include "Platform.h"
+#include "Item.h"
 
 LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
@@ -15,10 +16,10 @@ LevelOverground::~LevelOverground()
 
 void LevelOverground::InitializeCharacters()
 {
-  Player *p = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 200.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
-  playerOne = p;
-  characters.push_back(p);
-  entities->InsertDynamicEntity(p);
+  Player *playerOne = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 200.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+  characters.push_back(playerOne);
+  entities->InsertDynamicEntity(playerOne);
+  SetPlayerOne(playerOne);
 
   for (int i = 0; i < enemiesNum; i++)
   {
@@ -187,9 +188,10 @@ void LevelOverground::Initialize()
   entities->InsertDynamicEntity(trapPlatform5);
   platforms.push_back(trapPlatform5);
 
-  Platform *stair = new Platform(stairTexture, static_cast<sf::Vector2f>(stairTexture->getSize()), sf::Vector2f(trapPlatform5->GetPosition().x, trapPlatform5->GetPosition().y - trapPlatformBase->GetHalfSize().y - ((float)stairTexture->getSize().y / 2.0f)));
+  Item *stair = new Item(stairTexture, static_cast<sf::Vector2f>(stairTexture->getSize()), sf::Vector2f(trapPlatform5->GetPosition().x, trapPlatform5->GetPosition().y - trapPlatformBase->GetHalfSize().y - ((float)stairTexture->getSize().y / 2.0f)));
+  stair->SetStair(true);
   entities->InsertDynamicEntity(stair);
-  platforms.push_back(stair);
+  items.push_back(stair);
 
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -209,9 +211,10 @@ void LevelOverground::Initialize()
     platforms.push_back(airPlatformLast);
   }
 
-  Platform *door = new Platform(doorTexture, static_cast<sf::Vector2f>(doorTexture->getSize()), sf::Vector2f(airPlatformLast->GetPosition().x - (2 * airPlatformBase->GetSize().x), airPlatformLast->GetPosition().y - airPlatformBase->GetHalfSize().y - ((float)doorTexture->getSize().y / 2.0f)));
+  Item *door = new Item(doorTexture, static_cast<sf::Vector2f>(doorTexture->getSize()), sf::Vector2f(airPlatformLast->GetPosition().x - (2 * airPlatformBase->GetSize().x), airPlatformLast->GetPosition().y - airPlatformBase->GetHalfSize().y - ((float)doorTexture->getSize().y / 2.0f)));
+  door->SetDoor(true);
   entities->InsertDynamicEntity(door);
-  platforms.push_back(door);
+  items.push_back(door);
 
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
 

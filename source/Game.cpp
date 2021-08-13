@@ -40,7 +40,6 @@ void Game::Execute()
     {
       switch (event.type)
       {
-
       case sf::Event::Closed:
         graphicManager->GetWindow()->close();
         break;
@@ -71,6 +70,7 @@ void Game::Execute()
             level = levelSewer;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
+            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
           }
           else if (numberAction == 2)
           {
@@ -81,6 +81,7 @@ void Game::Execute()
             level = levelSubway;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
+            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
           }
           else if (numberAction == 3)
           {
@@ -91,6 +92,7 @@ void Game::Execute()
             level = levelOverground;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
+            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
           }
         }
         else if (!mainMenu->GetPlaying())
@@ -105,7 +107,6 @@ void Game::Execute()
             mainMenu->SetPlaying(true);
             level = levelSewer;
           }
-
           else if (numberAction == 2)
           {
             chapters->SetChapters(true);
@@ -120,7 +121,7 @@ void Game::Execute()
           }
         }
 
-        if (pauseMenu->GetPause())
+        if (pauseMenu->GetPause() && mainMenu->GetPlaying())
         {
           int numberAction = pauseMenu->SelectItem(event, level);
           if (numberAction == 0)
@@ -129,6 +130,7 @@ void Game::Execute()
           {
             level->ClearAll();
             mainMenu->SetPlaying(false);
+            pauseMenu->SetPause(false);
           }
         }
 

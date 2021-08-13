@@ -4,7 +4,7 @@
 
 MainMenu::MainMenu(GraphicManager *graphicManager) : Menu(graphicManager)
 {
-  selectedItemIndex = 0;
+  selectedItemIndex = 1;
   isPlaying = false;
   isPaused = false;
   isChapters = false;

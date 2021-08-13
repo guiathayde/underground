@@ -3,6 +3,7 @@
 #include "DynamicEntityList.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Item.h"
 
 ColliderManager::ColliderManager()
 {
@@ -104,7 +105,7 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
 
   for (int i = 0; i < entities->GetSize(); i++)
     for (int j = 0; j < entities->GetSize(); j++)
-      if (i != j && !(*entities)[i]->GetIsObstacle() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
+      if (i != j && !(*entities)[j]->GetIsObstacle() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
         (*entities)[j]->OnCollision(direction);
 }
 
@@ -120,4 +121,19 @@ void ColliderManager::CheckPlayerOnHead(list<Character *> characters, Player *pl
     for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
       if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerTwo->GetBody(), (*(*itCharacters)->GetBody())))
         static_cast<Enemy *>((*itCharacters))->SetStunned();
+}
+
+void ColliderManager::CheckItemCollision(list<Item *> items, Player *playerOne, Player *playerTwo)
+{
+  sf::Vector2f direction;
+  list<Item *>::iterator itItems;
+
+  for (itItems = items.begin(); itItems != items.end(); itItems++)
+    if (!(*itItems)->GetCaught() && CheckCollision((*(*itItems)->GetBody()), *playerOne->GetBody(), direction, 0.1f))
+      (*itItems)->SetCaught(true);
+
+  if (playerTwo)
+    for (itItems = items.begin(); itItems != items.end(); itItems++)
+      if (CheckCollision((*(*itItems)->GetBody()), *playerTwo->GetBody(), direction, 0.1f))
+        (*itItems)->SetCaught(true);
 }
