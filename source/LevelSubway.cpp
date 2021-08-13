@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Platform.h"
 #include "Item.h"
+#include "HollowHatEnemy.h"
 
 LevelSubway::LevelSubway(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
@@ -16,7 +17,7 @@ LevelSubway::~LevelSubway()
 
 void LevelSubway::InitializeCharacters()
 {
-  Player *playerOne = new Player(graphicManager->GetTexture("playerOne"), sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+  Player *playerOne = new Player(graphicManager, sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
@@ -27,8 +28,7 @@ void LevelSubway::InitializeCharacters()
     enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion.y = 0.0f;
 
-    Enemy *aux = NULL;
-    aux = new Enemy(graphicManager->GetTexture("enemyMelee"), sf::Vector2f(100, 100), enemyPosistion, sf::Vector2u(6, 2), 0.3f, 100.0f, 100.0f, 5.0f, false, true);
+    Enemy *aux = new HollowHatEnemy(graphicManager, enemyPosistion);
     characters.push_back(aux);
     entities->InsertDynamicEntity(aux);
   }
@@ -51,10 +51,10 @@ void LevelSubway::Initialize()
 
   /* --------------------------------------------------------- SetUp base platforms ------------------------------------------------------ */
 
-  Platform *airPlatformBase = new Platform(airPlatformTexture, static_cast<sf::Vector2f>(airPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
-  Platform *trapPlatformBase = new Platform(trapPlatformTexture, static_cast<sf::Vector2f>(trapPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
-  Platform *spikesBase = new Platform(spikesTexture, static_cast<sf::Vector2f>(spikesTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
-  Platform *wallPlatformBase = new Platform(wallPlatformTexture, static_cast<sf::Vector2f>(wallPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
+  Platform *airPlatformBase = new Platform(graphicManager, static_cast<sf::Vector2f>(airPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
+  Platform *trapPlatformBase = new Platform(graphicManager, static_cast<sf::Vector2f>(trapPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
+  Platform *spikesBase = new Platform(graphicManager, static_cast<sf::Vector2f>(spikesTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
+  Platform *wallPlatformBase = new Platform(graphicManager, static_cast<sf::Vector2f>(wallPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
 
   /* ------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -71,9 +71,9 @@ void LevelSubway::Initialize()
   basePlatformPosition.x = 0.0f;
   basePlatformPosition.y = static_cast<float>(windowSize.y);
 
-  Platform *basePlatform = new Platform(plataformTexture, sf::Vector2f(sizeX, 200.0f), sf::Vector2f(basePlatformPosition.x + (sizeX / 2.0f), basePlatformPosition.y + 100.0f));
-  Platform *limitBorderYLeft = new Platform(plataformTexture, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(basePlatformPosition.x - 2.5f, basePlatformPosition.y / 2.0f));
-  Platform *limitBorderYRight = new Platform(plataformTexture, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(sizeX + 2.5f, basePlatformPosition.y / 2.0f));
+  Platform *basePlatform = new Platform(graphicManager, sf::Vector2f(sizeX, 200.0f), sf::Vector2f(basePlatformPosition.x + (sizeX / 2.0f), basePlatformPosition.y + 100.0f));
+  Platform *limitBorderYLeft = new Platform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(basePlatformPosition.x - 2.5f, basePlatformPosition.y / 2.0f));
+  Platform *limitBorderYRight = new Platform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(sizeX + 2.5f, basePlatformPosition.y / 2.0f));
 
   entities->InsertDynamicEntity(basePlatform);
   platforms.push_back(basePlatform);
@@ -86,11 +86,11 @@ void LevelSubway::Initialize()
 
   /* --------------------------------------------------------- SetUp way to stairs ------------------------------------------------------- */
 
-  Platform *airPlatform1 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(static_cast<float>(airPlatformTexture->getSize().x) / 2.0f, basePlatformPosition.y - 150.0f));
-  Platform *airPlatform2 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(airPlatformTexture->getSize().x) / 2.0f) * 6.0f, basePlatformPosition.y - 300.0f));
-  Platform *airPlatform3 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(static_cast<float>(airPlatformTexture->getSize().x) / 2.0f, basePlatformPosition.y - 450.0f));
-  Platform *trapPlatform1 = new Platform(trapPlatformTexture, trapPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 6.0f, basePlatformPosition.y - 600.0f));
-  Platform *airPlatform4 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f));
+  Platform *airPlatform1 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(static_cast<float>(airPlatformTexture->getSize().x) / 2.0f, basePlatformPosition.y - 150.0f));
+  Platform *airPlatform2 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(airPlatformTexture->getSize().x) / 2.0f) * 6.0f, basePlatformPosition.y - 300.0f));
+  Platform *airPlatform3 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(static_cast<float>(airPlatformTexture->getSize().x) / 2.0f, basePlatformPosition.y - 450.0f));
+  Platform *trapPlatform1 = new Platform(graphicManager, trapPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 6.0f, basePlatformPosition.y - 600.0f));
+  Platform *airPlatform4 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f));
 
   Item *stair = new Item(stairTexture, static_cast<sf::Vector2f>(stairTexture->getSize()), sf::Vector2f((static_cast<float>(trapPlatformTexture->getSize().x) / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f - airPlatform4->GetHalfSize().y - (stairTexture->getSize().y / 2.0f)));
   stair->SetStair(true);
@@ -113,7 +113,7 @@ void LevelSubway::Initialize()
 
   /* --------------------------------------------------------- SetUp First Spikes --------------------------------------------------------- */
 
-  Platform *spikesFirst = new Platform(spikesTexture, spikesBase->GetSize(), sf::Vector2f(airPlatform2->GetPosition().x + airPlatform2->GetHalfSize().x + (spikesTexture->getSize().x / 2.0f), basePlatformPosition.y - (spikesTexture->getSize().y / 2.0f)));
+  Platform *spikesFirst = new Platform(graphicManager, spikesBase->GetSize(), sf::Vector2f(airPlatform2->GetPosition().x + airPlatform2->GetHalfSize().x + (spikesTexture->getSize().x / 2.0f), basePlatformPosition.y - (spikesTexture->getSize().y / 2.0f)));
   entities->InsertDynamicEntity(spikesFirst);
   platforms.push_back(spikesFirst);
 
@@ -121,7 +121,7 @@ void LevelSubway::Initialize()
   Platform *spikesLast = NULL;
   for (int i = 0; i < 12; i++)
   {
-    spikesLast = new Platform(spikesTexture, spikesBase->GetSize(), sf::Vector2f(spikesPrevious->GetPosition().x + spikesBase->GetSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
+    spikesLast = new Platform(graphicManager, spikesBase->GetSize(), sf::Vector2f(spikesPrevious->GetPosition().x + spikesBase->GetSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
     spikesPrevious = spikesLast;
     entities->InsertDynamicEntity(spikesLast);
     platforms.push_back(spikesLast);
@@ -131,11 +131,11 @@ void LevelSubway::Initialize()
 
   /* ------------------------------------------ SetUp Ladder + Second Spikes + Air Platform ----------------------------------------------- */
 
-  Platform *airPlatform5 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(spikesLast->GetPosition().x + spikesLast->GetSize().x + 1800.0f, basePlatformPosition.y - 150.0f));
-  Platform *trapPlatform2 = new Platform(trapPlatformTexture, trapPlatformBase->GetSize(), sf::Vector2f(airPlatform5->GetPosition().x + (airPlatformBase->GetSize().x * 4.0f), basePlatformPosition.y - 300.0f));
-  Platform *airPlatform6 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(trapPlatform2->GetPosition().x + (trapPlatformBase->GetSize().x * 4.0f), basePlatformPosition.y - 450.0f));
-  Platform *trapPlatform3 = new Platform(trapPlatformTexture, trapPlatformBase->GetSize(), sf::Vector2f(airPlatform6->GetPosition().x + (trapPlatformBase->GetSize().x * 5.0f), basePlatformPosition.y - 300.0f));
-  Platform *airPlatform7 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(trapPlatform3->GetPosition().x + (airPlatformBase->GetSize().x * 4.0f), basePlatformPosition.y - 450.0f));
+  Platform *airPlatform5 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(spikesLast->GetPosition().x + spikesLast->GetSize().x + 1800.0f, basePlatformPosition.y - 150.0f));
+  Platform *trapPlatform2 = new Platform(graphicManager, trapPlatformBase->GetSize(), sf::Vector2f(airPlatform5->GetPosition().x + (airPlatformBase->GetSize().x * 4.0f), basePlatformPosition.y - 300.0f));
+  Platform *airPlatform6 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(trapPlatform2->GetPosition().x + (trapPlatformBase->GetSize().x * 4.0f), basePlatformPosition.y - 450.0f));
+  Platform *trapPlatform3 = new Platform(graphicManager, trapPlatformBase->GetSize(), sf::Vector2f(airPlatform6->GetPosition().x + (trapPlatformBase->GetSize().x * 5.0f), basePlatformPosition.y - 300.0f));
+  Platform *airPlatform7 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(trapPlatform3->GetPosition().x + (airPlatformBase->GetSize().x * 4.0f), basePlatformPosition.y - 450.0f));
 
   entities->InsertDynamicEntity(airPlatform5);
   platforms.push_back(airPlatform5);
@@ -150,7 +150,7 @@ void LevelSubway::Initialize()
 
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
 
-  spikesFirst = new Platform(spikesTexture, spikesBase->GetSize(), sf::Vector2f(spikesLast->GetPosition().x + spikesLast->GetSize().x + 1800.0f, basePlatformPosition.y - spikesBase->GetHalfSize().y));
+  spikesFirst = new Platform(graphicManager, spikesBase->GetSize(), sf::Vector2f(spikesLast->GetPosition().x + spikesLast->GetSize().x + 1800.0f, basePlatformPosition.y - spikesBase->GetHalfSize().y));
   entities->InsertDynamicEntity(spikesFirst);
   platforms.push_back(spikesFirst);
 
@@ -158,7 +158,7 @@ void LevelSubway::Initialize()
   spikesLast = NULL;
   for (int i = 0; i < 44; i++)
   {
-    spikesLast = new Platform(spikesTexture, spikesBase->GetSize(), sf::Vector2f(spikesPrevious->GetPosition().x + spikesPrevious->GetSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
+    spikesLast = new Platform(graphicManager, spikesBase->GetSize(), sf::Vector2f(spikesPrevious->GetPosition().x + spikesPrevious->GetSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
     spikesPrevious = spikesLast;
     entities->InsertDynamicEntity(spikesLast);
     platforms.push_back(spikesLast);
@@ -166,7 +166,7 @@ void LevelSubway::Initialize()
 
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
 
-  Platform *airPlatformFirst = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(trapPlatform3->GetPosition().x + (airPlatformBase->GetSize().x * 4.0f) + 500.0f, basePlatformPosition.y - 450.0f));
+  Platform *airPlatformFirst = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(trapPlatform3->GetPosition().x + (airPlatformBase->GetSize().x * 4.0f) + 500.0f, basePlatformPosition.y - 450.0f));
   entities->InsertDynamicEntity(airPlatformFirst);
   platforms.push_back(airPlatformFirst);
 
@@ -174,7 +174,7 @@ void LevelSubway::Initialize()
   Platform *airPlatformLast = NULL;
   for (int i = 0; i < 15; i++)
   {
-    airPlatformLast = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, basePlatformPosition.y - 450.0f));
+    airPlatformLast = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, basePlatformPosition.y - 450.0f));
     airPlatformPrevious = airPlatformLast;
     entities->InsertDynamicEntity(airPlatformLast);
     platforms.push_back(airPlatformLast);
@@ -186,14 +186,14 @@ void LevelSubway::Initialize()
 
   Platform *airPlatformLastBridge = airPlatformLast;
 
-  airPlatformFirst = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(airPlatformLast->GetPosition().x + 500.0f, basePlatformPosition.y - 100.0f));
+  airPlatformFirst = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(airPlatformLast->GetPosition().x + 500.0f, basePlatformPosition.y - 100.0f));
   entities->InsertDynamicEntity(airPlatformFirst);
   platforms.push_back(airPlatformFirst);
 
   airPlatformPrevious = airPlatformFirst;
   for (int i = 0; i < 1; i++)
   {
-    airPlatformLast = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, basePlatformPosition.y - 100.0f));
+    airPlatformLast = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, basePlatformPosition.y - 100.0f));
     airPlatformPrevious = airPlatformLast;
     entities->InsertDynamicEntity(airPlatformLast);
     platforms.push_back(airPlatformLast);
@@ -201,8 +201,8 @@ void LevelSubway::Initialize()
 
   /* ----------------------------------------------------------------------------------------------------------------------------------- */
 
-  Platform *airPlatform8 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(sizeX - airPlatformBase->GetHalfSize().x, basePlatformPosition.y - 250.0f));
-  Platform *airPlatform9 = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(airPlatform8->GetPosition().x - 100.0f, basePlatformPosition.y - 400.0f));
+  Platform *airPlatform8 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(sizeX - airPlatformBase->GetHalfSize().x, basePlatformPosition.y - 250.0f));
+  Platform *airPlatform9 = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(airPlatform8->GetPosition().x - 100.0f, basePlatformPosition.y - 400.0f));
 
   entities->InsertDynamicEntity(airPlatform8);
   platforms.push_back(airPlatform8);
@@ -211,20 +211,20 @@ void LevelSubway::Initialize()
 
   /* ----------------------------------------------------------------------------------------------------------------------------------- */
 
-  airPlatformFirst = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(airPlatformLastBridge->GetPosition().x + 200.0f, airPlatformLastBridge->GetPosition().y));
+  airPlatformFirst = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(airPlatformLastBridge->GetPosition().x + 200.0f, airPlatformLastBridge->GetPosition().y));
   entities->InsertDynamicEntity(airPlatformFirst);
   platforms.push_back(airPlatformFirst);
 
   airPlatformPrevious = airPlatformFirst;
   for (int i = 0; i < 5; i++)
   {
-    airPlatformLast = new Platform(airPlatformTexture, airPlatformBase->GetSize(), sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, airPlatformPrevious->GetPosition().y));
+    airPlatformLast = new Platform(graphicManager, airPlatformBase->GetSize(), sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, airPlatformPrevious->GetPosition().y));
     airPlatformPrevious = airPlatformLast;
     entities->InsertDynamicEntity(airPlatformLast);
     platforms.push_back(airPlatformLast);
   }
 
-  Platform *wallPlatformFirst = new Platform(wallPlatformTexture, wallPlatformBase->GetSize(), sf::Vector2f(airPlatformFirst->GetPosition().x - airPlatformBase->GetHalfSize().x + wallPlatformBase->GetHalfSize().x, airPlatformFirst->GetPosition().y - airPlatformBase->GetHalfSize().y - wallPlatformBase->GetHalfSize().y));
+  Platform *wallPlatformFirst = new Platform(graphicManager, wallPlatformBase->GetSize(), sf::Vector2f(airPlatformFirst->GetPosition().x - airPlatformBase->GetHalfSize().x + wallPlatformBase->GetHalfSize().x, airPlatformFirst->GetPosition().y - airPlatformBase->GetHalfSize().y - wallPlatformBase->GetHalfSize().y));
   entities->InsertDynamicEntity(wallPlatformFirst);
   platforms.push_back(wallPlatformFirst);
 
@@ -232,7 +232,7 @@ void LevelSubway::Initialize()
   Platform *wallPlatformLast = NULL;
   for (int i = 0; i < 5; i++)
   {
-    wallPlatformLast = new Platform(wallPlatformTexture, wallPlatformBase->GetSize(), sf::Vector2f(wallPlatformPrevious->GetPosition().x, wallPlatformPrevious->GetPosition().y - wallPlatformBase->GetSize().y));
+    wallPlatformLast = new Platform(graphicManager, wallPlatformBase->GetSize(), sf::Vector2f(wallPlatformPrevious->GetPosition().x, wallPlatformPrevious->GetPosition().y - wallPlatformBase->GetSize().y));
     wallPlatformPrevious = wallPlatformLast;
     entities->InsertDynamicEntity(wallPlatformLast);
     platforms.push_back(wallPlatformLast);
