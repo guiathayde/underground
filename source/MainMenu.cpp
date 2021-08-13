@@ -1,8 +1,12 @@
 #include "MainMenu.h"
 #include "Level.h"
 
-MainMenu::MainMenu(float width, float height) : Menu(width, height)
+MainMenu::MainMenu(GraphicManager* graphicManager,float width, float height) : Menu(graphicManager,width, height)
 {
+  backgroundTexture = new sf::Texture();
+  backgroundTexture =  graphicManager->GetTexture("backgroundTexture");
+  
+  
   selectedItemIndex = 0;
   isPlaying = false;
 
@@ -60,16 +64,14 @@ MainMenu::MainMenu(float width, float height) : Menu(width, height)
 
 MainMenu::~MainMenu()
 {
+  delete(backgroundTexture);
 }
 
 void MainMenu::Draw(sf::RenderWindow *window,sf::View *view)
 {
-  static sf::Texture backgroundTexture;
-  backgroundTexture.loadFromFile("assets/background/mainMenuBackground.png");
-
   sf::Vector2f rectangleSize = static_cast<sf::Vector2f>(window->getSize());
   background.setSize(rectangleSize);
-  background.setTexture(&backgroundTexture);
+  background.setTexture(backgroundTexture);
   background.setOrigin(0.0f, 0.0f);
 
   window->draw(background);

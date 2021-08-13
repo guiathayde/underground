@@ -1,8 +1,10 @@
 #include "Platform.h"
 
-Platform::Platform(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position)
+Platform::Platform(GraphicManager* graphicManager, sf::Vector2f size, sf::Vector2f position)
 :Obstacle(true)
 {
+  texture = graphicManager->GetTexture("platform");
+  
   body.setSize(size);
   body.setOrigin(size / 2.0f);
   body.setTexture(texture);
@@ -18,4 +20,8 @@ void Platform::Draw(sf::RenderWindow &window)
 }
 
 void Platform::OnCollision(sf::Vector2f direction){
+}
+
+void Platform::Update(float deltaTime, Character* character){
+  
 }

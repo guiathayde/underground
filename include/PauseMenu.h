@@ -15,7 +15,7 @@ private:
   sf::Text menu[MENU_MAX_ITEMS];
 
 public:
-  PauseMenu(float width, float height);
+  PauseMenu(GraphicManager* graphicManager,float width, float height);
   ~PauseMenu();
 
   void Draw(sf::RenderWindow *window, sf::View *view);

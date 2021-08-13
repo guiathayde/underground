@@ -1,12 +1,15 @@
 #pragma once
 
 #include "stdfx.h"
-#include "Player.h"
-#include "DynamicEntityList.h"
-#include "Obstacle.h"
 
-class GraphicManager;
-class ColliderManager;
+#include "Entity.h"
+#include "DynamicEntityList.h"
+#include "Character.h"
+#include "ColliderManager.h"
+
+class Player;
+class Obstacle;
+
 class Level : public Entity
 {
 protected:
@@ -19,11 +22,12 @@ protected:
 
   Player *playerOne;
   
-  ColliderManager *colliderManager;
-  GraphicManager *graphicManager;
-  
+
+  ColliderManager *colliderManager;  
 
   sf::RectangleShape background;
+  sf::View *view;
+  sf::RenderWindow* window;
 
   float sizeX;
 
@@ -40,6 +44,8 @@ public:
   Player *GetPlayer(){return playerOne;};
   void SetPlayer(Player *p) { playerOne = p; };
   
+  void SetViewCenter();
+
   void ClearAll();
 
   virtual float GetSizeX() { return sizeX; }

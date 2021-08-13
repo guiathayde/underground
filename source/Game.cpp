@@ -4,8 +4,8 @@
 Game::Game()
 {
   graphicManager = new GraphicManager();
-  mainMenu = new MainMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
-  pauseMenu = new PauseMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
+  mainMenu = new MainMenu(graphicManager,graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
+  pauseMenu = new PauseMenu(graphicManager,graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
 }
 
 Game::~Game()
@@ -56,10 +56,7 @@ void Game::Execute()
           {
             LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
             levelsewer->Initialize();
-            graphicManager->SetPlayerOne(levelsewer->GetPlayer());
-            graphicManager->SetCurrentLevel(levelsewer);
             mainMenu->SetPlaying(true);
-
             level = levelsewer;
           }
 
@@ -98,10 +95,10 @@ void Game::Execute()
     }
     if (graphicManager)
       graphicManager->GetWindow()->clear();
-
+    
     if (pauseMenu->GetPause() && mainMenu->GetPlaying())
     {
-      graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
+      level->Draw(*graphicManager->GetWindow());
       pauseMenu->Draw(graphicManager->GetWindow(), graphicManager->GetView());
     }
     else if (mainMenu->GetPlaying())
@@ -109,7 +106,7 @@ void Game::Execute()
       level->CheckCollison();
       level->Update(deltaTime);
       level->Draw(*graphicManager->GetWindow());
-      graphicManager->SetViewCenter();
+      level->SetViewCenter();
     }
     else if (!mainMenu->GetPlaying() && graphicManager)
     {

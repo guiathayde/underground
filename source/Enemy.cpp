@@ -4,13 +4,10 @@
 using std::cout;
 using std::endl;
 
-Enemy::Enemy(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer)
-    : Character(texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer), totalStunTime(5.0f)
+Enemy::Enemy(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,float totalStunTime, int hearts, bool isAlive, bool isPlayer)
+:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer), totalStunTime(totalStunTime)
 {
-    body.setSize(size);
-    body.setOrigin(body.getSize() / 2.0f);
-    body.setPosition(origin.x, origin.y);
-    body.setTexture(texture);
+
 }
 
 Enemy::~Enemy()
@@ -19,6 +16,8 @@ Enemy::~Enemy()
 
 void Enemy::Update(float deltaTime, Character *character)
 {
+
+    cout << "Entrou no update do enemy"<< endl;
 
     Player *p;
     p = static_cast<Player *>(character);
@@ -54,8 +53,8 @@ void Enemy::Update(float deltaTime, Character *character)
         isAlive = false;
     }
 
-    animation.Update(row, deltaTime, faceRight);
-    body.setTextureRect(animation.uvRect);
+    animation->Update(row, deltaTime, faceRight);
+    body.setTextureRect(animation->uvRect);
     body.move(velocity * deltaTime);
 }
 

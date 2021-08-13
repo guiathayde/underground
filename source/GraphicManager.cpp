@@ -1,12 +1,11 @@
 #include "GraphicManager.h"
 #include "Level.h"
+#include "Player.h"
 
 GraphicManager::GraphicManager()
 {
   window = new sf::RenderWindow(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "Underground");
   view = new sf::View(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(1280.0f, 720.0f));
-
-  playerOne = NULL;
 
   LoadTexture();
 }
@@ -16,33 +15,6 @@ GraphicManager::~GraphicManager()
   delete(window);
   delete(view);
 
-}
-
-void GraphicManager::ResizeView()
-{
-  float aspectRatio = float(window->getSize().x / float(window->getSize().y));
-  view->setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
-}
-
-void GraphicManager::SetViewCenter()
-{
-  // code to set the view to not extrapolate the level limits borders
-  sf::Vector2f viewCenter = playerOne->GetPosition();
-
-  // set in Y
-  if (viewCenter.y + (view->getSize().y / 2.0f) >= static_cast<float>(window->getSize().y))
-    viewCenter.y = static_cast<float>(window->getSize().y) - (view->getSize().y / 2.0f);
-  if (viewCenter.y - (view->getSize().y / 2.0f) <= 0.0f)
-    viewCenter.y = (view->getSize().y / 2.0f);
-
-  // set in X
-  if (viewCenter.x - (view->getSize().x / 2.0f) <= 0.0f)
-    viewCenter.x = view->getSize().x / 2.0f;
-  if (viewCenter.x + (view->getSize().x / 2.0f) >= currentLevel->GetSizeX())
-    viewCenter.x = currentLevel->GetSizeX() - (view->getSize().x / 2.0f);
-
-  view->setCenter(viewCenter);
-  window->setView(*view);
 }
 
 void GraphicManager::InsertTexture(const char *name, sf::Texture *texture)
@@ -61,6 +33,11 @@ sf::Texture *GraphicManager::GetTexture(const char *name)
     itr++;
   }
   return NULL;
+}
+void GraphicManager::ResizeView()
+{
+  float aspectRatio = float(window->getSize().x / float(window->getSize().y));
+  view->setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
 }
 
 void GraphicManager::LoadTexture()
@@ -85,6 +62,11 @@ void GraphicManager::LoadTexture()
     cerr << "Error loading enemyMeleeTexture texture" << endl;
   InsertTexture("enemyMelee", enemyMeleeTexture);
 
+  sf::Texture *enemyShooterTexture = new sf::Texture();
+  if (!enemyShooterTexture->loadFromFile("assets/characters/EnemyShooter/enemy_shooter.png"))
+    cerr << "Error loading enemyShooterTexture texture" << endl;
+  InsertTexture("enemyShooter", enemyShooterTexture);
+
   sf::Texture *playerOneTexture = new sf::Texture();
   if (!playerOneTexture->loadFromFile("assets/characters/PlayerOne/playerV2.png"))
     cerr << "Error loading playerOneTexture texture" << endl;
@@ -92,11 +74,21 @@ void GraphicManager::LoadTexture()
 
   sf::Texture *sewerBackgroundTexture = new sf::Texture();
   if (!sewerBackgroundTexture->loadFromFile("assets/background/levelOne.png"))
-    cerr << "Erro loading backgroundTexture" << endl;
+    cerr << "Erro loading sewrbackgroundTexture" << endl;
   InsertTexture("levelOne", sewerBackgroundTexture);
-}
 
-void GraphicManager::Draw()
-{
-  currentLevel->Draw(*window);
+  sf::Texture *backgroundTexture = new sf::Texture();
+  if(!backgroundTexture->loadFromFile("assets/background/mainMenuBackground.png"));
+    cerr << "Error loading mainmenu background texture"<<endl;
+  InsertTexture("backgroundTexture", backgroundTexture);
+
+  sf::Texture* platform = new sf::Texture();
+  if(!platform->loadFromFile("assets/background/air_platform.png"))
+    cerr <<"Error loading platform texture"<<endl;
+  InsertTexture("platform", platform);
+
+  sf::Texture* projectile = new sf::Texture();
+  if(!projectile->loadFromFile("assets/background/projectile.png"))
+    cerr << "Error loading pojectile" <<endl;
+  InsertTexture("projectile", projectile);
 }

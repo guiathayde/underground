@@ -1,11 +1,14 @@
 #pragma once
 
 #include "stdfx.h"
+#include "Entity.h"
+
 
 class Level;
-class Menu
+class Menu: public Entity
 {
 protected:
+  
   int selectedItemIndex;
   bool isPlaying;
   bool isPaused;
@@ -13,14 +16,14 @@ protected:
   sf::Vector2f centerPosition;
 
 public:
-  Menu(float width, float height);
+  Menu(GraphicManager* graphicManager,float width, float height);
   ~Menu();
 
   virtual void Draw(sf::RenderWindow *window, sf::View *view) = 0;
 
   virtual void MoveUp() = 0;
   virtual void MoveDown() = 0;
-
+  void Draw(sf::RenderWindow &window);
   virtual int SelectItem(sf::Event event, Level *level) = 0;
   int GetPressedItem() { return selectedItemIndex; }
 

@@ -4,7 +4,7 @@ using namespace std;
 #include "PauseMenu.h"
 #include "Level.h"
 
-PauseMenu::PauseMenu(float width, float height) : Menu(width, height)
+PauseMenu::PauseMenu(GraphicManager* graphicManager,float width, float height) : Menu(graphicManager,width, height)
 {
   selectedItemIndex = 0;
   isPaused = false;

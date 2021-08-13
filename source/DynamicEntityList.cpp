@@ -22,6 +22,16 @@ void DynamicEntityList::RemoveDynamicEntity(DynamicEntity *pR)
 
 void DynamicEntityList::DrawEntities(sf::RenderWindow &window){
 	for(int i = 0; i < ListEntities.GetSize();i++){
-		ListEntities[i]->Draw(window);
+		if(ListEntities[i])
+			ListEntities[i]->Draw(window);
 	}
+}
+
+void DynamicEntityList::Update(float deltaTime, Character* character){
+	
+	for(int i = 0; i < ListEntities.GetSize();i++){
+		if(ListEntities[i])
+			ListEntities[i]->Update(deltaTime, character);
+	}
+
 }

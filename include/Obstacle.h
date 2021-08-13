@@ -14,5 +14,5 @@ public:
 
     void Draw(sf::RenderWindow &window);
     virtual void OnCollision(sf::Vector2f direction) = 0;
-
+    virtual void Update(float deltaTime, Character* character);
 };

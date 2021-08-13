@@ -1,11 +1,10 @@
 #include "DynamicEntity.h"
 #include "ColliderManager.h"
 
-DynamicEntity::DynamicEntity(bool isObstacle)
+DynamicEntity::DynamicEntity(GraphicManager* graphicManager,bool isObstacle):Entity(graphicManager)
 {
-
+	//cout << "DynamicEntity"<<endl;
 	this->isObstacle = isObstacle;
-
 }
 
 DynamicEntity::~DynamicEntity()

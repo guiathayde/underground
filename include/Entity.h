@@ -1,10 +1,16 @@
+#pragma once 
+
 #include "stdfx.h"
+#include "GraphicManager.h"
 
 class Entity
 {
-private:
+protected:
+  
+  GraphicManager* graphicManager;
+
 public:
-  Entity();
+  Entity(GraphicManager* graphicManager);
   ~Entity();
 
   virtual void Draw(sf::RenderWindow &window) = 0;

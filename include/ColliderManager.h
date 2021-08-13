@@ -1,11 +1,15 @@
 #pragma once
 
-#include "DynamicEntityList.h"
 #include "stdfx.h"
-#include "Character.h"
-#include "Platform.h"
 
+
+class Platform;
+class Character;
 class Player;
+class DynamicEntityList;
+class DynamicEntity;
+class Obstacle;
+
 class ColliderManager
 {
 public:

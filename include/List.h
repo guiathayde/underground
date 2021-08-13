@@ -141,17 +141,29 @@ void List<T1>::ClearAll()
 template <class T1>
 void List<T1>::RemoveInfo(T1 *pRemove)
 {
-    pFirst = pAux;
-    while (pAux != NULL)
-    {
 
-        if (pAux->GetInfo() == pRemove)
+    Element<T1> *tmp = NULL;
+    tmp = pFirst;
+    while (tmp != NULL)
+    {
+    
+        if (tmp->GetInfo() == pRemove)
         {
-            pAux->GetPrev()->SetNext(pAux->GetNext());
-            pAux->GetNext()->SetPrev(pAux->GetPrev());
-            delete (pAux);
+        
+                    if(tmp->GetPrev())
+                tmp->GetPrev()->SetNext(tmp->GetNext());
+            if(tmp->GetNext())
+                tmp->GetNext()->SetPrev(tmp->GetPrev());
+            
+            
+            delete (tmp->GetInfo());
+            delete(tmp);
+            return;
         }
+        if(tmp)
+            tmp = tmp->GetNext();
     }
+
 }
 
 template <class T1>

@@ -3,10 +3,12 @@
 #include "stdfx.h"
 #include "List.h"
 #include "DynamicEntity.h"
+#include "Character.h"
 
 class DynamicEntityList
 {
 private:
+	
 	List<DynamicEntity> ListEntities;
 
 public:
@@ -19,6 +21,7 @@ public:
 
 	void CheckEntitiesCollision();
 	void DrawEntities(sf::RenderWindow &window);
+	void Update(float deltaTime, Character* character);
 	bool GetIsObstacle(int x) { return ListEntities[x]->GetIsObstacle(); }
 
 	DynamicEntity *operator[](int x) { return ListEntities[x]; }

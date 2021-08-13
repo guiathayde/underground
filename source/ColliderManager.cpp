@@ -1,8 +1,12 @@
 #include "stdfx.h"
+
 #include "ColliderManager.h"
 #include "DynamicEntityList.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Platform.h"
+#include "DynamicEntity.h"
+#include "Obstacle.h"
 
 ColliderManager::ColliderManager()
 {
@@ -100,10 +104,11 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
   for (itPlatforms = platforms.begin(); itPlatforms != platforms.end(); itPlatforms++)
     for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
       if (CheckCollision((*(*itPlatforms)->GetBody()), (*(*itCharacters)->GetBody()), direction, 1.0f))
-        (*itCharacters)->OnCollision(direction);
-
+          (*itCharacters)->OnCollision(direction);
+  
   for (int i = 0; i < entities->GetSize(); i++)
     for (int j = 0; j < entities->GetSize(); j++)
+     if((*entities)[i] && (*entities)[j])
       if (i != j && !(*entities)[i]->GetIsObstacle() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
         (*entities)[j]->OnCollision(direction);
 }
@@ -113,9 +118,9 @@ void ColliderManager::CheckPlayerOnHead(list<Character *> characters, Player *pl
   list<Character *>::iterator itCharacters;
 
   for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
-    if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerOne->GetBody(), (*(*itCharacters)->GetBody())))
+    if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerOne->GetBody(), (*(*itCharacters)->GetBody()))){
       static_cast<Enemy *>((*itCharacters))->SetStunned();
-
+    }
   if (playerTwo)
     for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
       if (!(*itCharacters)->GetIsPlayer() && CheckOnHeadCollision(*playerTwo->GetBody(), (*(*itCharacters)->GetBody())))

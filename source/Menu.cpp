@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(float width, float height)
+Menu::Menu(GraphicManager* graphicManager,float width, float height):Entity(graphicManager)
 {
   selectedItemIndex = 1;
   isPlaying = false;
@@ -12,4 +12,8 @@ Menu::Menu(float width, float height)
 
 Menu::~Menu()
 {
+}
+
+void Menu::Draw(sf::RenderWindow &window){
+
 }
