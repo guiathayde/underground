@@ -13,6 +13,8 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
 
   sizeX = 5000.0f;
 
+  this->graphicManager = graphicManager;
+
   view = graphicManager->GetView();
   window = graphicManager->GetWindow();
 

@@ -10,7 +10,7 @@ Game::Game()
   mainMenu = new MainMenu(graphicManager);
   pauseMenu = new PauseMenu(graphicManager);
   chapters = new Chapters(graphicManager);
-  level = NULL;
+  cout << "saiu da contrutora do game"<<endl;
 }
 
 Game::~Game()
@@ -63,6 +63,7 @@ void Game::Execute()
           }
           else if (numberAction == 1)
           {
+            cout << "Inicializou aqui" <<endl;
             LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
             levelSewer->Initialize();
             level = levelSewer;
@@ -94,6 +95,7 @@ void Game::Execute()
           int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
+            cout << "Incializou o level"<<endl;
             LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
             levelsewer->Initialize();
             mainMenu->SetPlaying(true);

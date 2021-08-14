@@ -1,6 +1,6 @@
 #include "Item.h"
 
-Item::Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position) : Obstacle(true)
+Item::Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position) : Obstacle(true,false)
 {
   isCaught = false;
   isStair = false;

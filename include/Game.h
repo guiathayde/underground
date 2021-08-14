@@ -9,7 +9,7 @@
 class Game
 {
 private:
-    GraphicManager *graphicManager;
+  GraphicManager *graphicManager;
   ColliderManager *colliderManager;
 
   MainMenu *mainMenu;

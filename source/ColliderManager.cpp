@@ -96,21 +96,43 @@ bool ColliderManager::CheckOnHeadCollision(sf::RectangleShape &body, sf::Rectang
     return false;
 }
 
-void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Obstacle *> platforms, list<Character *> characters)
+void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Obstacle *> obstacles, list<Character *> characters)
 {
   sf::Vector2f direction;
-  list<Obstacle *>::iterator itPlatforms;
+  list<Obstacle *>::iterator itObstacle;
   list<Character *>::iterator itCharacters;
 
-  for (itPlatforms = platforms.begin(); itPlatforms != platforms.end(); itPlatforms++)
+  for (itObstacle = obstacles.begin(); itObstacle != obstacles.end(); itObstacle++)
+  {
     for (itCharacters = characters.begin(); itCharacters != characters.end(); itCharacters++)
-      if (CheckCollision((*(*itPlatforms)->GetBody()), (*(*itCharacters)->GetBody()), direction, 1.0f))
+    {
+      if (CheckCollision((*(*itObstacle)->GetBody()), (*(*itCharacters)->GetBody()), direction, 1.0f))
+      {
         (*itCharacters)->OnCollision(direction);
-
+        if((*itObstacle)->GetIsSpike()&&(*itCharacters)->GetIsPlayer())
+              cout <<"Caiu no spike"<<endl;
+              (*itCharacters)->GetDamage();
+      }
+    }
+  }
   for (int i = 0; i < entities->GetSize(); i++)
+  {
     for (int j = 0; j < entities->GetSize(); j++)
-      if (i != j && !(*entities)[j]->GetIsObstacle() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
-        (*entities)[j]->OnCollision(direction);
+    {
+      if((*entities)[i]&&(*entities)[j])
+      {
+        if (i != j && !(*entities)[j]->GetIsObstacle() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
+          (*entities)[j]->OnCollision(direction);
+        if((*entities)[i]->GetIsPlayer() && (*entities)[j]->GetIsProjectile())
+        {
+          static_cast<Player*>((*entities)[i])->GetDamage();
+          cout << "Levou dano do projétil" <<endl;
+        }
+        
+      
+      }
+    }
+  }
 }
 
 void ColliderManager::CheckPlayerOnHead(int &score, list<Character *> characters, Player *playerOne, Player *playerTwo)

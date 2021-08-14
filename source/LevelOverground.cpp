@@ -4,12 +4,17 @@
 #include "Platform.h"
 #include "Item.h"
 #include "HollowHatEnemy.h"
+#include "WelderEnemy.h"
+#include "Spike.h"
+#include "ChildPlayer.h"
+#include "TrashMonster.h"
 
 LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
   sizeX = 5400.0f;
-  enemiesNum = 6;
+  enemiesNum = 2;
 }
+
 
 LevelOverground::~LevelOverground()
 {
@@ -17,20 +22,35 @@ LevelOverground::~LevelOverground()
 
 void LevelOverground::InitializeCharacters()
 {
-  Player *playerOne = new Player(graphicManager, sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 200.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+  ChildPlayer *playerOne = new ChildPlayer(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
+
 
   for (int i = 0; i < enemiesNum; i++)
   {
     sf::Vector2f enemyPosistion;
     enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion.y = 0.0f;
+    
+    sf::Vector2f enemyPosistion1;
+    enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
+    enemyPosistion1.y = 0.0f;
+
+    Enemy *boss = new TrashMonster(graphicManager,enemyPosistion1);
+    characters.push_back(boss);
+    entities->InsertDynamicEntity(boss);
 
     Enemy *aux = new HollowHatEnemy(graphicManager, enemyPosistion);
     characters.push_back(aux);
     entities->InsertDynamicEntity(aux);
+    
+    /*
+    Enemy *aux1 = new WelderEnemy(graphicManager, enemyPosistion1,entities);
+    characters.push_back(aux1);
+    entities->InsertDynamicEntity(aux1);
+    */
   }
 }
 
@@ -53,7 +73,7 @@ void LevelOverground::Initialize()
 
   Platform *airPlatformBase = new Platform(graphicManager, static_cast<sf::Vector2f>(airPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
   Platform *trapPlatformBase = new Platform(graphicManager, static_cast<sf::Vector2f>(trapPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
-  Platform *spikesBase = new Platform(graphicManager, static_cast<sf::Vector2f>(spikesTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
+  Spike *spikesBase = new Spike(graphicManager, static_cast<sf::Vector2f>(spikesTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
   Platform *wallPlatformBase = new Platform(graphicManager, static_cast<sf::Vector2f>(wallPlatformTexture->getSize()), sf::Vector2f(0.0f, 0.0f));
 
   /* ------------------------------------------------------------------------------------------------------------------------------------- */
@@ -86,15 +106,15 @@ void LevelOverground::Initialize()
 
   /* --------------------------------------------------------- SetUp spikes on floor ------------------------------------------------------- */
 
-  Platform *spikesFirst = new Platform(graphicManager, spikesBase->GetSize(), sf::Vector2f(spikesBase->GetHalfSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
+  Spike *spikesFirst = new Spike(graphicManager, spikesBase->GetSize(), sf::Vector2f(spikesBase->GetHalfSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
   entities->InsertDynamicEntity(spikesFirst);
   platforms.push_back(spikesFirst);
 
-  Platform *spikesPrevious = spikesFirst;
-  Platform *spikesLast = NULL;
+  Spike *spikesPrevious = spikesFirst;
+  Spike *spikesLast = NULL;
   for (int i = 0; i < 84; i++)
   {
-    spikesLast = new Platform(graphicManager, spikesBase->GetSize(), sf::Vector2f(spikesPrevious->GetPosition().x + spikesBase->GetSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
+    spikesLast = new Spike(graphicManager, spikesBase->GetSize(), sf::Vector2f(spikesPrevious->GetPosition().x + spikesBase->GetSize().x, basePlatformPosition.y - spikesBase->GetHalfSize().y));
     spikesPrevious = spikesLast;
     entities->InsertDynamicEntity(spikesLast);
     platforms.push_back(spikesLast);

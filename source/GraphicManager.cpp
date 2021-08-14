@@ -82,6 +82,11 @@ void GraphicManager::LoadTexture()
     cerr << "Error loading enemyShooterTexture texture" << endl;
   InsertTexture("enemyShooter", enemyShooterTexture);
 
+  sf::Texture *trashMonster = new sf::Texture();
+  if(!trashMonster->loadFromFile("assets/characters/Trash Monster/trash_monster.png"))
+    cerr << "Errot loading trashMonster texture" << endl;
+  InsertTexture("trashMonster",trashMonster);
+
   sf::Texture *playerOneTexture = new sf::Texture();
   if (!playerOneTexture->loadFromFile("assets/characters/PlayerOne/playerV2.png"))
     cerr << "Error loading playerOneTexture texture" << endl;

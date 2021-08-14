@@ -9,8 +9,6 @@ class Character : public DynamicEntity
 protected:
   
   
-  sf::Texture* texture;
-
   sf::Vector2f origin;
   sf::Vector2f velocity;
   sf::Vector2f size;
@@ -46,4 +44,10 @@ public:
   bool GetIsPlayer() { return isPlayer; }
 
   void SetIsAlive(bool alive) { isAlive = alive; };
+
+  void GetDamage(){
+    //cout << "Levou dano"<< endl;
+    hearts--;
+  }
+
 };

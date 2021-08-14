@@ -18,9 +18,10 @@ WelderEnemy::WelderEnemy(GraphicManager* graphicManager,sf::Vector2f origin,Dyna
     jumpHeight = WELDER_ENEMY_JUMP_HEIGHT;
     totalStunTime = WELDER_ENEMY_TOTAL_STUN_TIME;
     hearts =    WELDER_ENEMY_HEARTS;
-    ammunition = 3;
+    ammunition = 5;
     size = WELDER_ENEMY_SIZE;
 
+    canShoot = true;
     isAlive = true;
     isPlayer = false;
     isStunned = false;
@@ -33,7 +34,7 @@ WelderEnemy::WelderEnemy(GraphicManager* graphicManager,sf::Vector2f origin,Dyna
 }
 
 WelderEnemy::~WelderEnemy(){
-    delete(texture);
+    delete(animation);
 }
 
 void WelderEnemy::Update(float deltaTime,Character* character)
@@ -44,30 +45,33 @@ void WelderEnemy::Update(float deltaTime,Character* character)
 
     if (isStunned && coolDown > totalStunTime)
     {
+        return;
         isStunned = false;
     }
     coolDown += deltaTime;
 
-    velocity.x *= 0.5f; // time to stop action walk (slow down)
+    velocity.x *= 0.5f; 
     
     if (!isStunned && SeePlayer(p))
     {
         coolDown = 0;
-        velocity.x = Attack(p);
+        faceRight = Attack(p);
         if(ammunition > 0){
+            cout << "atirou" <<endl;
             Shoot();
             ammunition--;
         }
-        //cout <<"entrou no shoot"<<endl;
-        
-        if(shootCoolDown > 3){
+        if(shootCoolDown > 4){
             shootCoolDown = 0;
             entities->RemoveDynamicEntity(projectile);
+            delete(projectile);
+            cout <<"Removeu"<<endl;
             ammunition++;
         }
         else
             shootCoolDown+=deltaTime;
-    }
+
+}
 
     velocity.y += 981.0f * deltaTime;
 
@@ -110,7 +114,7 @@ bool WelderEnemy::SeePlayer(Player *p){
     
 }
 
-float WelderEnemy::Attack(Player *p){
+bool WelderEnemy::Attack(Player *p){
     
     sf::Vector2f pos_enemy;
     sf::Vector2f pos_player;
@@ -119,11 +123,11 @@ float WelderEnemy::Attack(Player *p){
     pos_player = p->GetPosition();
     if(pos_player.x < pos_enemy.x){
         velocity.x -= speed;
-        return velocity.x;
+        return false;
     }
     else if(pos_player.x > pos_enemy.x){
         velocity.x += speed;
-        return velocity.x;
+        return true;
     }
     
     return 0.0;
@@ -132,12 +136,19 @@ float WelderEnemy::Attack(Player *p){
 void WelderEnemy::Shoot(){
 
     float projectile_speed;
-    if(faceRight)
-        projectile_speed = 50.0f;
-    else
-        projectile_speed = -50.0f;
+    float tmp;
+
+    if(faceRight){
+        projectile_speed = 5.0f;
+        tmp  = 10+body.getSize().x/2.0f;
+    }
+    else{
+        projectile_speed = -5.0f;
+        tmp = -10-body.getSize().x/2.0f;
+    }
 
     sf::Vector2f position = GetPosition();
+    position.x += tmp;
     projectile = new Projectile(graphicManager,position,projectile_speed);
     entities->InsertDynamicEntity(projectile);
 

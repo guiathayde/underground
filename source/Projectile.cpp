@@ -2,12 +2,9 @@
 #include "Character.h"
 
 Projectile::Projectile(GraphicManager* graphicManager,sf::Vector2f position,float speed):
-DynamicEntity(graphicManager,false)
+DynamicEntity(graphicManager,false,true,false)
 {
     
-    cout <<"Entrou na contrutora do projectile"<<endl;
-    cout << position.x <<endl;
-    cout <<position.y<<endl;
     size = PROJECTILE_SIZE;
     velocity = PROJECTILE_VELOCITY;
     imageCount = PROJECTILE_IMAGE_COUNT;
@@ -17,9 +14,9 @@ DynamicEntity(graphicManager,false)
     this->position = position;
 
     texture = graphicManager->GetTexture("projectile");
-    
     animation = new Animation(texture,imageCount,switchTime);
-    
+    cout  << position.x<<endl;
+    cout  << position.y<<endl;
 
     row = 0;
     faceRight = true;
@@ -52,6 +49,12 @@ void Projectile::Update(float deltaTime,Character *p){
     //cout << position.y<<endl;
 
     velocity.x += speed;
+    
+    if (velocity.x > 0.0f)
+        faceRight = true;
+    else
+        faceRight = false;
+    
 
     animation->Update(row, deltaTime, faceRight);
     body.setTextureRect(animation->uvRect);

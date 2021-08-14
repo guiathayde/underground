@@ -20,13 +20,14 @@ private:
     Projectile *projectile;
     float shootCoolDown;
     int ammunition;
+    bool canShoot;
 public:
 
     WelderEnemy(GraphicManager* graphicManager,sf::Vector2f origin,DynamicEntityList *entities);
     ~WelderEnemy();
 
     void Update(float deltaTime,Character* character);
-    float Attack(Player *p);
+    bool Attack(Player *p);
     bool SeePlayer(Player *p);
     void Shoot();
 

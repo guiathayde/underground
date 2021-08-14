@@ -1,7 +1,7 @@
 #include "Platform.h"
 
 Platform::Platform(GraphicManager *graphicManager, sf::Vector2f size, sf::Vector2f position)
-    : Obstacle(true)
+    : Obstacle(true,false)
 {
   texture = graphicManager->GetTexture("platform");
 

@@ -1,7 +1,7 @@
 #include "Obstacle.h"
 
-Obstacle::Obstacle(bool isPlatform)
-: DynamicEntity(graphicManager,isPlatform)
+Obstacle::Obstacle(bool isPlatform,bool isSpike)
+: DynamicEntity(graphicManager,isPlatform,false,false)
 {
 }
 

@@ -5,10 +5,13 @@
 #include "WelderEnemy.h"
 #include "HollowHatEnemy.h"
 #include "Item.h"
+#include "Spike.h"
+#include "ChildPlayer.h"
+#include "TrashMonster.h"
 
 LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
-  enemiesNum = 2;
+  enemiesNum = 3;
 }
 
 LevelSewer::~LevelSewer()
@@ -17,7 +20,8 @@ LevelSewer::~LevelSewer()
 
 void LevelSewer::InitializeCharacters()
 {
-  Player *playerOne = new Player(graphicManager, sf::Vector2f(60.0f, 40.0f), sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f), sf::Vector2u(4, 4), 0.30f, 200.0f, 200.0f, 300, true, true, true);
+  cout << "inicializou character" <<endl;
+  ChildPlayer *playerOne = new ChildPlayer(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
@@ -32,12 +36,21 @@ void LevelSewer::InitializeCharacters()
     enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion1.y = 0.0f;
 
+    sf::Vector2f enemyPosistion2;
+    enemyPosistion2.x = static_cast<float>((rand() % 3000) + 1200);
+    enemyPosistion2.y = 0.0f;
+
+
     WelderEnemy *aux1 = NULL;
     HollowHatEnemy *aux2 = NULL;
 
-    aux1 = new WelderEnemy(graphicManager, enemyPosistion, entities);
+    aux1 = new WelderEnemy(graphicManager, enemyPosistion2, entities);
     characters.push_back(aux1);
     entities->InsertDynamicEntity(aux1);
+    
+    Enemy *boss = new TrashMonster(graphicManager,enemyPosistion);
+    characters.push_back(boss);
+    entities->InsertDynamicEntity(boss);
 
     aux2 = new HollowHatEnemy(graphicManager, enemyPosistion1);
     characters.push_back(aux2);
@@ -47,17 +60,12 @@ void LevelSewer::InitializeCharacters()
 
 void LevelSewer::Initialize()
 {
+  
   /* --------------------------------------------------------- Getting textures --------------------------------------------------------- */
 
-  sf::Texture *backgroundTexture = graphicManager->GetTexture("levelOne");
-  sf::Texture *plataformTexture = graphicManager->GetTexture("basePlatformTexture");
-  sf::Texture *airPlatformTexture = graphicManager->GetTexture("airPlatform");
-  sf::Texture *spikesTexture = graphicManager->GetTexture("spikes");
-  sf::Texture *stairTexture = graphicManager->GetTexture("stair1");
-  sf::Texture *wallPlatformTexture = graphicManager->GetTexture("wallPlatform");
-  sf::Texture *doorTexture = graphicManager->GetTexture("door");
-
-  /* ------------------------------------------------------------------------------------------------------------------------------------- */
+  sf::Texture *backgroundTexture;
+  backgroundTexture = new sf::Texture();
+  backgroundTexture = graphicManager->GetTexture("levelOne");
 
   sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
   sf::Vector2f backgroundSize;
@@ -65,6 +73,7 @@ void LevelSewer::Initialize()
   backgroundSize.y = static_cast<float>(windowSize.y);
   background.setSize(backgroundSize);
   background.setTexture(backgroundTexture);
+
 
   sf::Vector2f basePlatformPosition;
   basePlatformPosition.x = 0.0f;
@@ -83,16 +92,17 @@ void LevelSewer::Initialize()
 
   /* --------------------------------------------------------- SetUp Spikes --------------------------------------------------------- */
 
-  //Platform *spikes1 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(300.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  //Platform *spikes2 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(364.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  //Platform *spikes3 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(428.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  //Platform *spikes4 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(492.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  //Platform *spikes5 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(556.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  //Platform *spikes6 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(620.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  //Platform *spikes7 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(684.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  //Platform *spikes8 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(748.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
 
-  /*entities->InsertDynamicEntity(spikes1);
+  Spike *spikes1 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(300.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes2 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(364.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes3 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(428.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes4 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(492.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes5 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(556.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes6 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(620.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes7 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(684.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes8 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(748.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+
+  entities->InsertDynamicEntity(spikes1);
   platforms.push_back(spikes1);
   entities->InsertDynamicEntity(spikes2);
   platforms.push_back(spikes2);
@@ -108,8 +118,9 @@ void LevelSewer::Initialize()
   platforms.push_back(spikes7);
   entities->InsertDynamicEntity(spikes8);
   platforms.push_back(spikes8);
-  */
+  
   /* --------------------------------------------------------- SetUp First Air Platform --------------------------------------------------------- */
+
 
   Platform *airPlatform1 = new Platform(graphicManager, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(748.0f, basePlatformPosition.y - 50.0f));
   Platform *airPlatform2 = new Platform(graphicManager, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(794.0f, basePlatformPosition.y - 50.0f));
@@ -187,26 +198,25 @@ void LevelSewer::Initialize()
   entities->InsertDynamicEntity(airPlatform18);
   platforms.push_back(airPlatform18);
 
-  Item *stair = new Item(stairTexture, sf::Vector2f(35.0f, 39.0f), sf::Vector2f(2581.5f, basePlatformPosition.y - 372.0f));
-  stair->SetStair(true);
+  Platform *stair = new Platform(graphicManager, sf::Vector2f(35.0f, 39.0f), sf::Vector2f(2581.5f, basePlatformPosition.y - 372.0f));
 
   entities->InsertDynamicEntity(stair);
-  items.push_back(stair);
+  platforms.push_back(stair);
 
-  /* --------------------------------------------------------- SetUp Spikes and AirPlatform --------------------------------------------------------- 
+  // --------------------------------------------------------- SetUp Spikes and AirPlatform --------------------------------------------------------- 
 
-  Platform *spikes9 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2604.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes10 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2668.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes11 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2732.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes12 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2796.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes13 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2860.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes14 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2924.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes15 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2988.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes16 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3052.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes17 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3116.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes18 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3180.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes19 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3244.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
-  Platform *spikes20 = new Platform(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3308.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->getSize().y) / 2.0f)));
+  Spike *spikes9 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2604.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes10 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2668.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes11 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2732.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes12 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2796.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes13 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2860.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes14 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2924.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes15 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2988.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes16 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3052.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes17 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3116.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes18 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3180.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes19 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3244.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
+  Spike *spikes20 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(3308.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
 
   entities->InsertDynamicEntity(spikes9);
   platforms.push_back(spikes9);
@@ -250,7 +260,7 @@ void LevelSewer::Initialize()
   entities->InsertDynamicEntity(airPlatform23);
   platforms.push_back(airPlatform23);
 
-  ----------------------------------------------------------- SetUp Exit Platform --------------------------------------------------------- */
+  //----------------------------------------------------------- SetUp Exit Platform --------------------------------------------------------- */
 
   Platform *wallPlatform5 = new Platform(graphicManager, sf::Vector2f(16.0f, 46.0f), sf::Vector2f(4164.0f, basePlatformPosition.y - 23.0f));
   Platform *wallPlatform6 = new Platform(graphicManager, sf::Vector2f(16.0f, 46.0f), sf::Vector2f(4164.0f, basePlatformPosition.y - 69.0f));
@@ -337,6 +347,12 @@ void LevelSewer::Initialize()
   platforms.push_back(airPlatform40);
   entities->InsertDynamicEntity(airPlatform41);
   platforms.push_back(airPlatform41);
+
+  static sf::Texture *doorTexture;
+  doorTexture = new sf::Texture();
+  if (!doorTexture->loadFromFile("assets/background/door.png"))
+    cerr << "Error loading door texture" << endl;
+
 
   Item *door = new Item(doorTexture, sf::Vector2f(69.0f, 113.0f), sf::Vector2f(4931.0f, basePlatformPosition.y - 424.5f));
   door->SetDoor(true);
