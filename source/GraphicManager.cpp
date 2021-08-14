@@ -83,9 +83,9 @@ void GraphicManager::LoadTexture()
   InsertTexture("enemyShooter", enemyShooterTexture);
 
   sf::Texture *trashMonster = new sf::Texture();
-  if(!trashMonster->loadFromFile("assets/characters/Trash Monster/trash_monster.png"))
+  if (!trashMonster->loadFromFile("assets/characters/Trash Monster/trash_monster.png"))
     cerr << "Errot loading trashMonster texture" << endl;
-  InsertTexture("trashMonster",trashMonster);
+  InsertTexture("trashMonster", trashMonster);
 
   sf::Texture *playerOneTexture = new sf::Texture();
   if (!playerOneTexture->loadFromFile("assets/characters/PlayerOne/playerV2.png"))
@@ -139,8 +139,18 @@ void GraphicManager::LoadTexture()
 
   sf::Texture *stair3Texture = new sf::Texture();
   if (!stair3Texture->loadFromFile("assets/background/stair3.png"))
-    cerr << "Erro loading stair2Texture" << endl;
+    cerr << "Erro loading stair3Texture" << endl;
   InsertTexture("stair3", stair3Texture);
+
+  sf::Texture *rankingTexture = new sf::Texture();
+  if (!rankingTexture->loadFromFile("assets/background/rankingBackground.png"))
+    cerr << "Erro loading rankingTexture" << endl;
+  InsertTexture("ranking", rankingTexture);
+
+  sf::Texture *endLevelBackgroundTexture = new sf::Texture();
+  if (!endLevelBackgroundTexture->loadFromFile("assets/background/endLevelBackground.png"))
+    cerr << "Erro loading endLevelBackgroundTexture" << endl;
+  InsertTexture("endLevelBackground", endLevelBackgroundTexture);
 
   sf::Texture *backgroundTexture = new sf::Texture();
   if (!backgroundTexture->loadFromFile("assets/background/mainMenuBackground.png"))

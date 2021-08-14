@@ -10,26 +10,31 @@ Game::Game()
   mainMenu = new MainMenu(graphicManager);
   pauseMenu = new PauseMenu(graphicManager);
   chapters = new Chapters(graphicManager);
-  cout << "saiu da contrutora do game"<<endl;
+  ranking = new Ranking(graphicManager);
+  level = NULL;
+  saveManager = new SaveManager(level, ranking);
 }
 
 Game::~Game()
 {
   delete (graphicManager);
+  delete (saveManager);
   delete (mainMenu);
   delete (pauseMenu);
   delete (chapters);
+  delete (ranking);
   delete (level);
 }
 
 void Game::Execute()
 {
+  saveManager->ReadRanking();
+
   float deltaTime = 0.0f;
   sf::Clock clock;
 
   while (graphicManager->WindowisOpen())
   {
-
     deltaTime = clock.restart().asSeconds();
     // solution when resizing the window and the player falls
     if (deltaTime > 1.0f / 20.0f)
@@ -48,6 +53,11 @@ void Game::Execute()
         graphicManager->ResizeView();
         break;
 
+      case sf::Event::TextEntered:
+        if (level != NULL && level->GetEndLevel())
+          level->SetEndLevel(event);
+        break;
+
       case sf::Event::KeyPressed:
       {
         if (event.key.code == sf::Keyboard::Escape && pauseMenu->GetPause())
@@ -63,13 +73,12 @@ void Game::Execute()
           }
           else if (numberAction == 1)
           {
-            cout << "Inicializou aqui" <<endl;
+            cout << "Inicializou aqui" << endl;
             LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
             levelSewer->Initialize();
             level = levelSewer;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
-            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
           }
           else if (numberAction == 2)
           {
@@ -78,7 +87,6 @@ void Game::Execute()
             level = levelSubway;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
-            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
           }
           else if (numberAction == 3)
           {
@@ -87,15 +95,19 @@ void Game::Execute()
             level = levelOverground;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
-            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
           }
+        }
+        else if (ranking->GetRanking())
+        {
+          if (ranking->SelectItem(event, NULL) == 0)
+            ranking->SetRanking(false);
         }
         else if (!mainMenu->GetPlaying())
         {
           int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
-            cout << "Incializou o level"<<endl;
+            cout << "Incializou o level" << endl;
             LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
             levelsewer->Initialize();
             mainMenu->SetPlaying(true);
@@ -107,11 +119,39 @@ void Game::Execute()
           }
           else if (numberAction == 3)
           {
-            // ranking
+            ranking->SetRanking(true);
           }
           else if (numberAction == 4)
           {
+            saveManager->SaveScore();
             graphicManager->GetWindow()->close();
+          }
+        }
+        else if (level != NULL && level->GetEndLevel())
+        {
+          int numberAction = level->SetContinueLevel(event, ranking);
+          if (numberAction == 0)
+          {
+            level->ClearAll();
+            mainMenu->SetPlaying(false);
+          }
+          else if (numberAction == 2)
+          {
+            level->ClearAll();
+            LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
+            levelSubway->Initialize();
+            level = levelSubway;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
+          }
+          else if (numberAction == 3)
+          {
+            level->ClearAll();
+            LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
+            levelOverground->Initialize();
+            level = levelOverground;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
           }
         }
 
@@ -155,6 +195,11 @@ void Game::Execute()
       {
         graphicManager->GetView()->setCenter(chapters->GetCenterPosition());
         chapters->Draw(graphicManager->GetWindow(), graphicManager->GetView());
+      }
+      else if (!mainMenu->GetPlaying() && ranking->GetRanking())
+      {
+        graphicManager->GetView()->setCenter(ranking->GetCenterPosition());
+        ranking->Draw(graphicManager->GetWindow(), graphicManager->GetView());
       }
       else if (!mainMenu->GetPlaying() && !chapters->GetChapters())
       {

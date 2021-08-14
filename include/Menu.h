@@ -12,6 +12,7 @@ protected:
   bool isPlaying;
   bool isPaused;
   bool isChapters;
+  bool isRanking;
 
   sf::Vector2f centerPosition;
 
@@ -35,6 +36,9 @@ public:
 
   void SetChapters(bool state) { isChapters = state; }
   bool GetChapters() { return isChapters; }
+
+  void SetRanking(bool state) { isRanking = state; }
+  bool GetRanking() { return isRanking; }
 
   sf::Vector2f GetCenterPosition() { return centerPosition; }
 };

@@ -7,6 +7,7 @@ Chapters::Chapters(GraphicManager *graphicManager) : Menu(graphicManager)
   isPlaying = false;
   isPaused = false;
   isChapters = false;
+  isRanking = false;
 
   sf::Vector2f windowSize = static_cast<sf::Vector2f>(graphicManager->GetWindow()->getSize());
 

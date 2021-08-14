@@ -11,10 +11,11 @@
 
 LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
+  nameLevel = "Overground";
   sizeX = 5400.0f;
-  enemiesNum = 2;
+  enemiesNum = 6;
+  nextLevel = 0;
 }
-
 
 LevelOverground::~LevelOverground()
 {
@@ -27,25 +28,24 @@ void LevelOverground::InitializeCharacters()
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
 
-
   for (int i = 0; i < enemiesNum; i++)
   {
     sf::Vector2f enemyPosistion;
     enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion.y = 0.0f;
-    
+
     sf::Vector2f enemyPosistion1;
     enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion1.y = 0.0f;
 
-    Enemy *boss = new TrashMonster(graphicManager,enemyPosistion1);
+    Enemy *boss = new TrashMonster(graphicManager, enemyPosistion1);
     characters.push_back(boss);
     entities->InsertDynamicEntity(boss);
 
     Enemy *aux = new HollowHatEnemy(graphicManager, enemyPosistion);
     characters.push_back(aux);
     entities->InsertDynamicEntity(aux);
-    
+
     /*
     Enemy *aux1 = new WelderEnemy(graphicManager, enemyPosistion1,entities);
     characters.push_back(aux1);

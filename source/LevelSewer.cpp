@@ -11,7 +11,10 @@
 
 LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
-  enemiesNum = 3;
+  nameLevel = "Sewer";
+  sizeX = 5000.0f;
+  enemiesNum = 6;
+  nextLevel = 2;
 }
 
 LevelSewer::~LevelSewer()
@@ -20,7 +23,7 @@ LevelSewer::~LevelSewer()
 
 void LevelSewer::InitializeCharacters()
 {
-  cout << "inicializou character" <<endl;
+  cout << "inicializou character" << endl;
   ChildPlayer *playerOne = new ChildPlayer(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
@@ -40,15 +43,14 @@ void LevelSewer::InitializeCharacters()
     enemyPosistion2.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion2.y = 0.0f;
 
-
     WelderEnemy *aux1 = NULL;
     HollowHatEnemy *aux2 = NULL;
 
     aux1 = new WelderEnemy(graphicManager, enemyPosistion2, entities);
     characters.push_back(aux1);
     entities->InsertDynamicEntity(aux1);
-    
-    Enemy *boss = new TrashMonster(graphicManager,enemyPosistion);
+
+    Enemy *boss = new TrashMonster(graphicManager, enemyPosistion);
     characters.push_back(boss);
     entities->InsertDynamicEntity(boss);
 
@@ -60,7 +62,7 @@ void LevelSewer::InitializeCharacters()
 
 void LevelSewer::Initialize()
 {
-  
+
   /* --------------------------------------------------------- Getting textures --------------------------------------------------------- */
 
   sf::Texture *backgroundTexture;
@@ -73,7 +75,6 @@ void LevelSewer::Initialize()
   backgroundSize.y = static_cast<float>(windowSize.y);
   background.setSize(backgroundSize);
   background.setTexture(backgroundTexture);
-
 
   sf::Vector2f basePlatformPosition;
   basePlatformPosition.x = 0.0f;
@@ -91,7 +92,6 @@ void LevelSewer::Initialize()
   platforms.push_back(limitBorderYRight);
 
   /* --------------------------------------------------------- SetUp Spikes --------------------------------------------------------- */
-
 
   Spike *spikes1 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(300.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
   Spike *spikes2 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(364.0f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
@@ -118,9 +118,8 @@ void LevelSewer::Initialize()
   platforms.push_back(spikes7);
   entities->InsertDynamicEntity(spikes8);
   platforms.push_back(spikes8);
-  
-  /* --------------------------------------------------------- SetUp First Air Platform --------------------------------------------------------- */
 
+  /* --------------------------------------------------------- SetUp First Air Platform --------------------------------------------------------- */
 
   Platform *airPlatform1 = new Platform(graphicManager, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(748.0f, basePlatformPosition.y - 50.0f));
   Platform *airPlatform2 = new Platform(graphicManager, sf::Vector2f(46.0f, 14.0f), sf::Vector2f(794.0f, basePlatformPosition.y - 50.0f));
@@ -203,7 +202,7 @@ void LevelSewer::Initialize()
   entities->InsertDynamicEntity(stair);
   platforms.push_back(stair);
 
-  // --------------------------------------------------------- SetUp Spikes and AirPlatform --------------------------------------------------------- 
+  // --------------------------------------------------------- SetUp Spikes and AirPlatform ---------------------------------------------------------
 
   Spike *spikes9 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2604.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
   Spike *spikes10 = new Spike(graphicManager, sf::Vector2f(64.0f, 15.0f), sf::Vector2f(2668.5f, basePlatformPosition.y - (static_cast<float>(graphicManager->GetTexture("spikes")->getSize().y) / 2.0f)));
@@ -352,7 +351,6 @@ void LevelSewer::Initialize()
   doorTexture = new sf::Texture();
   if (!doorTexture->loadFromFile("assets/background/door.png"))
     cerr << "Error loading door texture" << endl;
-
 
   Item *door = new Item(doorTexture, sf::Vector2f(69.0f, 113.0f), sf::Vector2f(4931.0f, basePlatformPosition.y - 424.5f));
   door->SetDoor(true);
