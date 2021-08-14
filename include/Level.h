@@ -54,6 +54,8 @@ public:
   void CheckCollison();
   void Draw(sf::RenderWindow &window);
 
+  list<Character *> *GetListCharacters() { return &characters; }
+
   int GetScore() { return score; }
   bool GetEndLevel() { return endLevel; }
 
