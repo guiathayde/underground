@@ -1,9 +1,9 @@
 #pragma once
 
 #include "stdfix.h"
-#include "Obstacle.h"
+#include "Item.h"
 
-class Item : public Obstacle
+class Door : public Item
 {
 private:
   bool isCaught;
@@ -11,8 +11,8 @@ private:
   bool isDoor;
 
 public:
-  Item(GraphicManager *graphciManager, sf::Vector2f position);
-  ~Item();
+  Door(GraphicManager *graphciManager, sf::Vector2f position);
+  ~Door();
 
   void Draw(sf::RenderWindow &window);
   void OnCollision(sf::Vector2f direction);

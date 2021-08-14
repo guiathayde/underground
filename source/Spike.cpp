@@ -1,11 +1,12 @@
 #include "Spike.h"
-Spike::Spike(GraphicManager *graphicManager, sf::Vector2f size, sf::Vector2f position)
+
+Spike::Spike(GraphicManager *graphicManager, sf::Vector2f position)
     : Obstacle(false,true)
 {
-  texture = graphicManager->GetTexture("spikes");
+  sf::Texture *texture = graphicManager->GetTexture("spikes");
 
-  body.setSize(size);
-  body.setOrigin(size / 2.0f);
+  body.setSize(static_cast<sf::Vector2f>(texture->getSize()));
+  body.setOrigin(body.getSize() / 2.0f);
   body.setTexture(texture);
   body.setPosition(position);
 }

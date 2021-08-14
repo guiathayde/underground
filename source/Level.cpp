@@ -110,7 +110,7 @@ void Level::Update(float deltaTime)
 
 void Level::CheckCollison()
 {
-  colliderManager->CheckEntitiesCollison(entities, platforms, characters);
+  colliderManager->CheckEntitiesCollison(entities, obstacles, characters);
   colliderManager->CheckPlayerOnHead(score, characters, playerOne, NULL);
   colliderManager->CheckItemCollision(items, playerOne, NULL);
 }

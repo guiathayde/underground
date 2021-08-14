@@ -14,7 +14,7 @@ protected:
   sf::RenderWindow *window;
   sf::View *view;
 
-  map<const char *, sf::Texture *> textures;
+  map<string, sf::Texture *> textures;
 
 public:
 
@@ -23,13 +23,13 @@ public:
 
   void ResizeView();
   void LoadTexture();
-  void InsertTexture(const char *name, sf::Texture *texture);
+  void InsertTexture(string name, sf::Texture *texture);
   void Draw();
   
 
   bool WindowisOpen(){return window->isOpen();}
 
-  sf::Texture *GetTexture(const char *name);
+  sf::Texture *GetTexture(string name);
   sf::RenderWindow *GetWindow() { return window; }
   sf::View *GetView() { return view; }
   

@@ -9,7 +9,7 @@ private:
   sf::Vector2f velocity;
 
 public:
-  Platform(GraphicManager *graphicManager, sf::Vector2f size, sf::Vector2f position);
+  Platform(GraphicManager *graphicManager, sf::Vector2f position);
   ~Platform();
 
   void Draw(sf::RenderWindow &window);

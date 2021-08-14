@@ -2,8 +2,6 @@
 
 #include "Level.h"
 
-
-
 class LevelSewer : public Level
 {
 private:

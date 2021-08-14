@@ -3,6 +3,7 @@
 Obstacle::Obstacle(bool isPlatform,bool isSpike)
 : DynamicEntity(graphicManager,isPlatform,false,false)
 {
+    //cout << "entrou na construtora do obstacle" <<endl;
 }
 
 Obstacle::~Obstacle()

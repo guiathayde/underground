@@ -110,7 +110,7 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
       {
         (*itCharacters)->OnCollision(direction);
         if((*itObstacle)->GetIsSpike()&&(*itCharacters)->GetIsPlayer())
-              cout <<"Caiu no spike"<<endl;
+              //cout <<"Caiu no spike"<<endl;
               (*itCharacters)->GetDamage();
       }
     }
@@ -126,7 +126,7 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
         if((*entities)[i]->GetIsPlayer() && (*entities)[j]->GetIsProjectile())
         {
           static_cast<Player*>((*entities)[i])->GetDamage();
-          cout << "Levou dano do projétil" <<endl;
+          //cout << "Levou dano do projétil" <<endl;
         }
         
       

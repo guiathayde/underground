@@ -17,23 +17,24 @@ GraphicManager::~GraphicManager()
   delete (view);
 }
 
-void GraphicManager::InsertTexture(const char *name, sf::Texture *texture)
+void GraphicManager::InsertTexture(string name, sf::Texture *texture)
 {
   textures.emplace(name, texture);
 }
 
-sf::Texture *GraphicManager::GetTexture(const char *name)
+sf::Texture *GraphicManager::GetTexture(string name)
 {
-  map<const char *, sf::Texture *>::iterator itr = textures.begin();
+  map<string, sf::Texture *>::iterator itr = textures.begin();
 
   while (itr != textures.end())
   {
-    if (!strcmp(itr->first, name))
+    if (itr->first == name)
       return itr->second;
     itr++;
   }
   return NULL;
 }
+
 void GraphicManager::ResizeView()
 {
   float aspectRatio = float(window->getSize().x / float(window->getSize().y));

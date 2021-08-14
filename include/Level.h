@@ -30,7 +30,7 @@ protected:
 
   DynamicEntityList *entities;
   list<Character *> characters;
-  list<Obstacle *> platforms;
+  list<Obstacle *> obstacles;
   list<Item *> items;
 
   Player *playerOne;
@@ -39,6 +39,7 @@ protected:
   ColliderManager *colliderManager;
   GraphicManager *graphicManager;
 
+  sf::Texture *backgroundTexture;
   sf::RectangleShape background;
   sf::View *view;
   sf::RenderWindow *window;

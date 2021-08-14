@@ -1,13 +1,16 @@
-#pragma once 
-#include "Obstacle.h"
+#pragma once
 
-class Spike:public Obstacle
+#include "stdfix.h"
+#include "Platform.h"
+
+class WallPlatform : public Platform
 {
 private:
+  sf::Vector2f velocity;
 
 public:
-  Spike(GraphicManager *graphicManager, sf::Vector2f position);
-  ~Spike();
+  WallPlatform(GraphicManager *graphicManager, sf::Vector2f position);
+  ~WallPlatform();
 
   void Draw(sf::RenderWindow &window);
   void Update(float deltaTime, Character *character);
@@ -17,6 +20,3 @@ public:
   sf::Vector2f GetSize() { return body.getSize(); }
   sf::Vector2f GetHalfSize();
 };
-
-
-
