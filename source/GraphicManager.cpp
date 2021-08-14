@@ -151,8 +151,18 @@ void GraphicManager::LoadTexture()
 
   sf::Texture *stair3Texture = new sf::Texture();
   if (!stair3Texture->loadFromFile("assets/background/stair3.png"))
-    cerr << "Erro loading stair2Texture" << endl;
+    cerr << "Erro loading stair3Texture" << endl;
   InsertTexture("stair3", stair3Texture);
+
+  sf::Texture *rankingTexture = new sf::Texture();
+  if (!rankingTexture->loadFromFile("assets/background/rankingBackground.png"))
+    cerr << "Erro loading rankingTexture" << endl;
+  InsertTexture("ranking", rankingTexture);
+
+  sf::Texture *endLevelBackgroundTexture = new sf::Texture();
+  if (!endLevelBackgroundTexture->loadFromFile("assets/background/endLevelBackground.png"))
+    cerr << "Erro loading endLevelBackgroundTexture" << endl;
+  InsertTexture("endLevelBackground", endLevelBackgroundTexture);
 }
 
 void GraphicManager::Draw()

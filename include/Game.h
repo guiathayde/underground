@@ -5,6 +5,7 @@
 #include "MainMenu.h"
 #include "PauseMenu.h"
 #include "Chapters.h"
+#include "Ranking.h"
 
 class Game
 {
@@ -15,6 +16,7 @@ private:
   MainMenu *mainMenu;
   PauseMenu *pauseMenu;
   Chapters *chapters;
+  Ranking *ranking;
   Level *level;
 
 public:

@@ -8,6 +8,7 @@ LevelSubway::LevelSubway(GraphicManager *graphicManager, ColliderManager *graphi
 {
   sizeX = 5600.0f;
   enemiesNum = 6;
+  nextLevel = 3;
 }
 
 LevelSubway::~LevelSubway()

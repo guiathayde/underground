@@ -8,12 +8,21 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
 {
   n_entities = 0;
   score = 0;
+  nextLevel = 0;
+  endLevel = false;
+  name = "";
 
   entities = new DynamicEntityList();
+
+  sf::Texture *endLevelBackgroundTexture = graphicManager->GetTexture("endLevelBackground");
+  endLevelBackground.setSize(static_cast<sf::Vector2f>(graphicManager->GetWindow()->getSize()));
+  endLevelBackground.setOrigin(endLevelBackground.getSize() / 2.0f);
+  endLevelBackground.setTexture(endLevelBackgroundTexture);
 
   if (!font.loadFromFile("assets/fonts/DarkMage.ttf"))
     cerr << "Error loading item DarkMage font!" << endl;
 
+  /* ----------------------------------------------- SetUp Score Display -----------------------------------------------*/
   scoreText[0].setFont(font);
   scoreText[0].setCharacterSize(48);
   scoreText[0].setFillColor(sf::Color::White);
@@ -29,6 +38,42 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   sf::FloatRect textRectInt = scoreText[1].getLocalBounds();
   scoreText[1].setOrigin(0.0f, 0.0f);
   scoreText[1].setPosition(textRectScore.width + 15.0f, 40.0f);
+
+  /* ----------------------------------------------- SetUp End Level Display -----------------------------------------------*/
+  endLevelText[0].setFont(font);
+  endLevelText[0].setCharacterSize(56);
+  endLevelText[0].setFillColor(sf::Color::White);
+  endLevelText[0].setString("Congratulation!");
+  sf::FloatRect textRectEndLevelCongratulation = endLevelText[0].getLocalBounds();
+  endLevelText[0].setOrigin(textRectEndLevelCongratulation.left + textRectEndLevelCongratulation.width / 2.0f, textRectEndLevelCongratulation.top + textRectEndLevelCongratulation.height / 2.0f);
+  endLevelText[0].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / 2.0f, 40.0f);
+
+  endLevelText[1].setFont(font);
+  endLevelText[1].setCharacterSize(44);
+  endLevelText[1].setFillColor(sf::Color::White);
+  endLevelText[1].setString("You escaped from the sewer!");
+  sf::FloatRect textRectEndLevelPhrase = endLevelText[1].getLocalBounds();
+  endLevelText[1].setOrigin(textRectEndLevelPhrase.left + textRectEndLevelPhrase.width / 2.0f, textRectEndLevelPhrase.top + textRectEndLevelPhrase.height / 2.0f);
+  endLevelText[1].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / 2.0f, 40.0f + textRectEndLevelCongratulation.height);
+
+  for (int i = 2, j = 3; i <= 3; i++, j--)
+  {
+    endLevelText[i].setFont(font);
+    endLevelText[i].setCharacterSize(48);
+    endLevelText[i].setFillColor(sf::Color::White);
+    sf::FloatRect textRectEndLevelPhrase = endLevelText[i].getLocalBounds();
+    endLevelText[i].setOrigin(textRectEndLevelPhrase.left + textRectEndLevelPhrase.width / 2.0f, textRectEndLevelPhrase.top + textRectEndLevelPhrase.height / 2.0f);
+    endLevelText[i].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / (float)j, static_cast<float>(graphicManager->GetWindow()->getSize().y) / 2.0f);
+  }
+  endLevelText[2].setFillColor(sf::Color::Red);
+
+  endLevelText[4].setFont(font);
+  endLevelText[4].setCharacterSize(52);
+  endLevelText[4].setFillColor(sf::Color::White);
+  endLevelText[4].setString("Continue");
+  sf::FloatRect textRectEndLevelContinue = endLevelText[4].getLocalBounds();
+  endLevelText[4].setOrigin(textRectEndLevelContinue.left + textRectEndLevelContinue.width / 2.0f, textRectEndLevelContinue.top + textRectEndLevelContinue.height / 2.0f);
+  endLevelText[4].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / 2.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 150.0f);
 }
 
 Level::~Level()
@@ -62,12 +107,69 @@ void Level::CheckCollison()
   colliderManager->CheckItemCollision(items, playerOne, NULL);
 }
 
+void Level::SetEndLevel(sf::Event event)
+{
+  endLevelBackground.setPosition(graphicManager->GetView()->getCenter());
+
+  endLevelText[0].setPosition(graphicManager->GetView()->getCenter().x, 50.0f);
+  endLevelText[1].setPosition(graphicManager->GetView()->getCenter().x, 100.0f);
+  endLevelText[2].setPosition(graphicManager->GetView()->getCenter().x - 300.0f, graphicManager->GetView()->getCenter().y);
+  endLevelText[3].setPosition(graphicManager->GetView()->getCenter().x + 100.0f, graphicManager->GetView()->getCenter().y);
+  endLevelText[4].setPosition(graphicManager->GetView()->getCenter().x, graphicManager->GetView()->getCenter().y + 275.0f);
+
+  endLevelText[3].setString(to_string(score));
+
+  if (event.type == sf::Event::TextEntered)
+    if (event.text.unicode == '\b' && name.size() > 0)
+      name.pop_back();
+    else if (event.text.unicode > 33 && event.text.unicode < 126)
+      name += event.text.unicode;
+
+  endLevelText[2].setString(name);
+}
+
+int Level::SetContinueLevel(sf::Event event)
+{
+  if (event.key.code == sf::Keyboard::Down)
+  {
+    endLevelText[2].setFillColor(sf::Color::White);
+    endLevelText[4].setFillColor(sf::Color::Red);
+    return -1;
+  }
+
+  if (event.key.code == sf::Keyboard::Up)
+  {
+    endLevelText[2].setFillColor(sf::Color::Red);
+    endLevelText[4].setFillColor(sf::Color::White);
+    return -1;
+  }
+
+  if (event.key.code == sf::Keyboard::Return && endLevelText[4].getFillColor() == sf::Color::Red)
+    return nextLevel;
+
+  return -1;
+}
+
 void Level::Draw(sf::RenderWindow &window)
 {
-  window.draw(background);
-  window.draw(scoreText[0]);
-  window.draw(scoreText[1]);
-  entities->DrawEntities(window);
+  list<Item *>::iterator itItem;
+  for (itItem = items.begin(); itItem != items.end(); itItem++)
+    if ((*itItem)->GetCaught() && (*itItem)->GetDoor())
+      endLevel = true;
+
+  if (!endLevel)
+  {
+    window.draw(background);
+    window.draw(scoreText[0]);
+    window.draw(scoreText[1]);
+    entities->DrawEntities(window);
+  }
+  else
+  {
+    window.draw(endLevelBackground);
+    for (int i = 0; i < 5; i++)
+      window.draw(endLevelText[i]);
+  }
 }
 
 void Level::ClearAll()

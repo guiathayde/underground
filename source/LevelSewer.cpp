@@ -8,6 +8,7 @@ LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicC
 {
   sizeX = 5000.0f;
   enemiesNum = 6;
+  nextLevel = 2;
 }
 
 LevelSewer::~LevelSewer()
