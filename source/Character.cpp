@@ -1,28 +1,27 @@
-#include <cmath>
 #include "Character.h"
-#include <list>
-
-Character::Character(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive,bool isPlayer) 
-:animation(texture, imageCount, switchTime),Entity(false)
+Character::Character(GraphicManager *graphicManager,sf::Texture* texture ,sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer)
+: DynamicEntity(graphicManager,false,false,isPlayer)
 {
+  
+  
+  //cout <<"Entou na construtora character"<<endl;
+
   this->speed = speed;
   this->jumpHeight = jumpHeight;
   this->hearts = hearts;
   this->isAlive = isAlive;
   row = 0;
   faceRight = true;
-
-  
 }
 
 Character::~Character()
 {
 }
 
-void Character::Draw(sf::RenderWindow &window){
+void Character::Draw(sf::RenderWindow &window)
+{
   window.draw(body);
 }
-
 
 void Character::OnCollision(sf::Vector2f direction)
 {
@@ -40,4 +39,8 @@ void Character::OnCollision(sf::Vector2f direction)
   {
     velocity.y = 0.0f;
   }
+}
+
+void Character::Update(float deltaTime, Character* character){
+
 }

@@ -3,6 +3,8 @@
 Animation::Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime)
 {
   
+  //cout <<"entrou no animation" << endl;
+
   this->imageCount = imageCount;
   this->switchTime = switchTime;
   
@@ -11,6 +13,7 @@ Animation::Animation(sf::Texture *texture, sf::Vector2u imageCount, float switch
 
   uvRect.width = texture->getSize().x / float(imageCount.x);
   uvRect.height = texture->getSize().y / float(imageCount.y);
+
 }
 
 Animation::~Animation()

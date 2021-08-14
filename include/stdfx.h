@@ -1,9 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <map>
-#include <cmath>
+#include <list>
 #include <iostream>
+#include <string>
 #include "string.h"
-using std::cout;
-using std::endl;
 using namespace std;

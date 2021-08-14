@@ -2,16 +2,20 @@
 using namespace std;
 
 #include "PauseMenu.h"
-#include "MainMenu.h"
 #include "Level.h"
+#include "GraphicManager.h"
 
-PauseMenu::PauseMenu(float width, float height)
+PauseMenu::PauseMenu(GraphicManager *graphicManager) : Menu(graphicManager)
 {
   selectedItemIndex = 0;
+  isPlaying = false;
   isPaused = false;
+  isChapters = false;
 
-  centerPosition.x = width / 2;
-  centerPosition.y = height / 2;
+  sf::Vector2f windowSize = static_cast<sf::Vector2f>(graphicManager->GetWindow()->getSize());
+
+  centerPosition.x = windowSize.x / 2.0f;
+  centerPosition.y = windowSize.y / 2.0f;
 
   if (!font.loadFromFile("assets/fonts/DarkMage.ttf"))
     cerr << "Error loading DarkMage font!" << endl;
@@ -31,13 +35,13 @@ PauseMenu::~PauseMenu()
 {
 }
 
-void PauseMenu::Draw(sf::RenderWindow &window, sf::View &view)
+void PauseMenu::Draw(sf::RenderWindow *window, sf::View *view)
 {
-  menu[0].setPosition(view.getCenter().x - 500.0f, view.getCenter().y - 200.0f);
-  menu[1].setPosition(view.getCenter().x - 500.0f, view.getCenter().y - 100.0f);
+  menu[0].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 200.0f);
+  menu[1].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 100.0f);
 
   for (int i = 0; i < MENU_MAX_ITEMS; i++)
-    window.draw(menu[i]);
+    window->draw(menu[i]);
 }
 
 void PauseMenu::MoveUp()
@@ -60,36 +64,34 @@ void PauseMenu::MoveDown()
   }
 }
 
-void PauseMenu::SelectItem(sf::Event event, MainMenu &mainMenu, Level *level)
+int PauseMenu::SelectItem(sf::Event event, Level *level)
 {
   switch (event.key.code)
   {
   case sf::Keyboard::Up:
     MoveUp();
-    break;
+    return -1;
 
   case sf::Keyboard::Down:
     MoveDown();
-    break;
+    return -1;
 
   case sf::Keyboard::Return:
     switch (GetPressedItem())
     {
     case 0:
-      SetPause(false);
-      break;
+      return 0;
 
     case 1:
-      level->ClearAll();
-      delete (level);
-      mainMenu.SetPlaying(false);
-      break;
+      return 1;
 
     default:
-      break;
+      return -1;
     }
 
   default:
-    break;
+    return -1;
   }
+
+  return -1;
 }

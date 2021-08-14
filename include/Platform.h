@@ -3,19 +3,20 @@
 #include "stdfix.h"
 #include "Obstacle.h"
 
-class Platform:public Obstacle
-{ 
+class Platform : public Obstacle
+{
 private:
-
-sf::Vector2f velocity;
+  sf::Vector2f velocity;
 
 public:
-  
-  Platform(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position);
+  Platform(GraphicManager *graphicManager, sf::Vector2f size, sf::Vector2f position);
   ~Platform();
 
   void Draw(sf::RenderWindow &window);
+  void Update(float deltaTime, Character *character);
   void OnCollision(sf::Vector2f direction);
 
-  Collider GetCollider(){return Collider(body);}
+  sf::Vector2f GetPosition() { return body.getPosition(); }
+  sf::Vector2f GetSize() { return body.getSize(); }
+  sf::Vector2f GetHalfSize();
 };

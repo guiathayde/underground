@@ -1,15 +1,8 @@
 #include "Entity.h"
 
-Entity::Entity(bool isPlatform)
-{
-      this->isPlatform = isPlatform;
+Entity::Entity(GraphicManager* graphicManager){
+    //cout <<"Construtora do entity"<<endl;
+    this->graphicManager = graphicManager;
 }
 
-
-Entity::~Entity(){
-
-}
-
-void Entity::Drawn(sf::RenderWindow &window){
-      window.draw(body);
-}
+Entity::~Entity(){}

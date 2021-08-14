@@ -4,16 +4,10 @@
 using std::cout;
 using std::endl;
 
-Enemy::Enemy(sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float totalStunTime, float jumoHeight, int hearts, bool isAlive, bool isPlayer) : Character(texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer), totalStunTime(totalStunTime)
+Enemy::Enemy(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,float totalStunTime, int hearts, bool isAlive, bool isPlayer)
+:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer), totalStunTime(totalStunTime)
 {
 
-    isStunned = false;
-    coolDown = 0.0f;
-
-    body.setSize(size);
-    body.setOrigin(body.getSize() / 2.0f);
-    body.setPosition(origin.x, origin.y);
-    body.setTexture(texture);
 }
 
 Enemy::~Enemy()
@@ -22,15 +16,22 @@ Enemy::~Enemy()
 
 void Enemy::Update(float deltaTime, Character *character)
 {
-    sf::Vector2f direction;
-    float push = 0.1f;
+
+    cout << "Entrou no update do enemy"<< endl;
 
     Player *p;
     p = static_cast<Player *>(character);
 
-    velocity.x *= 0.5f; // time to stop action walk (slow down)
-    if (SeePlayer(*p))
+    if (isStunned && coolDown > totalStunTime)
     {
+        isStunned = false;
+    }
+    coolDown += deltaTime;
+
+    velocity.x *= 0.5f; // time to stop action walk (slow down)
+    if (!isStunned && SeePlayer(*p))
+    {
+        coolDown = 0;
         velocity.x = Attack(*p);
     }
 
@@ -52,25 +53,9 @@ void Enemy::Update(float deltaTime, Character *character)
         isAlive = false;
     }
 
-    if (GetCollider().CheckOnHeadCollision(p->GetCollider(), direction, push))
-    {
-        row = 0;
-        isStunned = true;
-    }
-
-    if (!GetCollider().CheckOnHeadCollision(p->GetCollider(), direction, push) && GetCollider().CheckCollision(p->GetCollider(), direction, push) && !isStunned)
-    {
-        //cout <<p->GetHearts()<<endl;
-        p->GetDamage();
-    }
-    animation.Update(row, deltaTime, faceRight);
-    body.setTextureRect(animation.uvRect);
+    animation->Update(row, deltaTime, faceRight);
+    body.setTextureRect(animation->uvRect);
     body.move(velocity * deltaTime);
-}
-
-void Enemy::SetPosition(sf::Vector2f position)
-{
-    body.setPosition(position);
 }
 
 bool Enemy::SeePlayer(Player p)

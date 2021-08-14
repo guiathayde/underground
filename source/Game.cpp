@@ -1,14 +1,25 @@
+#include "stdfx.h"
 #include "Game.h"
+#include "LevelSewer.h"
+#include "LevelSubway.h"
+#include "LevelOverground.h"
 
 Game::Game()
 {
   graphicManager = new GraphicManager();
-  mainMenu = new MainMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
-  pauseMenu = new PauseMenu(graphicManager->GetWindow()->getSize().x, graphicManager->GetWindow()->getSize().y);
+  mainMenu = new MainMenu(graphicManager);
+  pauseMenu = new PauseMenu(graphicManager);
+  chapters = new Chapters(graphicManager);
+  cout << "saiu da contrutora do game"<<endl;
 }
 
 Game::~Game()
 {
+  delete (graphicManager);
+  delete (mainMenu);
+  delete (pauseMenu);
+  delete (chapters);
+  delete (level);
 }
 
 void Game::Execute()
@@ -29,13 +40,11 @@ void Game::Execute()
     {
       switch (event.type)
       {
-
       case sf::Event::Closed:
         graphicManager->GetWindow()->close();
         break;
 
       case sf::Event::Resized:
-        //cout <<"resized"<<endl;
         graphicManager->ResizeView();
         break;
 
@@ -45,22 +54,56 @@ void Game::Execute()
           pauseMenu->SetPause(false);
         else if (event.key.code == sf::Keyboard::Escape)
           pauseMenu->SetPause(true);
-        else if (!mainMenu->GetPlaying())
+        else if (chapters->GetChapters())
         {
-          int numberAction = mainMenu->SelectItem(event);
-          if (numberAction == 1)
+          int numberAction = chapters->SelectItem(event, NULL);
+          if (numberAction == 0)
           {
-            LevelSewer *levelsewer = new LevelSewer(graphicManager);
-            levelsewer->Initialize();
-            graphicManager->SetPlayerOne(levelsewer->GetPlayer());
-            graphicManager->SetCurrentLevel(levelsewer);
-            mainMenu->SetPlaying(true);
-            cout << "Criou level" << endl;
+            chapters->SetChapters(false);
           }
-
+          else if (numberAction == 1)
+          {
+            cout << "Inicializou aqui" <<endl;
+            LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
+            levelSewer->Initialize();
+            level = levelSewer;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
+            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
+          }
           else if (numberAction == 2)
           {
-            // chapters
+            LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
+            levelSubway->Initialize();
+            level = levelSubway;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
+            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
+          }
+          else if (numberAction == 3)
+          {
+            LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
+            levelOverground->Initialize();
+            level = levelOverground;
+            mainMenu->SetPlaying(true);
+            chapters->SetChapters(false);
+            cout << mainMenu->GetPlaying() << chapters->GetChapters() << endl;
+          }
+        }
+        else if (!mainMenu->GetPlaying())
+        {
+          int numberAction = mainMenu->SelectItem(event, NULL);
+          if (numberAction == 1)
+          {
+            cout << "Incializou o level"<<endl;
+            LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
+            levelsewer->Initialize();
+            mainMenu->SetPlaying(true);
+            level = levelsewer;
+          }
+          else if (numberAction == 2)
+          {
+            chapters->SetChapters(true);
           }
           else if (numberAction == 3)
           {
@@ -71,20 +114,18 @@ void Game::Execute()
             graphicManager->GetWindow()->close();
           }
         }
-        //cout <<mainMenu->GetPlaying()<<endl;
 
-        if (pauseMenu->GetPause())
+        if (pauseMenu->GetPause() && mainMenu->GetPlaying())
         {
-          //cout <<"Não era para entrar aqui"<<endl;
-          pauseMenu->SelectItem(event, *mainMenu, graphicManager->GetCurrentLevel());
-        }
-
-        else if (mainMenu->GetPlaying() && !graphicManager->GetCurrentLevel()->GetPlayer()->GetIsAlive())
-        {
-          //cout <<"Não era para entrar aqui"<<endl;
-          graphicManager->GetCurrentLevel()->ClearAll();
-          delete (graphicManager->GetCurrentLevel());
-          mainMenu->SetPlaying(false);
+          int numberAction = pauseMenu->SelectItem(event, level);
+          if (numberAction == 0)
+            pauseMenu->SetPause(false);
+          else if (numberAction == 1)
+          {
+            level->ClearAll();
+            mainMenu->SetPlaying(false);
+            pauseMenu->SetPause(false);
+          }
         }
 
         break;
@@ -94,28 +135,35 @@ void Game::Execute()
         break;
       }
     }
-
-    graphicManager->GetWindow()->clear();
-
-    if (pauseMenu->GetPause() && mainMenu->GetPlaying())
+    if (graphicManager)
     {
-      graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
-      pauseMenu->Draw(*graphicManager->GetWindow(), *graphicManager->GetView());
-    }
-    else if (mainMenu->GetPlaying())
-    {
-      graphicManager->GetCurrentLevel()->Update(deltaTime);
-      graphicManager->GetCurrentLevel()->CheckCollison();
-      graphicManager->SetViewCenter();
-      graphicManager->GetCurrentLevel()->Draw(*graphicManager->GetWindow());
-    }
-    else if (!mainMenu->GetPlaying())
-    {
-      graphicManager->GetView()->setCenter(mainMenu->GetCenterPosition());
-      mainMenu->Draw(*graphicManager->GetWindow());
-    }
+      graphicManager->GetWindow()->clear();
 
-    graphicManager->GetWindow()->setView(*graphicManager->GetView());
-    graphicManager->GetWindow()->display();
+      if (pauseMenu->GetPause() && mainMenu->GetPlaying())
+      {
+        level->Draw(*graphicManager->GetWindow());
+        pauseMenu->Draw(graphicManager->GetWindow(), graphicManager->GetView());
+      }
+      else if (mainMenu->GetPlaying())
+      {
+        level->CheckCollison();
+        level->Update(deltaTime);
+        level->Draw(*graphicManager->GetWindow());
+        level->SetViewCenter();
+      }
+      else if (!mainMenu->GetPlaying() && chapters->GetChapters())
+      {
+        graphicManager->GetView()->setCenter(chapters->GetCenterPosition());
+        chapters->Draw(graphicManager->GetWindow(), graphicManager->GetView());
+      }
+      else if (!mainMenu->GetPlaying() && !chapters->GetChapters())
+      {
+        graphicManager->GetView()->setCenter(mainMenu->GetCenterPosition());
+        mainMenu->Draw(graphicManager->GetWindow(), NULL);
+      }
+
+      graphicManager->GetWindow()->setView(*graphicManager->GetView());
+      graphicManager->GetWindow()->display();
+    }
   }
 }

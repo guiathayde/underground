@@ -1,15 +1,23 @@
-#include <iostream>
-using namespace std;
-
 #include "MainMenu.h"
+#include "Level.h"
+#include "GraphicManager.h"
 
-MainMenu::MainMenu(float width, float height)
+MainMenu::MainMenu(GraphicManager *graphicManager) : Menu(graphicManager)
 {
   selectedItemIndex = 1;
   isPlaying = false;
+  isPaused = false;
+  isChapters = false;
 
-  centerPosition.x = width / 2;
-  centerPosition.y = height / 2;
+  sf::Vector2f windowSize = static_cast<sf::Vector2f>(graphicManager->GetWindow()->getSize());
+
+  centerPosition.x = windowSize.x / 2.0f;
+  centerPosition.y = windowSize.y / 2.0f;
+
+  sf::Texture *backgroundTexture = graphicManager->GetTexture("mainMenuBackgroundTexture");
+  background.setSize(windowSize);
+  background.setTexture(backgroundTexture);
+  background.setOrigin(0.0f, 0.0f);
 
   if (!titleFont.loadFromFile("assets/fonts/Aokigahara.ttf"))
     cerr << "Error loading title Aokigahara font!" << endl;
@@ -25,7 +33,7 @@ MainMenu::MainMenu(float width, float height)
   menu[0].setString("Underground");
   textRect = menu[0].getLocalBounds();
   menu[0].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-  menu[0].setPosition(sf::Vector2f((width / 2) - 35.0f, height / (MAINMENU_MAX_ITEMS + 1) * 1.85));
+  menu[0].setPosition(sf::Vector2f((windowSize.x / 2) - 35.0f, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 1.85));
 
   menu[1].setFont(itemFont);
   menu[1].setCharacterSize(54);
@@ -33,7 +41,7 @@ MainMenu::MainMenu(float width, float height)
   menu[1].setString("Play");
   textRect = menu[1].getLocalBounds();
   menu[1].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-  menu[1].setPosition(sf::Vector2f(width / 2, height / (MAINMENU_MAX_ITEMS + 1) * 2.25));
+  menu[1].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 2.25));
 
   menu[2].setFont(itemFont);
   menu[2].setCharacterSize(54);
@@ -41,7 +49,7 @@ MainMenu::MainMenu(float width, float height)
   menu[2].setString("Chapters");
   textRect = menu[2].getLocalBounds();
   menu[2].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-  menu[2].setPosition(sf::Vector2f(width / 2, height / (MAINMENU_MAX_ITEMS + 1) * 3.25));
+  menu[2].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 3.25));
 
   menu[3].setFont(itemFont);
   menu[3].setCharacterSize(54);
@@ -49,7 +57,7 @@ MainMenu::MainMenu(float width, float height)
   menu[3].setString("Ranking");
   textRect = menu[3].getLocalBounds();
   menu[3].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-  menu[3].setPosition(sf::Vector2f(width / 2, height / (MAINMENU_MAX_ITEMS + 1) * 4.25));
+  menu[3].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 4.25));
 
   menu[4].setFont(itemFont);
   menu[4].setCharacterSize(54);
@@ -57,26 +65,20 @@ MainMenu::MainMenu(float width, float height)
   menu[4].setString("Quit");
   textRect = menu[4].getLocalBounds();
   menu[4].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-  menu[4].setPosition(sf::Vector2f(width / 2, height / (MAINMENU_MAX_ITEMS + 1) * 5.25));
+  menu[4].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 5.25));
 }
 
 MainMenu::~MainMenu()
 {
+  delete (backgroundTexture);
 }
 
-void MainMenu::Draw(sf::RenderWindow &window)
+void MainMenu::Draw(sf::RenderWindow *window, sf::View *view)
 {
-  static sf::Texture backgroundTexture;
-  backgroundTexture.loadFromFile("assets/background/mainMenuBackground.png");
-
-  sf::Vector2f rectangleSize = static_cast<sf::Vector2f>(window.getSize());
-  background.setSize(rectangleSize);
-  background.setTexture(&backgroundTexture);
-  background.setOrigin(0.0f, 0.0f);
-  window.draw(background);
+  window->draw(background);
 
   for (int i = 0; i < MAINMENU_MAX_ITEMS; i++)
-    window.draw(menu[i]);
+    window->draw(menu[i]);
 }
 
 void MainMenu::MoveUp()
@@ -99,7 +101,7 @@ void MainMenu::MoveDown()
   }
 }
 
-int MainMenu::SelectItem(sf::Event event)
+int MainMenu::SelectItem(sf::Event event, Level *level)
 {
   switch (event.key.code)
   {

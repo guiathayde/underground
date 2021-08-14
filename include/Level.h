@@ -2,37 +2,60 @@
 
 #include "stdfx.h"
 
-#include "CharacterList.h"
-#include "EntityList.h"
+#include "Entity.h"
+#include "DynamicEntityList.h"
+#include "Character.h"
+#include "ColliderManager.h"
 
-class Level
+class Player;
+class Obstacle;
+class Item;
+class GraphicManager;
+class ColliderManager;
+class Level : public Entity
 {
 protected:
-  int level;;
+  int level;
   int n_entities;
+  int score;
 
-  EntityList entities;
-  CharacterList characters;
+  sf::Font font;
+  sf::Text scoreText[2];
 
-  sf::RectangleShape background;
-
-  sf::View *view;
-  float sizeX;
+  DynamicEntityList *entities;
+  list<Character *> characters;
+  list<Obstacle *> platforms;
+  list<Item *> items;
 
   Player *playerOne;
+  Player *playerTwo;
+
+  ColliderManager *colliderManager;
+  GraphicManager *graphicManager;
+
+  sf::RectangleShape background;
+  sf::View *view;
+  sf::RenderWindow *window;
+
+  float sizeX;
 
 public:
-  Level();
+  Level(GraphicManager *graphicManager, ColliderManager *colliderManager);
   virtual ~Level();
 
   virtual void Initialize() = 0;
-  void CheckCollison();
+  virtual void InitializeCharacters() = 0;
   void Update(float deltaTime);
+  void CheckCollison();
   void Draw(sf::RenderWindow &window);
-  void SetPlayer(Player *p) { playerOne = p; };
+
+  Player *GetPlayer() { return playerOne; };
+  void SetPlayerOne(Player *p) { playerOne = p; };
+  void SetPlayerTwo(Player *p) { playerTwo = p; };
+
+  void SetViewCenter();
+
   void ClearAll();
-  
+
   virtual float GetSizeX() { return sizeX; }
-  
-  Player *GetPlayer();
 };

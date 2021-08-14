@@ -1,18 +1,20 @@
 #pragma once
 
 #include "Level.h"
-#include "GraphicManager.h"
+
+
 
 class LevelSewer : public Level
 {
 private:
   int enemiesNum;
-  GraphicManager *graphicManager;
 
 public:
-  LevelSewer(GraphicManager *graphicManager);
+  LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider);
   ~LevelSewer();
 
+  void InitializeCharacters();
   void Initialize();
+
   float GetSizeX() { return sizeX; }
 };

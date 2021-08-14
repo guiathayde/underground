@@ -12,7 +12,6 @@ public:
         T2 *info;
 
         Element<T2> *pNext;
-        Element<T2> *pPrev;
 
     public:
         Element(T2 *info)
@@ -20,14 +19,12 @@ public:
 
             SetInfo(info);
             pNext = NULL;
-            pPrev = NULL;
         }
 
         ~Element()
         {
 
             pNext = NULL;
-            pPrev = NULL;
         }
 
         void SetInfo(T2 *in)
@@ -41,14 +38,10 @@ public:
         {
             pNext = pN;
         }
-        void SetPrev(Element<T2> *pP)
-        {
-            pPrev = pP;
-        }
+       
 
         T2 *GetInfo() { return info; }
         Element<T2> *GetNext() { return pNext; }
-        Element<T2> *GetPrev() { return pPrev; }
     };
 
 private:
@@ -107,11 +100,9 @@ void List<T1>::Insert(T1 *pnew)
 
     Element<T1> *tmp = NULL;
     tmp = new Element<T1>(pnew);
-
     if (pFirst == NULL)
     {
         pFirst = tmp;
-        pFirst->SetPrev(NULL);
         pFirst->SetNext(NULL);
         pLast = pFirst;
     }
@@ -119,7 +110,6 @@ void List<T1>::Insert(T1 *pnew)
     else
     {
         pLast->SetNext(tmp);
-        tmp->SetPrev(pLast);
         pLast = tmp;
     }
 
@@ -129,7 +119,6 @@ void List<T1>::Insert(T1 *pnew)
 template <class T1>
 void List<T1>::ClearAll()
 {
-
     while (pFirst != NULL)
     {
         Element<T1> *tmp = NULL;
@@ -143,16 +132,28 @@ void List<T1>::ClearAll()
 template <class T1>
 void List<T1>::RemoveInfo(T1 *pRemove)
 {
-    pFirst = pAux;
-    while (pAux != NULL)
-    {
 
-        if (pAux->GetInfo() == pRemove)
-        {
-            pAux->GetPrev()->SetNext(pAux->GetNext());
-            pAux->GetNext()->SetPrev(pAux->GetPrev());
-            delete (pAux);
+    Element<T1> *tmp_atual = NULL;
+    Element<T1> *tmp_anterior = NULL;
+
+    tmp_atual = pFirst;
+    
+    while (tmp_atual)
+    {
+        if (tmp_atual->GetInfo() == pRemove)
+        {   
+            if(tmp_anterior){
+                tmp_anterior->SetNext(tmp_atual->GetNext());
+            }
+            delete(tmp_atual);
+            n_elementos--;
+            return;
         }
+        if(tmp_atual)
+            tmp_anterior = tmp_atual;
+        
+        if(tmp_atual)
+            tmp_atual = tmp_atual->GetNext();
     }
 }
 
@@ -173,6 +174,7 @@ T1 *List<T1>::operator[](int x)
             return pA->GetInfo();
     }
     else
-        cerr << "Error using operator of the List" << endl;
+        cerr << "Error using operator of the List"
+             << "o n de elementos" << n_elementos << " o x " << x << endl;
     return NULL;
 }
