@@ -3,6 +3,7 @@
 #include "GraphicManager.h"
 #include "ColliderManager.h"
 #include "Item.h"
+#include "Ranking.h"
 
 Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) : graphicManager(graphicManager), colliderManager(colliderManager)
 {
@@ -128,7 +129,7 @@ void Level::SetEndLevel(sf::Event event)
   endLevelText[2].setString(name);
 }
 
-int Level::SetContinueLevel(sf::Event event)
+int Level::SetContinueLevel(sf::Event event, Ranking *ranking)
 {
   if (event.key.code == sf::Keyboard::Down)
   {
@@ -145,7 +146,10 @@ int Level::SetContinueLevel(sf::Event event)
   }
 
   if (event.key.code == sf::Keyboard::Return && endLevelText[4].getFillColor() == sf::Color::Red)
+  {
+    ranking->SetRank(name, score);
     return nextLevel;
+  }
 
   return -1;
 }

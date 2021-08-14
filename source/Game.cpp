@@ -108,7 +108,6 @@ void Game::Execute()
           int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
-            cout << "entrou aqwui" << endl;
             LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
             levelSewer->Initialize();
             graphicManager->SetPlayerOne(levelSewer->GetPlayer());
@@ -131,7 +130,7 @@ void Game::Execute()
         }
         else if (level != NULL && level->GetEndLevel())
         {
-          int numberAction = level->SetContinueLevel(event);
+          int numberAction = level->SetContinueLevel(event, ranking);
           if (numberAction == 0)
           {
             level->ClearAll();

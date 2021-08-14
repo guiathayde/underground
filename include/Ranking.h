@@ -13,7 +13,7 @@ private:
   int scoreLevelTwo;
   int scoreLevelThree;
 
-  map<const char *, int> ranking;
+  map<string, int> ranking;
 
   sf::Font font;
   sf::RectangleShape background;
@@ -39,8 +39,7 @@ public:
   void SetScoreLevelThree(int score) { scoreLevelThree = score; }
   int GetScoreLevelThree() { return scoreLevelThree; }
 
-  void InsertRank(const char *name, int score);
-  void SetRank(const char *name, int score);
+  void SetRank(string name, int score);
 
   int SelectItem(sf::Event event, Level *level);
 };

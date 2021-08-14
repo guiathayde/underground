@@ -8,6 +8,7 @@
 class Item;
 class GraphicManager;
 class ColliderManager;
+class Ranking;
 class Level : public Entity
 {
 protected:
@@ -47,7 +48,7 @@ public:
   virtual void InitializeCharacters() = 0;
 
   void SetEndLevel(sf::Event event);
-  int SetContinueLevel(sf::Event event);
+  int SetContinueLevel(sf::Event event, Ranking *ranking);
 
   void Update(float deltaTime);
   void CheckCollison();
