@@ -1,10 +1,12 @@
 #include "SaveManager.h"
 #include "Level.h"
+#include "Ranking.h"
 #include "Enemy.h"
 
-SaveManager::SaveManager(Level *level)
+SaveManager::SaveManager(Level *level, Ranking *ranking)
 {
   currentLevel = level;
+  currentRanking = ranking;
 }
 
 SaveManager::~SaveManager()
@@ -12,17 +14,13 @@ SaveManager::~SaveManager()
   delete currentLevel;
 }
 
-void SaveManager::SaveLevel(string nameLevel)
+void SaveManager::SaveLevel()
 {
-  string filePath = "data/saves/";
-  filePath += nameLevel + ".txt";
-  ofstream Writer(filePath, ios::out);
+  string filePath = "data/saves/" + currentLevel->GetNameLevel() + ".txt";
+  ofstream Writer(currentLevel->GetNameLevel(), ios::out);
 
   if (!Writer)
-  {
     cerr << "File cannot be opened" << endl;
-    fflush(stdin);
-  }
 
   list<Character *>::iterator itCharacter;
   for (itCharacter = currentLevel->GetListCharacters()->begin(); itCharacter != currentLevel->GetListCharacters()->end(); itCharacter++)
@@ -35,16 +33,13 @@ void SaveManager::SaveLevel(string nameLevel)
   Writer.close();
 }
 
-void SaveManager::ReadLevel(string nameLevel)
+void SaveManager::ReadLevel()
 {
-  string filePath = "data/saves/" + nameLevel + ".txt";
+  string filePath = "data/saves/" + currentLevel->GetNameLevel() + ".txt";
   ifstream Reader(filePath, ios::in);
 
   if (!Reader)
-  {
     cerr << "File cannot be opened" << endl;
-    fflush(stdin);
-  }
 
   while (!Reader.eof())
   {
@@ -64,4 +59,48 @@ void SaveManager::ReadLevel(string nameLevel)
   }
 
   Reader.close();
+}
+
+void SaveManager::SaveScore()
+{
+  ofstream Writer("data/saves/ranking.txt", ios::out);
+
+  if (!Writer)
+    cerr << "File ranking.txt cannot be opened" << endl;
+
+  map<string, int>::iterator itRank;
+  for (itRank = currentRanking->GetRank()->begin(); itRank != currentRanking->GetRank()->end(); itRank++)
+  {
+    Writer << itRank->first << " "
+           << itRank->second << " "
+           << endl;
+  }
+
+  Writer.close();
+}
+
+void SaveManager::ReadRanking()
+{
+  ifstream Reader("data/saves/ranking.txt", ios::in);
+
+  if (Reader)
+  {
+    while (!Reader.eof())
+    {
+      string name;
+      int score;
+
+      Reader >> name >> score;
+
+      if (!name.empty() && score)
+        currentRanking->SetRank(name, score);
+    }
+
+    Reader.close();
+  }
+  else
+  {
+    cerr << "File ranking.txt cannot be opened" << endl;
+    Reader.close();
+  }
 }

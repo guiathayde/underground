@@ -40,6 +40,7 @@ public:
   int GetScoreLevelThree() { return scoreLevelThree; }
 
   void SetRank(string name, int score);
+  map<string, int> *GetRank() { return &ranking; }
 
   int SelectItem(sf::Event event, Level *level);
 };

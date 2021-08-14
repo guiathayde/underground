@@ -6,6 +6,7 @@
 
 LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
+  nameLevel = "Sewer";
   sizeX = 5000.0f;
   enemiesNum = 6;
   nextLevel = 2;

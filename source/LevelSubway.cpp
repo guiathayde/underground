@@ -6,6 +6,7 @@
 
 LevelSubway::LevelSubway(GraphicManager *graphicManager, ColliderManager *graphicCollider) : Level(graphicManager, graphicCollider)
 {
+  nameLevel = "Subway";
   sizeX = 5600.0f;
   enemiesNum = 6;
   nextLevel = 3;

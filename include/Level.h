@@ -12,12 +12,12 @@ class Ranking;
 class Level : public Entity
 {
 protected:
-  int level;
   int n_entities;
   int score;
   int nextLevel;
   bool endLevel;
 
+  string nameLevel;
   string name;
 
   sf::Font font;
@@ -55,6 +55,8 @@ public:
   void Draw(sf::RenderWindow &window);
 
   list<Character *> *GetListCharacters() { return &characters; }
+
+  string GetNameLevel() { return nameLevel; }
 
   int GetScore() { return score; }
   bool GetEndLevel() { return endLevel; }

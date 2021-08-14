@@ -12,11 +12,13 @@ Game::Game()
   chapters = new Chapters(graphicManager);
   ranking = new Ranking(graphicManager);
   level = NULL;
+  saveManager = new SaveManager(level, ranking);
 }
 
 Game::~Game()
 {
   delete (graphicManager);
+  delete (saveManager);
   delete (mainMenu);
   delete (pauseMenu);
   delete (chapters);
@@ -26,6 +28,8 @@ Game::~Game()
 
 void Game::Execute()
 {
+  saveManager->ReadRanking();
+
   float deltaTime = 0.0f;
   sf::Clock clock;
 
@@ -125,6 +129,7 @@ void Game::Execute()
           }
           else if (numberAction == 4)
           {
+            saveManager->SaveScore();
             graphicManager->GetWindow()->close();
           }
         }
