@@ -74,7 +74,7 @@ void Game::Execute()
           else if (numberAction == 1)
           {
             LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
-            levelSewer->Initialize(NULL);
+            levelSewer->Initialize();
             level = levelSewer;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
@@ -82,7 +82,7 @@ void Game::Execute()
           else if (numberAction == 2)
           {
             LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
-            levelSubway->Initialize(NULL);
+            levelSubway->Initialize();
             level = levelSubway;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
@@ -90,7 +90,7 @@ void Game::Execute()
           else if (numberAction == 3)
           {
             LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
-            levelOverground->Initialize(NULL);
+            levelOverground->Initialize();
             level = levelOverground;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
@@ -107,7 +107,7 @@ void Game::Execute()
           if (numberAction == 1)
           {
             LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
-            levelsewer->Initialize(NULL);
+            levelsewer->Initialize();
             mainMenu->SetPlaying(true);
             level = levelsewer;
           }
@@ -119,27 +119,32 @@ void Game::Execute()
             if (nameLevel == "Sewer")
             {
               LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
-              levelSewer->Initialize(saveManager->GetEntities());
-              levelSewer->SetList(saveManager->GetEntities(), *saveManager->GetCharacters());
               level = levelSewer;
+              saveManager->SetLevel(level);
+              saveManager->ReadLevel();
+              
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
+              cout << "setou o level" <<endl;
             }
             else if (nameLevel == "Subway")
             {
               LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
-              levelSubway->Initialize(NULL);
-              levelSubway->SetList(saveManager->GetEntities(), *saveManager->GetCharacters());
               level = levelSubway;
+              saveManager->SetLevel(level);
+              saveManager->ReadLevel();
+              
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
+              cout << "setou o level" <<endl;
             }
             else if (nameLevel == "Overground")
             {
               LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
-              levelOverground->Initialize(NULL);
-              levelOverground->SetList(saveManager->GetEntities(), *saveManager->GetCharacters());
               level = levelOverground;
+              saveManager->SetLevel(level);              
+              saveManager->ReadLevel();
+              
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
             }
@@ -170,7 +175,7 @@ void Game::Execute()
           {
             level->ClearAll();
             LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
-            levelSubway->Initialize(NULL);
+            levelSubway->Initialize();
             level = levelSubway;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
@@ -179,7 +184,7 @@ void Game::Execute()
           {
             level->ClearAll();
             LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
-            levelOverground->Initialize(NULL);
+            levelOverground->Initialize();
             level = levelOverground;
             mainMenu->SetPlaying(true);
             chapters->SetChapters(false);
@@ -222,8 +227,11 @@ void Game::Execute()
       }
       else if (mainMenu->GetPlaying())
       {
+        cout << "Entrou no getPlaying" <<endl;
         level->CheckCollison();
+        cout << "Saiu do checkCollision" <<endl;
         level->Update(deltaTime);
+        cout << "Saiu do update" <<endl;
         level->Draw(*graphicManager->GetWindow());
         level->SetViewCenter();
       }

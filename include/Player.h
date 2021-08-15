@@ -17,4 +17,5 @@ public:
 
   virtual void Update(float deltaTime, Character *p);
   virtual void SetPosition(sf::Vector2f position) { body.setPosition(position); }
+  void SetHearts(int hearts) { this->hearts = hearts; }
 };

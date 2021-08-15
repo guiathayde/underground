@@ -1,8 +1,10 @@
 #include "Stair.h"
 
 Stair::Stair(GraphicManager *graphicManager, sf::Vector2f position, int number) : 
-Item(graphicManager,position)
+Item(graphicManager,position,STAIR_ID)
 {
+  this->number = number;
+
   isCaught = false;
   isStair = false;
   isDoor = false;

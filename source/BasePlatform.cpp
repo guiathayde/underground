@@ -1,7 +1,7 @@
 #include "BasePlatform.h"
 
 BasePlatform::BasePlatform(GraphicManager *graphicManager, sf::Vector2f size, sf::Vector2f position)
-: Platform(graphicManager,position)
+: Platform(graphicManager,position, BASE_PLATFORM_ID)
 {
   sf::Texture *texture = graphicManager->GetTexture("basePlataformTexture");
 

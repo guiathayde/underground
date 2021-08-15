@@ -3,12 +3,18 @@
 #include "stdfix.h"
 #include "Item.h"
 
+#define STAIR_ID 12
+
 class Stair : public Item
 {
 private:
+
+  int number;
+
   bool isCaught;
   bool isStair;
   bool isDoor;
+
 
 public:
   Stair(GraphicManager *graphciManager, sf::Vector2f position, int number);
@@ -25,6 +31,8 @@ public:
 
   void SetDoor(bool state) { isDoor = state; }
   bool GetDoor() { return isDoor; }
+
+  int GetNumber(){return number;}
 
   void SetPosition(sf::Vector2f position) { body.setPosition(position); }
   sf::Vector2f GetPosition() { return body.getPosition(); }

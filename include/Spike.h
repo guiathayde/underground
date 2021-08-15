@@ -1,6 +1,8 @@
 #pragma once 
 #include "Obstacle.h"
 
+#define SPIKE_ID 10
+
 class Spike:public Obstacle
 {
 private:

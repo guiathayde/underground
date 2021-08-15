@@ -1,7 +1,7 @@
 #include "WallPlatform.h"
 
 WallPlatform::WallPlatform(GraphicManager *graphicManager, sf::Vector2f position)
-: Platform(graphicManager,position)
+: Platform(graphicManager,position, WALL_PLATFORM_ID)
 {
   sf::Texture *texture = graphicManager->GetTexture("wallPlatform");
 

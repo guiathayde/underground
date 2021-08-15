@@ -1,8 +1,11 @@
 #include "Item.h"
 
-Item::Item(GraphicManager *graphicManager, sf::Vector2f position) : Obstacle(true,false)
+Item::Item(GraphicManager *graphicManager, sf::Vector2f position, int id) : DynamicEntity(graphicManager,false,false,false,true)
 {
   cout << "Entrou na construtora da stair" <<endl;
+
+  
+  this->id = id;
 
   isCaught = false;
   isStair = false;
@@ -17,6 +20,10 @@ Item::~Item()
 void Item::Draw(sf::RenderWindow &window)
 {
   window.draw(body);
+}
+
+void Item::Update(float deltaTime,Character *character){
+
 }
 
 void Item::OnCollision(sf::Vector2f direction)

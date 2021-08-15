@@ -3,6 +3,8 @@
 #include "stdfix.h"
 #include "Platform.h"
 
+#define BASE_PLATFORM_ID 7
+
 class BasePlatform : public Platform
 {
 private:

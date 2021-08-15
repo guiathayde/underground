@@ -21,16 +21,38 @@ LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *manageCo
   sizeX = 5000.0f;
   enemiesNum = 2;
   nextLevel = 2;
+
+  backgroundTexture = graphicManager->GetTexture("levelOne");
+  sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
+  sf::Vector2f backgroundSize;
+  backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
+  backgroundSize.y = static_cast<float>(windowSize.y);
+  background.setSize(backgroundSize);
+  background.setTexture(backgroundTexture);
+
+  sf::Vector2f basePlatformPosition;
+  basePlatformPosition.x = 0.0f;
+  basePlatformPosition.y = static_cast<float>(windowSize.y);
+
+  BasePlatform *basePlatform = new BasePlatform(graphicManager, sf::Vector2f(sizeX, 200.0f), sf::Vector2f(basePlatformPosition.x + 2500.0f, basePlatformPosition.y + 100.0f));
+  BasePlatform *limitBorderYLeft = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(basePlatformPosition.x, basePlatformPosition.y / 2.0f));
+  BasePlatform *limitBorderYRight = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(sizeX, basePlatformPosition.y / 2.0f));
+
+  entities->InsertDynamicEntity(basePlatform);
+  obstacles.push_back(basePlatform);
+  entities->InsertDynamicEntity(limitBorderYLeft);
+  obstacles.push_back(limitBorderYLeft);
+  entities->InsertDynamicEntity(limitBorderYRight);
+  obstacles.push_back(limitBorderYRight);
 }
 
 LevelSewer::~LevelSewer()
 {
 }
 
-void LevelSewer::InitializeCharacters(DynamicEntityList* entities)
+void LevelSewer::InitializeCharacters()
 {
-  if (entities == NULL)
-  {
+
     ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
     characters.push_back(playerOne);
     entities->InsertDynamicEntity(playerOne);
@@ -71,47 +93,12 @@ void LevelSewer::InitializeCharacters(DynamicEntityList* entities)
       characters.push_back(aux2);
       entities->InsertDynamicEntity(aux2);
       */
-    }
-  }
-  else
-  {
-    this->entities = entities;
-  }
+   }
+
 }
 
-void LevelSewer::Initialize(DynamicEntityList* entities)
+void LevelSewer::Initialize()
 {
-  /* --------------------------------------------------------- Getting textures --------------------------------------------------------- */
-
-  sf::Texture *backgroundTexture;
-  backgroundTexture = new sf::Texture();
-  backgroundTexture = graphicManager->GetTexture("levelOne");
-
-  sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
-  sf::Vector2f backgroundSize;
-  backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
-  backgroundSize.y = static_cast<float>(windowSize.y);
-  background.setSize(backgroundSize);
-  background.setTexture(backgroundTexture);
-
-  sf::Vector2f basePlatformPosition;
-  basePlatformPosition.x = 0.0f;
-  basePlatformPosition.y = static_cast<float>(windowSize.y);
-
-  BasePlatform *basePlatform = new BasePlatform(graphicManager, sf::Vector2f(5000.0f, 200.0f), sf::Vector2f(basePlatformPosition.x + 2500.0f, basePlatformPosition.y + 100.0f));
-  BasePlatform *limitBorderYLeft = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(basePlatformPosition.x, basePlatformPosition.y / 2.0f));
-  BasePlatform *limitBorderYRight = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(5000.0f, basePlatformPosition.y / 2.0f));
-
-  cout <<"Inseriu um"<<endl;
-  entities->InsertDynamicEntity(basePlatform);
-  cout <<"Inseriu um"<<endl;
-
-  obstacles.push_back(basePlatform);
-  entities->InsertDynamicEntity(limitBorderYLeft);
-  obstacles.push_back(limitBorderYLeft);
-  entities->InsertDynamicEntity(limitBorderYRight);
-  obstacles.push_back(limitBorderYRight);
-
   /* --------------------------------------------------------- SetUp base obstacles ------------------------------------------------------ */
 
   AirPlatform *airPlatformBase = new AirPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
@@ -199,7 +186,7 @@ void LevelSewer::Initialize(DynamicEntityList* entities)
 
   Stair *stair = new Stair(graphicManager, sf::Vector2f(2581.5f, basePlatformPosition.y - 372.0f), 1);
   entities->InsertDynamicEntity(stair);
-  obstacles.push_back(stair);
+  items.push_back(stair);
 
   // --------------------------------------------------------- SetUp Spikes and AirPlatform ---------------------------------------------------------
 
@@ -294,5 +281,7 @@ void LevelSewer::Initialize(DynamicEntityList* entities)
   entities->InsertDynamicEntity(door);
   items.push_back(door);
 
-  InitializeCharacters(entities);
+  cout << "antes do initialize chara" << endl;
+
+  InitializeCharacters();
 }

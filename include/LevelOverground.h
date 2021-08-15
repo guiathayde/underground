@@ -3,14 +3,17 @@
 class LevelOverground : public Level
 {
 private:
+
   int enemiesNum;
+  sf::Vector2f basePlatformPosition;
+
 
 public:
   LevelOverground(GraphicManager *graphicManager, ColliderManager *graphicCollider);
   ~LevelOverground();
 
-  void InitializeCharacters(DynamicEntityList* entities);
-  void Initialize(DynamicEntityList* entities);
+  void InitializeCharacters();
+  void Initialize();
 
   float GetSizeX() { return sizeX; }
 };

@@ -1,7 +1,7 @@
 #include "Spike.h"
 
 Spike::Spike(GraphicManager *graphicManager, sf::Vector2f position)
-    : Obstacle(false,true)
+    : Obstacle(false,true,SPIKE_ID)
 {
   sf::Texture *texture = graphicManager->GetTexture("spikes");
 

@@ -22,13 +22,34 @@ LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager
   nextLevel = 0;
 
   backgroundTexture = graphicManager->GetTexture("levelThree");
+  sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
+
+  sf::Vector2f backgroundSize;
+  backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
+  backgroundSize.y = static_cast<float>(windowSize.y);
+  background.setSize(backgroundSize);
+  background.setTexture(backgroundTexture);
+
+  basePlatformPosition.x = 0.0f;
+  basePlatformPosition.y = static_cast<float>(windowSize.y);
+
+  BasePlatform *basePlatform = new BasePlatform(graphicManager, sf::Vector2f(sizeX, 200.0f), sf::Vector2f(basePlatformPosition.x + (sizeX / 2.0f), basePlatformPosition.y + 100.0f));
+  WallPlatform *limitBorderYLeft = new WallPlatform(graphicManager, sf::Vector2f(basePlatformPosition.x - 2.5f, basePlatformPosition.y / 2.0f));
+  WallPlatform *limitBorderYRight = new WallPlatform(graphicManager, sf::Vector2f(sizeX + 2.5f, basePlatformPosition.y / 2.0f));
+
+  entities->InsertDynamicEntity(basePlatform);
+  obstacles.push_back(basePlatform);
+  entities->InsertDynamicEntity(limitBorderYLeft);
+  obstacles.push_back(limitBorderYLeft);
+  entities->InsertDynamicEntity(limitBorderYRight);
+  obstacles.push_back(limitBorderYRight);
 }
 
 LevelOverground::~LevelOverground()
 {
 }
 
-void LevelOverground::InitializeCharacters(DynamicEntityList* entities)
+void LevelOverground::InitializeCharacters()
 {
   ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
   characters.push_back(playerOne);
@@ -61,46 +82,16 @@ void LevelOverground::InitializeCharacters(DynamicEntityList* entities)
   }
 }
 
-void LevelOverground::Initialize(DynamicEntityList* entities)
+void LevelOverground::Initialize()
 {
-
   /* --------------------------------------------------------- SetUp base obstacles ------------------------------------------------------ */
 
   AirPlatform *airPlatformBase = new AirPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
   TrapPlatform *trapPlatformBase = new TrapPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
   Spike *spikesBase = new Spike(graphicManager, sf::Vector2f(0.0f, 0.0f));
   WallPlatform *wallPlatformBase = new WallPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
-  cout <<"71"<< endl;
-
 
   /* ------------------------------------------------------------------------------------------------------------------------------------- */
-
-
-  /* --------------------------------------------------------- SetUp base platform and limits -------------------------------------------- */
-  sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
-
-  sf::Vector2f backgroundSize;
-  backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
-  backgroundSize.y = static_cast<float>(windowSize.y);
-  background.setSize(backgroundSize);
-  background.setTexture(backgroundTexture);
-
-  sf::Vector2f basePlatformPosition;
-  basePlatformPosition.x = 0.0f;
-  basePlatformPosition.y = static_cast<float>(windowSize.y);
-
-  BasePlatform *basePlatform = new BasePlatform(graphicManager, sf::Vector2f(sizeX, 200.0f), sf::Vector2f(basePlatformPosition.x + (sizeX / 2.0f), basePlatformPosition.y + 100.0f));
-  WallPlatform *limitBorderYLeft = new WallPlatform(graphicManager, sf::Vector2f(basePlatformPosition.x - 2.5f, basePlatformPosition.y / 2.0f));
-  WallPlatform *limitBorderYRight = new WallPlatform(graphicManager, sf::Vector2f(sizeX + 2.5f, basePlatformPosition.y / 2.0f));
-
-  entities->InsertDynamicEntity(basePlatform);
-  obstacles.push_back(basePlatform);
-  entities->InsertDynamicEntity(limitBorderYLeft);
-  obstacles.push_back(limitBorderYLeft);
-  entities->InsertDynamicEntity(limitBorderYRight);
-  obstacles.push_back(limitBorderYRight);
-
-  /* -------------------------------------------------------------------------------------------------------------------------------------- */
 
   /* --------------------------------------------------------- SetUp spikes on floor ------------------------------------------------------- */
 
@@ -244,5 +235,5 @@ void LevelOverground::Initialize(DynamicEntityList* entities)
   delete spikesBase;
   delete wallPlatformBase;
 
-  InitializeCharacters(entities);
+  InitializeCharacters();
 }

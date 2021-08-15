@@ -2,8 +2,9 @@
 #include "Character.h"
 
 Projectile::Projectile(GraphicManager* graphicManager,sf::Vector2f position,float speed):
-DynamicEntity(graphicManager,false,true,false)
+DynamicEntity(graphicManager,false,true,false,false)
 {
+    
     
     size = PROJECTILE_SIZE;
     velocity = PROJECTILE_VELOCITY;
@@ -12,6 +13,7 @@ DynamicEntity(graphicManager,false,true,false)
     
     this->speed = speed;
     this->position = position;
+    id = PROJECTILE_ID;
 
     texture = graphicManager->GetTexture("projectile");
     animation = new Animation(texture,imageCount,switchTime);

@@ -20,14 +20,35 @@ LevelSubway::LevelSubway(GraphicManager *graphicManager, ColliderManager *graphi
   sizeX = 5600.0f;
   enemiesNum = 3;
   nextLevel = 3;
+  
   backgroundTexture = graphicManager->GetTexture("levelTwo");
+  sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
+  
+  backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
+  backgroundSize.y = static_cast<float>(windowSize.y);
+  background.setSize(backgroundSize);
+  background.setTexture(backgroundTexture);
+
+  basePlatformPosition.x = 0.0f;
+  basePlatformPosition.y = static_cast<float>(windowSize.y);
+
+  BasePlatform *basePlatform = new BasePlatform(graphicManager, sf::Vector2f(sizeX, 200.0f), sf::Vector2f(basePlatformPosition.x + (sizeX / 2.0f), basePlatformPosition.y + 100.0f));
+  BasePlatform *limitBorderYLeft = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(basePlatformPosition.x - 2.5f, basePlatformPosition.y / 2.0f));
+  BasePlatform *limitBorderYRight = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(sizeX + 2.5f, basePlatformPosition.y / 2.0f));
+
+  entities->InsertDynamicEntity(basePlatform);
+  obstacles.push_back(basePlatform);
+  entities->InsertDynamicEntity(limitBorderYLeft);
+  obstacles.push_back(limitBorderYLeft);
+  entities->InsertDynamicEntity(limitBorderYRight);
+  obstacles.push_back(limitBorderYRight);
 }
 
 LevelSubway::~LevelSubway()
 {
 }
 
-void LevelSubway::InitializeCharacters(DynamicEntityList* entities)
+void LevelSubway::InitializeCharacters()
 {
   ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
   characters.push_back(playerOne);
@@ -62,51 +83,15 @@ void LevelSubway::InitializeCharacters(DynamicEntityList* entities)
   }
 }
 
-void LevelSubway::Initialize(DynamicEntityList* entities)
+void LevelSubway::Initialize()
 {
   /* --------------------------------------------------------- SetUp base obstacles ------------------------------------------------------ */
 
-  cout << "inicializou o level subway" <<endl;
-
   AirPlatform *airPlatformBase = new AirPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
-  cout << "news feitos1"<<endl;
-
   TrapPlatform *trapPlatformBase = new TrapPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
-  cout << "news feitos2"<<endl;
-
   Spike *spikesBase = new Spike(graphicManager, sf::Vector2f(0.0f, 0.0f));
-    cout << "news feitos3"<<endl;
-
   WallPlatform *wallPlatformBase = new WallPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
-  cout << "news feitos4"<<endl;
 
-  /* ------------------------------------------------------------------------------------------------------------------------------------- */
-
-  /* --------------------------------------------------------- SetUp base platform and limits -------------------------------------------- */
-  sf::Vector2u windowSize = graphicManager->GetWindow()->getSize();
-
-  sf::Vector2f backgroundSize;
-  backgroundSize.x = static_cast<float>(backgroundTexture->getSize().x);
-  backgroundSize.y = static_cast<float>(windowSize.y);
-  background.setSize(backgroundSize);
-  background.setTexture(backgroundTexture);
-
-  sf::Vector2f basePlatformPosition;
-  basePlatformPosition.x = 0.0f;
-  basePlatformPosition.y = static_cast<float>(windowSize.y);
-
-  BasePlatform *basePlatform = new BasePlatform(graphicManager, sf::Vector2f(sizeX, 200.0f), sf::Vector2f(basePlatformPosition.x + (sizeX / 2.0f), basePlatformPosition.y + 100.0f));
-  BasePlatform *limitBorderYLeft = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(basePlatformPosition.x - 2.5f, basePlatformPosition.y / 2.0f));
-  BasePlatform *limitBorderYRight = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(sizeX + 2.5f, basePlatformPosition.y / 2.0f));
-
-  cout << "entrou do insere" <<endl;
-  entities->InsertDynamicEntity(basePlatform);
-  obstacles.push_back(basePlatform);
-  entities->InsertDynamicEntity(limitBorderYLeft);
-  obstacles.push_back(limitBorderYLeft);
-  entities->InsertDynamicEntity(limitBorderYRight);
-  obstacles.push_back(limitBorderYRight);
-  cout << "saiu do insere" <<endl;
   /* ------------------------------------------------------------------------------------------------------------------------------------- */
 
   /* --------------------------------------------------------- SetUp way to stairs ------------------------------------------------------- */
@@ -276,5 +261,5 @@ void LevelSubway::Initialize(DynamicEntityList* entities)
   delete spikesBase;
   delete wallPlatformBase;
 
-  InitializeCharacters(entities);
+  InitializeCharacters();
 }

@@ -110,8 +110,11 @@ void Level::Update(float deltaTime)
 
 void Level::CheckCollison()
 {
+  cout << "Entrou no checkCollision" <<endl;
   colliderManager->CheckEntitiesCollison(entities, obstacles, characters);
+  cout << "saiu 1" <<endl;
   colliderManager->CheckPlayerOnHead(score, characters, playerOne, NULL);
+  cout << "saiu 2" <<endl;
   colliderManager->CheckItemCollision(items, playerOne, NULL);
 }
 
@@ -202,19 +205,6 @@ void Level::Draw(sf::RenderWindow &window)
     for (int i = 0; i < 5; i++)
       window.draw(endLevelText[i]);
   }
-}
-
-void Level::SetList(DynamicEntityList* entities, list<Character*> characters){
-  this->characters = characters;
-  this->entities = entities;
-  
-  cout << "Entrou no set List"<<endl;
-  // for (int i = 0; i < this->entities->GetSize(); i++)
-  //   if (!(*this->entities)[i]->GetIsObstacle())
-  //     this->entities->RemoveDynamicEntity((*this->entities)[i]);
-
-  // for (int i = 0; i < entities->GetSize(); i++)
-  //   this->entities->InsertDynamicEntity((*entities)[i]);
 }
 
 void Level::ClearAll()

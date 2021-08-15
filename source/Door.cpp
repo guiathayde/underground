@@ -1,6 +1,6 @@
 #include "Door.h"
 
-Door::Door(GraphicManager *graphicManager, sf::Vector2f position) : Item(graphicManager,position)
+Door::Door(GraphicManager *graphicManager, sf::Vector2f position) : Item(graphicManager,position,DOOR_ID)
 {
   isCaught = false;
   isStair = false;

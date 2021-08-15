@@ -1,7 +1,7 @@
 #include "Platform.h"
 
-Platform::Platform(GraphicManager *graphicManager, sf::Vector2f position)
-: Obstacle(true,false)
+Platform::Platform(GraphicManager *graphicManager, sf::Vector2f position,int id)
+: Obstacle(id,true,false)
 {
 
 }

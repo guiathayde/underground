@@ -18,9 +18,10 @@ protected:
     bool isObstacle;
     bool isProjectile;
     bool isPlayer;
+    bool isItem;
 
 public:
-    DynamicEntity(GraphicManager* graphicManager,bool isObstacle,bool isProjectile, bool isPlayer);
+    DynamicEntity(GraphicManager* graphicManager,bool isObstacle,bool isProjectile, bool isPlayer, bool isItem);
     virtual ~DynamicEntity();
 
     sf::RectangleShape *GetBody() { return &body; }

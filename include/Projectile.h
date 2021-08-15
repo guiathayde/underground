@@ -4,11 +4,11 @@
 #include "Animation.h"
 #include "Player.h"
 
-
 #define PROJECTILE_VELOCITY {300.0f, 0.0f}
 #define PROJECTILE_SIZE {100.0f,50.0f}
 #define PROJECTILE_IMAGE_COUNT {2,1}
 #define PROJECTILE_SWITCH_TIME 0.3F
+#define PROJECTILE_ID 13
 
 class Character;
 class Projectile: public DynamicEntity
@@ -25,6 +25,7 @@ private:
     float speed;
 
     int row;
+    int id;
     bool faceRight;
 
 

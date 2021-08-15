@@ -1,6 +1,6 @@
 #include "Character.h"
 Character::Character(GraphicManager *graphicManager,sf::Texture* texture ,sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,int id, int hearts, bool isAlive, bool isPlayer)
-: DynamicEntity(graphicManager,false,false,isPlayer)
+: DynamicEntity(graphicManager,false,false,isPlayer,false)
 {
   this->id = id;
   this->speed = speed;

@@ -19,6 +19,9 @@ protected:
   int n_entities;
   int score;
   int nextLevel;
+  int hearts;
+
+  bool isStairCought;
   bool endLevel;
 
   string nameLevel;
@@ -51,8 +54,8 @@ public:
   Level(GraphicManager *graphicManager, ColliderManager *colliderManager);
   virtual ~Level();
 
-  virtual void Initialize(DynamicEntityList* entities) = 0;
-  virtual void InitializeCharacters(DynamicEntityList* entities) = 0;
+  virtual void Initialize() = 0;
+  virtual void InitializeCharacters() = 0;
 
   void SetEndLevel(sf::Event event);
   int SetContinueLevel(sf::Event event, Ranking *ranking);
@@ -63,6 +66,8 @@ public:
 
   DynamicEntityList *GetDynamicEntityList() { return entities; }
   list<Character *> *GetListCharacters() { return &characters; }
+  list<Obstacle *> *GetListObstacles() { return &obstacles; }
+  list<Item *> *GetListItems() { return &items; }
 
   string GetNameLevel() { return nameLevel; }
 
@@ -75,7 +80,6 @@ public:
   void SetPlayerTwo(Player *p) { playerTwo = p; };
 
   void SetViewCenter();
-  void SetList(DynamicEntityList* entities, list<Character*> characters);
 
   void ClearAll();
 

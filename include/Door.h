@@ -3,6 +3,8 @@
 #include "stdfix.h"
 #include "Item.h"
 
+#define DOOR_ID 11
+
 class Door : public Item
 {
 private:
@@ -16,6 +18,8 @@ public:
 
   void Draw(sf::RenderWindow &window);
   void OnCollision(sf::Vector2f direction);
+
+  int GetNumber() { return 0; }
 
   void SetCaught(bool state);
   bool GetCaught() { return isCaught; }

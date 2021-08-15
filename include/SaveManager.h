@@ -6,14 +6,14 @@ class GraphicManager;
 class DynamicEntityList;
 class Ranking;
 class Character;
+class Obstacle;
 class SaveManager
 {
 private:
   
   GraphicManager *currentGraphicManager;
   Level *currentLevel;
-  DynamicEntityList *entities;
-  list<Character *> characters;
+ 
   Ranking *currentRanking;
   string nameLevel;
 
@@ -22,11 +22,18 @@ public:
   ~SaveManager();
 
   string GetNameLevel() { return nameLevel; };
-  DynamicEntityList *GetEntities() { return entities; };
-  list<Character *> *GetCharacters() { return &characters; };
 
   void SaveLevel();
   void ReadLevel();
+  
+  void SaveCharacters();
+  void ReadCharacters();
+
+  void SaveObstacles();
+  void ReadObstacles();
+
+  void SaveItems();
+  void ReadItems();
 
   void SaveScore();
   void ReadRanking();

@@ -6,13 +6,14 @@ class LevelSewer : public Level
 {
 private:
   int enemiesNum;
+  sf::Vector2f basePlatformPosition;
 
 public:
   LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider);
   ~LevelSewer();
 
-  void InitializeCharacters(DynamicEntityList* entities);
-  void Initialize(DynamicEntityList* entities);
+  void InitializeCharacters();
+  void Initialize();
 
   float GetSizeX() { return sizeX; }
 };

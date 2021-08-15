@@ -3,6 +3,8 @@
 #include "stdfix.h"
 #include "Platform.h"
 
+#define TRAP_PALTFORM_ID 8
+
 class TrapPlatform : public Platform
 {
 private:

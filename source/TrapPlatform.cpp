@@ -1,7 +1,7 @@
 #include "TrapPlatform.h"
 
 TrapPlatform::TrapPlatform(GraphicManager *graphicManager, sf::Vector2f position)
-: Platform(graphicManager,position)
+: Platform(graphicManager,position,TRAP_PALTFORM_ID)
 {
   cout <<"entrou na construtora do trapPlatform"<< endl;
 

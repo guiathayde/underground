@@ -16,6 +16,9 @@ public:
   ~Enemy();
 
   void Update(float deltaTime, Character *p);
+
+  void SetHearts(int hearts) { this->hearts = hearts; }
+  
   bool SeePlayer(Player p);
   float Attack(Player p);
 
