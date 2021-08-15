@@ -24,8 +24,8 @@ void Item::Draw(sf::RenderWindow &window)
 
 void Item::Update(float deltaTime,Character *character){
 
-  cout << GetPosition().x <<endl;
-  cout << GetPosition().y <<endl;
+  //cout << GetPosition().x <<endl;
+  //cout << GetPosition().y <<endl;
 
 }
 

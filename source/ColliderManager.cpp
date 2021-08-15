@@ -121,7 +121,7 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
     {
       if((*entities)[i]&&(*entities)[j])
       {
-        if (i != j && !(*entities)[j]->GetIsObstacle() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
+        if (i != j && !(*entities)[j]->GetIsObstacle()&& !(*entities)[j]->GetIsItem() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
           (*entities)[j]->OnCollision(direction);
         if((*entities)[i]->GetIsPlayer() && (*entities)[j]->GetIsProjectile())
         {
@@ -165,11 +165,13 @@ void ColliderManager::CheckItemCollision(list<Item *> items, Player *playerOne, 
   list<Item *>::iterator itItems;
 
   for (itItems = items.begin(); itItems != items.end(); itItems++)
-    if (!(*itItems)->GetCaught() && CheckCollision((*(*itItems)->GetBody()), *playerOne->GetBody(), direction, 0.1f))
+    if (!(*itItems)->GetCaught() && CheckCollision((*(*itItems)->GetBody()), *playerOne->GetBody(), direction, 0.1f)){
       (*itItems)->SetCaught(true);
-
+    }
   if (playerTwo)
     for (itItems = items.begin(); itItems != items.end(); itItems++)
-      if (CheckCollision((*(*itItems)->GetBody()), *playerTwo->GetBody(), direction, 0.1f))
+      if (CheckCollision((*(*itItems)->GetBody()), *playerTwo->GetBody(), direction, 0.1f)){
+        cout << "Colidiu" <<endl;
         (*itItems)->SetCaught(true);
-}
+      }  
+} 

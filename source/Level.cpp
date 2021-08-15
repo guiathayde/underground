@@ -96,12 +96,12 @@ void Level::Update(float deltaTime)
   entities->Update(deltaTime, playerOne);
 
   list<Item *>::iterator itItem;
-  for (itItem = items.begin(); itItem != items.end(); itItem++)
-    if ((*itItem)->GetCaught() && (*itItem)->GetStair())
-      (*itItem)->SetPosition(sf::Vector2f(
-          graphicManager->GetView()->getCenter().x + (graphicManager->GetView()->getSize().x / 2.0f) - (*itItem)->GetHalfSize().x - 20.0f,
-          graphicManager->GetView()->getCenter().y - (graphicManager->GetView()->getSize().y / 2.0f) + (*itItem)->GetHalfSize().y + 20.0f));
-
+  for (itItem = items.begin(); itItem != items.end(); itItem++){
+    if ((*itItem)->GetCaught() && (*itItem)->GetStair()){
+      cout << "entroun no if"<<endl;
+      (*itItem)->SetPosition(sf::Vector2f(graphicManager->GetView()->getCenter().x + (graphicManager->GetView()->getSize().x / 2.0f) - (*itItem)->GetHalfSize().x - 20.0f,graphicManager->GetView()->getCenter().y - (graphicManager->GetView()->getSize().y / 2.0f) + (*itItem)->GetHalfSize().y + 20.0f));
+    }
+  }  
   string scoreUpdated = to_string(score);
   scoreText[0].setPosition(graphicManager->GetView()->getCenter().x - (graphicManager->GetView()->getSize().x / 2.0f) + 30.0f, 40.0f);
   scoreText[1].setPosition(graphicManager->GetView()->getCenter().x - (graphicManager->GetView()->getSize().x / 2.0f) + 215.0f, 40.0f);
@@ -110,11 +110,8 @@ void Level::Update(float deltaTime)
 
 void Level::CheckCollison()
 {
-  cout << "Entrou no checkCollision" <<endl;
   colliderManager->CheckEntitiesCollison(entities, obstacles, characters);
-  cout << "saiu 1" <<endl;
   colliderManager->CheckPlayerOnHead(score, characters, playerOne, NULL);
-  cout << "saiu 2" <<endl;
   colliderManager->CheckItemCollision(items, playerOne, NULL);
 }
 

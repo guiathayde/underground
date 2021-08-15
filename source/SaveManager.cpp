@@ -145,7 +145,7 @@ void SaveManager::SaveObstacles()
   list<Obstacle *>::iterator itObstacle;
   for (itObstacle = currentLevel->GetListObstacles()->begin(); itObstacle != currentLevel->GetListObstacles()->end(); itObstacle++)
   {
-    cout << "obstacle id (write):" << (*itObstacle)->GetId() <<endl;
+    //cout << "obstacle id (write):" << (*itObstacle)->GetId() <<endl;
     Writer 
            << (*itObstacle)->GetId() << " "
            << (*itObstacle)->GetPosition().x << " "
@@ -173,7 +173,7 @@ void SaveManager::ReadObstacles()
       float x, y;
 
       Reader >> id >> x >> y;
-      cout << "obstacle id:" << id << endl;
+      //cout << "obstacle id:" << id << endl;
       switch (id)
       {
       case 6:
@@ -257,8 +257,8 @@ void SaveManager::ReadItems()
       case 11:
         door = new Door(currentGraphicManager, sf::Vector2f(x, y));
         door->SetCaught(isCaught);
-        currentLevel->GetDynamicEntityList()->InsertDynamicEntity(stair);
-        currentLevel->GetListItems()->push_back(stair);
+        currentLevel->GetDynamicEntityList()->InsertDynamicEntity(door);
+        currentLevel->GetListItems()->push_back(door);
         break;
 
       case 12:
