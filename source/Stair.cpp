@@ -6,7 +6,7 @@ Item(graphicManager,position,STAIR_ID)
   this->number = number;
 
   isCaught = false;
-  isStair = false;
+  isStair = true;
   isDoor = false;
 
   cout << "Entrou na construtora da stair" <<endl;

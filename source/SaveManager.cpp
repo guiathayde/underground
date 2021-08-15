@@ -145,7 +145,9 @@ void SaveManager::SaveObstacles()
   list<Obstacle *>::iterator itObstacle;
   for (itObstacle = currentLevel->GetListObstacles()->begin(); itObstacle != currentLevel->GetListObstacles()->end(); itObstacle++)
   {
-    Writer << (*itObstacle)->GetId() << " "
+    cout << "obstacle id (write):" << (*itObstacle)->GetId() <<endl;
+    Writer 
+           << (*itObstacle)->GetId() << " "
            << (*itObstacle)->GetPosition().x << " "
            << (*itObstacle)->GetPosition().y << " "
            << endl;
@@ -157,13 +159,9 @@ void SaveManager::SaveObstacles()
 void SaveManager::ReadObstacles()
 {
   AirPlatform* airPlatform;
-  BasePlatform *basePlatform;
   TrapPlatform *trapPlatform;
   WallPlatform* wallPlatform;
-
   Spike* spikes;
-  Stair* stair;
-  Door* doors;
 
   ifstream Reader("data/saves/obstacles.txt", ios::in);
 
@@ -175,10 +173,10 @@ void SaveManager::ReadObstacles()
       float x, y;
 
       Reader >> id >> x >> y;
-
+      cout << "obstacle id:" << id << endl;
       switch (id)
       {
-        case 6:
+      case 6:
         airPlatform = new AirPlatform(currentGraphicManager, sf::Vector2f(x, y));
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(airPlatform);
         currentLevel->GetListObstacles()->push_back(airPlatform);
@@ -188,16 +186,19 @@ void SaveManager::ReadObstacles()
         trapPlatform = new TrapPlatform(currentGraphicManager, sf::Vector2f(x, y));
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(trapPlatform);
         currentLevel->GetListObstacles()->push_back(trapPlatform);
+        break;
       
       case 9:
         wallPlatform = new WallPlatform(currentGraphicManager, sf::Vector2f(x, y));
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(wallPlatform);
         currentLevel->GetListObstacles()->push_back(wallPlatform);
+        break;
       
-      
-      case 10:
+      case 0:
         spikes = new Spike(currentGraphicManager, sf::Vector2f(x, y));
-        currentLevel->GetDynamicEntityList()->InsertDynamicEntity(spikes);     
+        currentLevel->GetDynamicEntityList()->InsertDynamicEntity(spikes);
+        currentLevel->GetListObstacles()->push_back(spikes);
+        break;
 
       default:
         break;
@@ -247,22 +248,22 @@ void SaveManager::ReadItems()
     {
       int id, number;
       float x, y;
-      bool isCought;
+      bool isCaught;
 
-      Reader >> id >> x >> y >> number >> isCought;
+      Reader >> id >> x >> y >> number >> isCaught;
 
       switch (id)
       {
       case 11:
         door = new Door(currentGraphicManager, sf::Vector2f(x, y));
-        door->SetCaught(isCought);
+        door->SetCaught(isCaught);
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(stair);
         currentLevel->GetListItems()->push_back(stair);
         break;
 
       case 12:
         stair = new Stair(currentGraphicManager, sf::Vector2f(x, y), number);
-        stair->SetCaught(isCought);
+        stair->SetCaught(isCaught);
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(stair);
         currentLevel->GetListItems()->push_back(stair);
         break;

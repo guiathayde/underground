@@ -29,6 +29,7 @@ public:
     bool GetIsObstacle() { return isObstacle; }
     bool GetIsProjectile(){return isProjectile;}
     bool GetIsPlayer(){return isPlayer;}
+    bool GetIsItem(){return isItem;}
     virtual void Draw(sf::RenderWindow &window) = 0;
     virtual void OnCollision(sf::Vector2f direction) = 0;
     virtual void Update(float deltaTime, Character* character) = 0;

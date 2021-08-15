@@ -3,7 +3,7 @@
 
 #define SPIKE_ID 10
 
-class Spike:public Obstacle
+class Spike : public Obstacle
 {
 private:
 
@@ -19,6 +19,3 @@ public:
   sf::Vector2f GetSize() { return body.getSize(); }
   sf::Vector2f GetHalfSize();
 };
-
-
-

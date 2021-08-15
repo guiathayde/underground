@@ -125,7 +125,7 @@ void Game::Execute()
               
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
-              cout << "setou o level" <<endl;
+             // cout << "setou o level" <<endl;
             }
             else if (nameLevel == "Subway")
             {
@@ -136,7 +136,7 @@ void Game::Execute()
               
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
-              cout << "setou o level" <<endl;
+             // cout << "setou o level" <<endl;
             }
             else if (nameLevel == "Overground")
             {
@@ -227,11 +227,11 @@ void Game::Execute()
       }
       else if (mainMenu->GetPlaying())
       {
-        cout << "Entrou no getPlaying" <<endl;
+        //cout << "Entrou no getPlaying" <<endl;
         level->CheckCollison();
-        cout << "Saiu do checkCollision" <<endl;
+        //cout << "Saiu do checkCollision" <<endl;
         level->Update(deltaTime);
-        cout << "Saiu do update" <<endl;
+        //cout << "Saiu do update" <<endl;
         level->Draw(*graphicManager->GetWindow());
         level->SetViewCenter();
       }

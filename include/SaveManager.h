@@ -10,10 +10,8 @@ class Obstacle;
 class SaveManager
 {
 private:
-  
   GraphicManager *currentGraphicManager;
   Level *currentLevel;
- 
   Ranking *currentRanking;
   string nameLevel;
 

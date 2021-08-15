@@ -30,7 +30,7 @@ LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *manageCo
   background.setSize(backgroundSize);
   background.setTexture(backgroundTexture);
 
-  sf::Vector2f basePlatformPosition;
+  
   basePlatformPosition.x = 0.0f;
   basePlatformPosition.y = static_cast<float>(windowSize.y);
 
@@ -281,7 +281,7 @@ void LevelSewer::Initialize()
   entities->InsertDynamicEntity(door);
   items.push_back(door);
 
-  cout << "antes do initialize chara" << endl;
+  //cout << "antes do initialize chara" << endl;
 
   InitializeCharacters();
 }

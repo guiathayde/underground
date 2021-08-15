@@ -4,7 +4,7 @@ Door::Door(GraphicManager *graphicManager, sf::Vector2f position) : Item(graphic
 {
   isCaught = false;
   isStair = false;
-  isDoor = false;
+  isDoor = true;
 
   texture = graphicManager->GetTexture("door");
 

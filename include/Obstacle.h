@@ -12,7 +12,7 @@ private:
     bool isSpike;
 
 public:
-    Obstacle(int id,bool isPlatform,bool isSpike);
+    Obstacle(int id, bool isPlatform, bool isSpike);
     virtual ~Obstacle();
 
     void Draw(sf::RenderWindow &window);
