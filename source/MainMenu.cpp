@@ -47,7 +47,7 @@ MainMenu::MainMenu(GraphicManager *graphicManager) : Menu(graphicManager)
   menu[2].setFont(itemFont);
   menu[2].setCharacterSize(54);
   menu[2].setFillColor(sf::Color::Black);
-  menu[2].setString("Chapters");
+  menu[2].setString("Load Game");
   textRect = menu[2].getLocalBounds();
   menu[2].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
   menu[2].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 3.25));
@@ -55,7 +55,7 @@ MainMenu::MainMenu(GraphicManager *graphicManager) : Menu(graphicManager)
   menu[3].setFont(itemFont);
   menu[3].setCharacterSize(54);
   menu[3].setFillColor(sf::Color::Black);
-  menu[3].setString("Ranking");
+  menu[3].setString("Chapters");
   textRect = menu[3].getLocalBounds();
   menu[3].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
   menu[3].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 4.25));
@@ -63,10 +63,18 @@ MainMenu::MainMenu(GraphicManager *graphicManager) : Menu(graphicManager)
   menu[4].setFont(itemFont);
   menu[4].setCharacterSize(54);
   menu[4].setFillColor(sf::Color::Black);
-  menu[4].setString("Quit");
+  menu[4].setString("Ranking");
   textRect = menu[4].getLocalBounds();
   menu[4].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
   menu[4].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 5.25));
+
+  menu[5].setFont(itemFont);
+  menu[5].setCharacterSize(54);
+  menu[5].setFillColor(sf::Color::Black);
+  menu[5].setString("Quit");
+  textRect = menu[5].getLocalBounds();
+  menu[5].setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+  menu[5].setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y / (MAINMENU_MAX_ITEMS + 1) * 6.25));
 }
 
 MainMenu::~MainMenu()
@@ -128,6 +136,9 @@ int MainMenu::SelectItem(sf::Event event, Level *level)
 
     case 4:
       return 4;
+
+    case 5:
+      return 5;
 
     default:
       return 0;

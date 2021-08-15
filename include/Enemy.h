@@ -12,7 +12,7 @@ protected:
   float totalStunTime;
 
 public:
-  Enemy(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,float totalStunTime, int hearts, bool isAlive, bool isPlayer);
+  Enemy(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,float totalStunTime,int id,int hearts, bool isAlive, bool isPlayer);
   ~Enemy();
 
   void Update(float deltaTime, Character *p);

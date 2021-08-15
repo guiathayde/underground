@@ -5,7 +5,7 @@
 #include "HollowHatEnemy.h"
 #include "Item.h"
 #include "Spike.h"
-#include "ChildPlayer.h"
+#include "ChildPlayerOne.h"
 #include "TrashMonster.h"
 #include "WallPlatform.h"
 #include "AirPlatform.h"
@@ -27,9 +27,9 @@ LevelSubway::~LevelSubway()
 {
 }
 
-void LevelSubway::InitializeCharacters()
+void LevelSubway::InitializeCharacters(DynamicEntityList* entities)
 {
-  ChildPlayer *playerOne = new ChildPlayer(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+  ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
@@ -62,14 +62,23 @@ void LevelSubway::InitializeCharacters()
   }
 }
 
-void LevelSubway::Initialize()
+void LevelSubway::Initialize(DynamicEntityList* entities)
 {
   /* --------------------------------------------------------- SetUp base obstacles ------------------------------------------------------ */
 
+  cout << "inicializou o level subway" <<endl;
+
   AirPlatform *airPlatformBase = new AirPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
+  cout << "news feitos1"<<endl;
+
   TrapPlatform *trapPlatformBase = new TrapPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
+  cout << "news feitos2"<<endl;
+
   Spike *spikesBase = new Spike(graphicManager, sf::Vector2f(0.0f, 0.0f));
+    cout << "news feitos3"<<endl;
+
   WallPlatform *wallPlatformBase = new WallPlatform(graphicManager, sf::Vector2f(0.0f, 0.0f));
+  cout << "news feitos4"<<endl;
 
   /* ------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -90,26 +99,26 @@ void LevelSubway::Initialize()
   BasePlatform *limitBorderYLeft = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(basePlatformPosition.x - 2.5f, basePlatformPosition.y / 2.0f));
   BasePlatform *limitBorderYRight = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y + 300.0f), sf::Vector2f(sizeX + 2.5f, basePlatformPosition.y / 2.0f));
 
-  cout << "entrou do insere" << endl;
+  cout << "entrou do insere" <<endl;
   entities->InsertDynamicEntity(basePlatform);
   obstacles.push_back(basePlatform);
   entities->InsertDynamicEntity(limitBorderYLeft);
   obstacles.push_back(limitBorderYLeft);
   entities->InsertDynamicEntity(limitBorderYRight);
   obstacles.push_back(limitBorderYRight);
-  cout << "saiu do insere" << endl;
+  cout << "saiu do insere" <<endl;
   /* ------------------------------------------------------------------------------------------------------------------------------------- */
 
   /* --------------------------------------------------------- SetUp way to stairs ------------------------------------------------------- */
-
-  AirPlatform *airPlatform1 = new AirPlatform(graphicManager, sf::Vector2f(airPlatformBase->GetHalfSize().x, basePlatformPosition.y - 150.0f));
+  
+  AirPlatform *airPlatform1 = new AirPlatform(graphicManager, sf::Vector2f(airPlatformBase->GetHalfSize().x , basePlatformPosition.y - 150.0f));
   AirPlatform *airPlatform2 = new AirPlatform(graphicManager, sf::Vector2f(airPlatformBase->GetHalfSize().x * 6.0f, basePlatformPosition.y - 300.0f));
   AirPlatform *airPlatform3 = new AirPlatform(graphicManager, sf::Vector2f(airPlatformBase->GetHalfSize().x, basePlatformPosition.y - 450.0f));
   TrapPlatform *trapPlatform1 = new TrapPlatform(graphicManager, sf::Vector2f(trapPlatformBase->GetHalfSize().x * 6.0f, basePlatformPosition.y - 600.0f));
   AirPlatform *airPlatform4 = new AirPlatform(graphicManager, sf::Vector2f(trapPlatformBase->GetHalfSize().x * 30.0f, basePlatformPosition.y - 600.0f));
 
   //cout << "stair deu new" <<endl;
-  Stair *stair = new Stair(graphicManager, sf::Vector2f((trapPlatformBase->GetHalfSize().x / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f - airPlatform4->GetHalfSize().y - (graphicManager->GetTexture("stair2")->getSize().y / 2.0f)), 2);
+  Stair *stair = new Stair(graphicManager, sf::Vector2f((trapPlatformBase->GetHalfSize().x / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f - airPlatform4->GetHalfSize().y - (graphicManager->GetTexture("stair2")->getSize().y / 2.0f)),2);
   //cout << "stair da deu new" <<endl;
   stair->SetStair(true);
   entities->InsertDynamicEntity(airPlatform1);
@@ -228,14 +237,14 @@ void LevelSubway::Initialize()
 
   /* ----------------------------------------------------------------------------------------------------------------------------------- */
 
-  airPlatformFirst = new AirPlatform(graphicManager, sf::Vector2f(airPlatformLastBridge->GetPosition().x + 200.0f, airPlatformLastBridge->GetPosition().y));
+  airPlatformFirst = new AirPlatform(graphicManager,  sf::Vector2f(airPlatformLastBridge->GetPosition().x + 200.0f, airPlatformLastBridge->GetPosition().y));
   entities->InsertDynamicEntity(airPlatformFirst);
   obstacles.push_back(airPlatformFirst);
 
   airPlatformPrevious = airPlatformFirst;
   for (int i = 0; i < 5; i++)
   {
-    airPlatformLast = new AirPlatform(graphicManager, sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, airPlatformPrevious->GetPosition().y));
+    airPlatformLast = new AirPlatform(graphicManager,  sf::Vector2f(airPlatformPrevious->GetPosition().x + airPlatformPrevious->GetSize().x, airPlatformPrevious->GetPosition().y));
     airPlatformPrevious = airPlatformLast;
     entities->InsertDynamicEntity(airPlatformLast);
     obstacles.push_back(airPlatformLast);
@@ -267,5 +276,5 @@ void LevelSubway::Initialize()
   delete spikesBase;
   delete wallPlatformBase;
 
-  InitializeCharacters();
+  InitializeCharacters(entities);
 }

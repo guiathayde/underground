@@ -145,6 +145,7 @@ void List<T1>::RemoveInfo(T1 *pRemove)
             if(tmp_anterior){
                 tmp_anterior->SetNext(tmp_atual->GetNext());
             }
+            delete(tmp_atual->GetInfo());
             delete(tmp_atual);
             n_elementos--;
             return;

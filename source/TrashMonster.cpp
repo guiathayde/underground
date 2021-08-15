@@ -1,7 +1,7 @@
 #include "TrashMonster.h"
 
 TrashMonster::TrashMonster(GraphicManager* graphicManager,sf::Vector2f origin)
-:Enemy(graphicManager,texture,size,origin,imageCount,switchTime,speed,jumpHeight,totalStunTime,hearts,isAlive,isPlayer)
+:Enemy(graphicManager,texture,size,origin,imageCount,switchTime,speed,jumpHeight,totalStunTime,TRASH_MONSTER_ID,hearts,isAlive,isPlayer)
 {
     
     texture = graphicManager->GetTexture("trashMonster");
@@ -31,7 +31,7 @@ TrashMonster::TrashMonster(GraphicManager* graphicManager,sf::Vector2f origin)
 TrashMonster::~TrashMonster(){
     
     cout <<"Entrou na destrutora do TrashMonster" <<endl;
-    delete(texture);
+    delete(animation);
 }
 
 

@@ -2,7 +2,7 @@
 
 
 WelderEnemy::WelderEnemy(GraphicManager* graphicManager,sf::Vector2f origin,DynamicEntityList* entities)
-:Enemy(graphicManager,texture,origin,size,imageCount,switchTime,speed,jumpHeight,totalStunTime,hearts,isAlive,isPlayer)
+:Enemy(graphicManager,texture,origin,size,imageCount,switchTime,speed,jumpHeight,totalStunTime,WELDER_ENEMY_ID,hearts,isAlive,isPlayer)
 {
     
     //cout <<"Entrou na construtora do WeldeEnemy"<<endl;
@@ -12,13 +12,14 @@ WelderEnemy::WelderEnemy(GraphicManager* graphicManager,sf::Vector2f origin,Dyna
 
     coolDown = 0;
     shootCoolDown = 0;
+
     speed = WELDER_ENEMY_SPEED;
     imageCount = WELDER_ENEMY_IMAGECOUNT;
     switchTime = WELDER_ENEMY_SWITCHTIME;
     jumpHeight = WELDER_ENEMY_JUMP_HEIGHT;
     totalStunTime = WELDER_ENEMY_TOTAL_STUN_TIME;
     hearts =    WELDER_ENEMY_HEARTS;
-    ammunition = 5;
+    ammunition = 1;
     size = WELDER_ENEMY_SIZE;
 
     canShoot = true;
@@ -45,7 +46,7 @@ void WelderEnemy::Update(float deltaTime,Character* character)
 
     if (isStunned && coolDown > totalStunTime)
     {
-        return;
+        coolDown = 0;   
         isStunned = false;
     }
     coolDown += deltaTime;
@@ -61,12 +62,15 @@ void WelderEnemy::Update(float deltaTime,Character* character)
             Shoot();
             ammunition--;
         }
-        if(shootCoolDown > 4){
+        //cout << shootCoolDown <<endl;
+        
+        if(shootCoolDown > 5){
+            
             shootCoolDown = 0;
-            entities->RemoveDynamicEntity(projectile);
-            delete(projectile);
-            cout <<"Removeu"<<endl;
             ammunition++;
+            entities->RemoveDynamicEntity(projectile);
+            cout << "Removeu" <<endl;
+            cout << projectile << endl;        
         }
         else
             shootCoolDown+=deltaTime;

@@ -11,8 +11,8 @@ public:
   LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider);
   ~LevelSewer();
 
-  void InitializeCharacters();
-  void Initialize();
+  void InitializeCharacters(DynamicEntityList* entities);
+  void Initialize(DynamicEntityList* entities);
 
   float GetSizeX() { return sizeX; }
 };

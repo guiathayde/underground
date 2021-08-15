@@ -15,6 +15,7 @@ void DynamicEntityList::InsertDynamicEntity(DynamicEntity *pE)
 
 }
 
+
 void DynamicEntityList::RemoveDynamicEntity(DynamicEntity *pR)
 {
 	ListEntities.RemoveInfo(pR);

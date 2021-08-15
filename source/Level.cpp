@@ -204,6 +204,19 @@ void Level::Draw(sf::RenderWindow &window)
   }
 }
 
+void Level::SetList(DynamicEntityList* entities, list<Character*> characters){
+  this->characters = characters;
+  this->entities = entities;
+  
+  cout << "Entrou no set List"<<endl;
+  // for (int i = 0; i < this->entities->GetSize(); i++)
+  //   if (!(*this->entities)[i]->GetIsObstacle())
+  //     this->entities->RemoveDynamicEntity((*this->entities)[i]);
+
+  // for (int i = 0; i < entities->GetSize(); i++)
+  //   this->entities->InsertDynamicEntity((*entities)[i]);
+}
+
 void Level::ClearAll()
 {
   entities->DeleteEntities();

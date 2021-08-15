@@ -9,6 +9,7 @@
 #define TRASH_MONSTER_HEARTS 200
 #define TRASH_MONSTER_SWITCHTIME 0.3f
 #define TRASH_MONSTER_TOTAL_STUN_TIME 7.0f
+#define TRASH_MONSTER_ID 4
 
 class TrashMonster:public Enemy
 {

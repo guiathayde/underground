@@ -10,7 +10,7 @@
 #define HOLLOW_HAT_ENEMY_HEARTS 200
 #define HOLLOW_HAT_ENEMY_SWITCHTIME 0.3f
 #define HOLLOW_HAT_ENEMY_TOTAL_STUN_TIME 7.0f
-
+#define HOLLOW_HAT_ENEMY_ID 3
 
 class HollowHatEnemy:public Enemy
 {

@@ -4,9 +4,12 @@
 DynamicEntity::DynamicEntity(GraphicManager* graphicManager,bool isObstacle,bool isProjectile, bool isPlayer):Entity(graphicManager)
 {
 	//cout << "DynamicEntity"<<endl;
+
+	
 	this->isObstacle = isObstacle;
 	this->isProjectile = isProjectile;
 	this->isPlayer = isPlayer;
+
 }
 
 DynamicEntity::~DynamicEntity()

@@ -12,6 +12,7 @@
 #define WELDER_ENEMY_HEARTS 200
 #define WELDER_ENEMY_SWITCHTIME 0.3f
 #define WELDER_ENEMY_TOTAL_STUN_TIME 7.0f
+#define WELDER_ENEMY_ID 5
 
 class WelderEnemy:public Enemy
 {

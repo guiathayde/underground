@@ -8,14 +8,15 @@
 #define CHILD_PLAYER_SPEED 200.0f
 #define CHILD_PLAYER_JUMP_HEIGHT 200.f
 #define CHILD_PLAYER_HEARTS 300
+#define ID_PLAYER_TWO 2
 
-class ChildPlayer:public Player
+class ChildPlayerTwo:public Player
 {
 private:
 
 public:
-    ChildPlayer(GraphicManager *graphicManager, sf::Vector2f position);
-    ~ChildPlayer();
+    ChildPlayerTwo(GraphicManager *graphicManager, sf::Vector2f position);
+    ~ChildPlayerTwo();
 
     void Update(float deltaTime, Character *ini);
     void SetPosition(sf::Vector2f position) { body.setPosition(position); }

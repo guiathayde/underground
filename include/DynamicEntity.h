@@ -14,7 +14,7 @@ protected:
 
     sf::Texture *texture;
     sf::RectangleShape body;
-    
+
     bool isObstacle;
     bool isProjectile;
     bool isPlayer;

@@ -9,8 +9,8 @@ public:
   LevelOverground(GraphicManager *graphicManager, ColliderManager *graphicCollider);
   ~LevelOverground();
 
-  void InitializeCharacters();
-  void Initialize();
+  void InitializeCharacters(DynamicEntityList* entities);
+  void Initialize(DynamicEntityList* entities);
 
   float GetSizeX() { return sizeX; }
 };

@@ -1,17 +1,15 @@
 #include "Character.h"
-Character::Character(GraphicManager *graphicManager,sf::Texture* texture ,sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer)
+Character::Character(GraphicManager *graphicManager,sf::Texture* texture ,sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,int id, int hearts, bool isAlive, bool isPlayer)
 : DynamicEntity(graphicManager,false,false,isPlayer)
 {
-  
-  
-  //cout <<"Entou na construtora character"<<endl;
-
+  this->id = id;
   this->speed = speed;
   this->jumpHeight = jumpHeight;
   this->hearts = hearts;
   this->isAlive = isAlive;
   row = 0;
   faceRight = true;
+
 }
 
 Character::~Character()

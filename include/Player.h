@@ -9,11 +9,10 @@
 class Player : public Character
 {
 protected:  
-
   bool isPlayerOne;
   
 public:
-  Player(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer, bool isPlayerOne);
+  Player(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,int id ,int hearts, bool isAlive, bool isPlayer, bool isPlayerOne);
   ~Player();
 
   virtual void Update(float deltaTime, Character *p);

@@ -1,7 +1,7 @@
 #include "Obstacle.h"
 
 Obstacle::Obstacle(bool isPlatform,bool isSpike)
-: DynamicEntity(graphicManager,isPlatform,false,false)
+: DynamicEntity(graphicManager,isPlatform,true,false)
 {
     //cout << "entrou na construtora do obstacle" <<endl;
 }

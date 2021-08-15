@@ -5,7 +5,7 @@
 #include "HollowHatEnemy.h"
 #include "Item.h"
 #include "Spike.h"
-#include "ChildPlayer.h"
+#include "ChildPlayerOne.h"
 #include "TrashMonster.h"
 #include "WallPlatform.h"
 #include "AirPlatform.h"
@@ -28,9 +28,9 @@ LevelOverground::~LevelOverground()
 {
 }
 
-void LevelOverground::InitializeCharacters()
+void LevelOverground::InitializeCharacters(DynamicEntityList* entities)
 {
-  ChildPlayer *playerOne = new ChildPlayer(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+  ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
@@ -61,7 +61,7 @@ void LevelOverground::InitializeCharacters()
   }
 }
 
-void LevelOverground::Initialize()
+void LevelOverground::Initialize(DynamicEntityList* entities)
 {
 
   /* --------------------------------------------------------- SetUp base obstacles ------------------------------------------------------ */
@@ -244,5 +244,5 @@ void LevelOverground::Initialize()
   delete spikesBase;
   delete wallPlatformBase;
 
-  InitializeCharacters();
+  InitializeCharacters(entities);
 }

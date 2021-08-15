@@ -93,6 +93,11 @@ void GraphicManager::LoadTexture()
     cerr << "Error loading playerOneTexture texture" << endl;
   InsertTexture("playerOne", playerOneTexture);
 
+  sf::Texture *playerTwoTexture = new sf::Texture();
+  if (!playerTwoTexture->loadFromFile("assets/characters/PlayerTwo/player2V3.png"))
+    cerr << "Error loading playerTwoTexture texture" << endl;
+  InsertTexture("playerTwo", playerTwoTexture);
+
   sf::Texture *sewerBackgroundTexture = new sf::Texture();
   if (!sewerBackgroundTexture->loadFromFile("assets/background/levelOne.png"))
     cerr << "Erro loading sewerBackgroundTexture" << endl;

@@ -9,8 +9,8 @@ public:
   LevelSubway(GraphicManager *graphicManager, ColliderManager *graphicCollider);
   ~LevelSubway();
 
-  void InitializeCharacters();
-  void Initialize();
+  void InitializeCharacters(DynamicEntityList* entities);
+  void Initialize(DynamicEntityList* entities);
 
   float GetSizeX() { return sizeX; }
 };

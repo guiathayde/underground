@@ -29,7 +29,12 @@ PauseMenu::PauseMenu(GraphicManager *graphicManager) : Menu(graphicManager)
   menu[1].setFont(font);
   menu[1].setCharacterSize(64);
   menu[1].setFillColor(sf::Color::White);
-  menu[1].setString("Back to main menu");
+  menu[1].setString("Save the game");
+
+  menu[2].setFont(font);
+  menu[2].setCharacterSize(64);
+  menu[2].setFillColor(sf::Color::White);
+  menu[2].setString("Back to main menu");
 }
 
 PauseMenu::~PauseMenu()
@@ -38,8 +43,9 @@ PauseMenu::~PauseMenu()
 
 void PauseMenu::Draw(sf::RenderWindow *window, sf::View *view)
 {
-  menu[0].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 200.0f);
-  menu[1].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 100.0f);
+  menu[0].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 300.0f);
+  menu[1].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 200.0f);
+  menu[2].setPosition(view->getCenter().x - 500.0f, view->getCenter().y - 100.0f);
 
   for (int i = 0; i < MENU_MAX_ITEMS; i++)
     window->draw(menu[i]);
@@ -85,6 +91,9 @@ int PauseMenu::SelectItem(sf::Event event, Level *level)
 
     case 1:
       return 1;
+
+    case 2:
+      return 2;
 
     default:
       return -1;

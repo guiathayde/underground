@@ -3,7 +3,7 @@
 #include "stdfx.h"
 #include "Menu.h"
 
-#define MENU_MAX_ITEMS 2
+#define MENU_MAX_ITEMS 3
 
 class GraphicManager;
 class Level;

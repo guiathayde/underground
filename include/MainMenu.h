@@ -3,7 +3,7 @@
 #include "stdfx.h"
 #include "Menu.h"
 
-#define MAINMENU_MAX_ITEMS 5
+#define MAINMENU_MAX_ITEMS 6
 
 class GraphicManager;
 class MainMenu : public Menu

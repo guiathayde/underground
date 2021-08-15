@@ -1,11 +1,9 @@
-#include "ChildPlayer.h"
+#include "ChildPlayerOne.h"
 
-ChildPlayer::ChildPlayer(GraphicManager* graphicManager, sf::Vector2f position)
-:Player(graphicManager, texture,size,position,imageCount,switchTime,speed,jumpHeight,hearts,isAlive,isPlayer,isPlayerOne)
+ChildPlayerOne::ChildPlayerOne(GraphicManager* graphicManager, sf::Vector2f position)
+:Player(graphicManager, texture,size,position,imageCount,switchTime,speed,jumpHeight,ID_PLAYER_ONE,hearts,isAlive,isPlayer,isPlayerOne)
 {
-    
-    cout << "Entrou na construtora do child player" <<endl;
-    
+    id = ID_PLAYER_ONE;
     size = CHILD_PLAYER_SIZE;
     imageCount = CHILD_PLAYER_IMAGE_COUNT;
     switchTime = CHILD_PLAYER_SWITCH_TIME;
@@ -17,7 +15,6 @@ ChildPlayer::ChildPlayer(GraphicManager* graphicManager, sf::Vector2f position)
     isPlayer = true;
     isPlayerOne = true;
     
-    
     texture = graphicManager->GetTexture("playerOne");
     animation = new Animation(texture,imageCount,switchTime);
 
@@ -25,16 +22,14 @@ ChildPlayer::ChildPlayer(GraphicManager* graphicManager, sf::Vector2f position)
     body.setOrigin(body.getSize() / 2.0f);
     body.setPosition(position.x, position.y);
     body.setTexture(texture);
+}
 
+ChildPlayerOne::~ChildPlayerOne(){
 
 }
 
-ChildPlayer::~ChildPlayer(){
 
-}
-
-
-void ChildPlayer::Update(float deltaTime, Character *ini)
+void ChildPlayerOne::Update(float deltaTime, Character *ini)
 {
 
   velocity.x *= 0.5f; // time to stop action walk (slow down)

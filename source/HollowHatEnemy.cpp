@@ -1,7 +1,7 @@
 #include "HollowHatEnemy.h"
 
 HollowHatEnemy::HollowHatEnemy(GraphicManager* graphicManager,sf::Vector2f origin)
-:Enemy(graphicManager,texture,size,origin,imageCount,switchTime,speed,jumpHeight,totalStunTime,hearts,isAlive,isPlayer)
+:Enemy(graphicManager,texture,size,origin,imageCount,switchTime,speed,jumpHeight,totalStunTime,HOLLOW_HAT_ENEMY_ID,hearts,isAlive,isPlayer)
 {
     
     texture = graphicManager->GetTexture("enemyMelee");
@@ -31,7 +31,7 @@ HollowHatEnemy::HollowHatEnemy(GraphicManager* graphicManager,sf::Vector2f origi
 HollowHatEnemy::~HollowHatEnemy(){
     
     cout <<"Entrou na destrutora do HollowEnemy" <<endl;
-    delete(texture);
+    delete(animation);
 }
 
 

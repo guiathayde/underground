@@ -1,13 +1,11 @@
 #include "Player.h"
 
-Player::Player(GraphicManager* graphicManager,sf::Texture *texture ,sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, bool isAlive, bool isPlayer, bool isPlayerOne) 
-:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer)
+Player::Player(GraphicManager* graphicManager,sf::Texture *texture ,sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,int id ,int hearts, bool isAlive, bool isPlayer, bool isPlayerOne) 
+:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, id, hearts, isAlive, isPlayer)
 {
-  
-
+  this->id = 0;
   this->isPlayerOne = isPlayerOne;
   this->isPlayer = isPlayer;
-
 }
 
 Player::~Player()

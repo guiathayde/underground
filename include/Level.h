@@ -51,8 +51,8 @@ public:
   Level(GraphicManager *graphicManager, ColliderManager *colliderManager);
   virtual ~Level();
 
-  virtual void Initialize() = 0;
-  virtual void InitializeCharacters() = 0;
+  virtual void Initialize(DynamicEntityList* entities) = 0;
+  virtual void InitializeCharacters(DynamicEntityList* entities) = 0;
 
   void SetEndLevel(sf::Event event);
   int SetContinueLevel(sf::Event event, Ranking *ranking);
@@ -61,18 +61,21 @@ public:
   void CheckCollison();
   void Draw(sf::RenderWindow &window);
 
+  DynamicEntityList *GetDynamicEntityList() { return entities; }
   list<Character *> *GetListCharacters() { return &characters; }
 
   string GetNameLevel() { return nameLevel; }
 
   int GetScore() { return score; }
   bool GetEndLevel() { return endLevel; }
-
+  
+  
   Player *GetPlayer() { return playerOne; };
   void SetPlayerOne(Player *p) { playerOne = p; };
   void SetPlayerTwo(Player *p) { playerTwo = p; };
 
   void SetViewCenter();
+  void SetList(DynamicEntityList* entities, list<Character*> characters);
 
   void ClearAll();
 

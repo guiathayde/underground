@@ -4,8 +4,8 @@
 using std::cout;
 using std::endl;
 
-Enemy::Enemy(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,float totalStunTime, int hearts, bool isAlive, bool isPlayer)
-:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, hearts, isAlive, isPlayer), totalStunTime(totalStunTime)
+Enemy::Enemy(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,float totalStunTime,int id,int hearts, bool isAlive, bool isPlayer)
+:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, id,hearts, isAlive, isPlayer), totalStunTime(totalStunTime)
 {
 
 }

@@ -5,7 +5,8 @@
 #include "HollowHatEnemy.h"
 #include "Item.h"
 #include "Spike.h"
-#include "ChildPlayer.h"
+#include "ChildPlayerTwo.h"
+#include "ChildPlayerOne.h"
 #include "TrashMonster.h"
 #include "WallPlatform.h"
 #include "AirPlatform.h"
@@ -18,7 +19,7 @@ LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *manageCo
 {
   nameLevel = "Sewer";
   sizeX = 5000.0f;
-  enemiesNum = 0;
+  enemiesNum = 2;
   nextLevel = 2;
 }
 
@@ -26,45 +27,59 @@ LevelSewer::~LevelSewer()
 {
 }
 
-void LevelSewer::InitializeCharacters()
+void LevelSewer::InitializeCharacters(DynamicEntityList* entities)
 {
-  ChildPlayer *playerOne = new ChildPlayer(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
-  characters.push_back(playerOne);
-  entities->InsertDynamicEntity(playerOne);
-  SetPlayerOne(playerOne);
-
-  for (int i = 0; i < enemiesNum; i++)
+  if (entities == NULL)
   {
-    sf::Vector2f enemyPosistion;
-    enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
-    enemyPosistion.y = 0.0f;
+    ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+    characters.push_back(playerOne);
+    entities->InsertDynamicEntity(playerOne);
+    SetPlayerOne(playerOne);
+    
+    
+    ChildPlayerTwo *playerTwo = new ChildPlayerTwo(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+    characters.push_back(playerTwo);
+    entities->InsertDynamicEntity(playerTwo);
+    SetPlayerOne(playerTwo);
+    
+    for (int i = 0; i < enemiesNum; i++)
+    {
+      sf::Vector2f enemyPosistion;
+      enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
+      enemyPosistion.y = 0.0f;
 
-    sf::Vector2f enemyPosistion1;
-    enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
-    enemyPosistion1.y = 0.0f;
+      sf::Vector2f enemyPosistion1;
+      enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
+      enemyPosistion1.y = 0.0f;
 
-    sf::Vector2f enemyPosistion2;
-    enemyPosistion2.x = static_cast<float>((rand() % 3000) + 1200);
-    enemyPosistion2.y = 0.0f;
+      sf::Vector2f enemyPosistion2;
+      enemyPosistion2.x = static_cast<float>((rand() % 3000) + 1200);
+      enemyPosistion2.y = 0.0f;
 
-    WelderEnemy *aux1 = NULL;
-    HollowHatEnemy *aux2 = NULL;
+      WelderEnemy *aux1 = NULL;
+      HollowHatEnemy *aux2 = NULL;
 
-    aux1 = new WelderEnemy(graphicManager, enemyPosistion2, entities);
-    characters.push_back(aux1);
-    entities->InsertDynamicEntity(aux1);
+      aux1 = new WelderEnemy(graphicManager, enemyPosistion2, entities);
+      characters.push_back(aux1);
+      entities->InsertDynamicEntity(aux1);
+      /*
+      Enemy *boss = new TrashMonster(graphicManager, enemyPosistion);
+      characters.push_back(boss);
+      entities->InsertDynamicEntity(boss);
 
-    Enemy *boss = new TrashMonster(graphicManager, enemyPosistion);
-    characters.push_back(boss);
-    entities->InsertDynamicEntity(boss);
-
-    aux2 = new HollowHatEnemy(graphicManager, enemyPosistion1);
-    characters.push_back(aux2);
-    entities->InsertDynamicEntity(aux2);
+      aux2 = new HollowHatEnemy(graphicManager, enemyPosistion1);
+      characters.push_back(aux2);
+      entities->InsertDynamicEntity(aux2);
+      */
+    }
+  }
+  else
+  {
+    this->entities = entities;
   }
 }
 
-void LevelSewer::Initialize()
+void LevelSewer::Initialize(DynamicEntityList* entities)
 {
   /* --------------------------------------------------------- Getting textures --------------------------------------------------------- */
 
@@ -87,7 +102,10 @@ void LevelSewer::Initialize()
   BasePlatform *limitBorderYLeft = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(basePlatformPosition.x, basePlatformPosition.y / 2.0f));
   BasePlatform *limitBorderYRight = new BasePlatform(graphicManager, sf::Vector2f(5.0f, basePlatformPosition.y), sf::Vector2f(5000.0f, basePlatformPosition.y / 2.0f));
 
+  cout <<"Inseriu um"<<endl;
   entities->InsertDynamicEntity(basePlatform);
+  cout <<"Inseriu um"<<endl;
+
   obstacles.push_back(basePlatform);
   entities->InsertDynamicEntity(limitBorderYLeft);
   obstacles.push_back(limitBorderYLeft);
@@ -276,5 +294,5 @@ void LevelSewer::Initialize()
   entities->InsertDynamicEntity(door);
   items.push_back(door);
 
-  InitializeCharacters();
+  InitializeCharacters(entities);
 }
