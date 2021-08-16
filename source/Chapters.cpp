@@ -124,6 +124,8 @@ void Chapters::MoveToSelection()
 {
   menu[0].setFillColor(sf::Color::White);
   menu[1].setFillColor(sf::Color::Red);
+  for (int i = 2; i < CHAPTERS_MAX_ITEMS; i++)
+    menu[i].setFillColor(sf::Color::White);
   selectedItemIndex = 1;
 }
 

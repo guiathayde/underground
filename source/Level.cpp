@@ -54,7 +54,7 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   heartsText[0].setFont(font);
   heartsText[0].setCharacterSize(48);
   heartsText[0].setFillColor(sf::Color::White);
-  heartsText[0].setString(to_string(hearts));
+  heartsText[0].setString("0");
   sf::FloatRect textRectHealthInt = heartsText[0].getLocalBounds();
   heartsText[0].setOrigin(0.0f, 0.0f);
   heartsText[0].setPosition((window->getSize().x / 2.0f) - 50.0f, 40.0f);
@@ -67,8 +67,8 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   heartsText[1].setOrigin(0.0f, 0.0f);
   heartsText[1].setPosition((window->getSize().x / 2.0f) + 50.0f, 40.0f);
 
-  healthBox.setSize(sf::Vector2f(150.0f, 50.0f));
-  healthBox.setPosition((window->getSize().x / 2.0f) - 50.0f, 40.0f);
+  healthBox.setSize(sf::Vector2f(210.0f, 50.0f));
+  healthBox.setPosition((window->getSize().x / 2.0f) - 55.0f, 45.0f);
   healthBox.setFillColor(sf::Color::Red);
 
   /* ----------------------------------------------- SetUp End Level Display -----------------------------------------------*/
@@ -84,8 +84,8 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   endLevelText[1].setCharacterSize(44);
   endLevelText[1].setFillColor(sf::Color::White);
   endLevelText[1].setString(finalPhrase);
-  sf::FloatRect textRectEndLevelPhrase = endLevelText[1].getLocalBounds();
-  endLevelText[1].setOrigin(textRectEndLevelPhrase.left + textRectEndLevelPhrase.width / 2.0f, textRectEndLevelPhrase.top + textRectEndLevelPhrase.height / 2.0f);
+  sf::FloatRect textRectEndLevel = endLevelText[1].getLocalBounds();
+  endLevelText[1].setOrigin(textRectEndLevel.left + textRectEndLevel.width / 2.0f, textRectEndLevel.top + textRectEndLevel.height / 2.0f);
   endLevelText[1].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / 2.0f, 40.0f + textRectEndLevelCongratulation.height);
 
   for (int i = 2, j = 3; i <= 3; i++, j--)
@@ -128,7 +128,9 @@ void Level::Update(float deltaTime)
 
   heartsText[0].setPosition(graphicManager->GetView()->getCenter().x - 50.0f, 40.0f);
   heartsText[1].setPosition(graphicManager->GetView()->getCenter().x + 50.0f, 40.0f);
-  heartsText[0].setString(to_string(hearts));
+  heartsText[0].setString(to_string(playerOne->GetHearts()));
+
+  healthBox.setPosition(graphicManager->GetView()->getCenter().x - 55.0f, 45.0f);
 }
 
 void Level::CheckCollison()
