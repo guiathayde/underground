@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(GraphicManager* graphicManager,sf::Texture *texture ,sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,int id ,int hearts, bool isAlive, bool isPlayer, bool isPlayerOne) 
-:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, id, hearts, isAlive, isPlayer)
+Player::Player(GraphicManager *graphicManager, sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int id, int hearts, bool isAlive, bool isPlayer, bool isPlayerOne)
+    : Character(graphicManager, texture, size, origin, imageCount, switchTime, speed, jumpHeight, id, hearts, isAlive, isPlayer)
 {
   this->id = 0;
   this->isPlayerOne = isPlayerOne;
@@ -10,7 +10,6 @@ Player::Player(GraphicManager* graphicManager,sf::Texture *texture ,sf::Vector2f
 
 Player::~Player()
 {
-  cout << "Entrou na destrutora do player"<< endl;
 }
 
 void Player::Update(float deltaTime, Character *ini)
@@ -53,7 +52,6 @@ void Player::Update(float deltaTime, Character *ini)
 
   if (hearts <= 0)
     isAlive = false;
-  //cout << hearts <<endl;
 
   animation->Update(row, deltaTime, faceRight);
   body.setTextureRect(animation->uvRect);

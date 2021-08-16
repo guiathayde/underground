@@ -43,14 +43,15 @@ void SaveManager::SaveLevel()
   SaveItems();
 }
 
-void SaveManager::SaveCharacters(){
-  
+void SaveManager::SaveCharacters()
+{
+
   ofstream Writer("data/saves/characters.txt", ios::out);
 
   if (!Writer)
     cerr << "File characters.txt cannot be opened" << endl;
 
-  list<Character*>::iterator itCharacter;
+  list<Character *>::iterator itCharacter;
 
   for (itCharacter = currentLevel->GetListCharacters()->begin(); itCharacter != currentLevel->GetListCharacters()->end(); itCharacter++)
   {
@@ -91,7 +92,7 @@ void SaveManager::ReadCharacters()
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(playerOne);
         currentLevel->GetListCharacters()->push_back(playerOne);
         break;
-        
+
       case 2:
         playerTwo = new ChildPlayerTwo(currentGraphicManager, sf::Vector2f(x, y));
         playerTwo->SetHearts(hearts);
@@ -145,12 +146,11 @@ void SaveManager::SaveObstacles()
   list<Obstacle *>::iterator itObstacle;
   for (itObstacle = currentLevel->GetListObstacles()->begin(); itObstacle != currentLevel->GetListObstacles()->end(); itObstacle++)
   {
-    //cout << "obstacle id (write):" << (*itObstacle)->GetId() <<endl;
-    Writer 
-           << (*itObstacle)->GetId() << " "
-           << (*itObstacle)->GetPosition().x << " "
-           << (*itObstacle)->GetPosition().y << " "
-           << endl;
+    Writer
+        << (*itObstacle)->GetId() << " "
+        << (*itObstacle)->GetPosition().x << " "
+        << (*itObstacle)->GetPosition().y << " "
+        << endl;
   }
 
   Writer.close();
@@ -158,10 +158,10 @@ void SaveManager::SaveObstacles()
 
 void SaveManager::ReadObstacles()
 {
-  AirPlatform* airPlatform;
+  AirPlatform *airPlatform;
   TrapPlatform *trapPlatform;
-  WallPlatform* wallPlatform;
-  Spike* spikes;
+  WallPlatform *wallPlatform;
+  Spike *spikes;
 
   ifstream Reader("data/saves/obstacles.txt", ios::in);
 
@@ -169,11 +169,10 @@ void SaveManager::ReadObstacles()
   {
     while (!Reader.eof())
     {
-      int id ;
+      int id;
       float x, y;
 
       Reader >> id >> x >> y;
-      //cout << "obstacle id:" << id << endl;
       switch (id)
       {
       case 6:
@@ -181,19 +180,19 @@ void SaveManager::ReadObstacles()
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(airPlatform);
         currentLevel->GetListObstacles()->push_back(airPlatform);
         break;
-      
+
       case 8:
         trapPlatform = new TrapPlatform(currentGraphicManager, sf::Vector2f(x, y));
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(trapPlatform);
         currentLevel->GetListObstacles()->push_back(trapPlatform);
         break;
-      
+
       case 9:
         wallPlatform = new WallPlatform(currentGraphicManager, sf::Vector2f(x, y));
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(wallPlatform);
         currentLevel->GetListObstacles()->push_back(wallPlatform);
         break;
-      
+
       case 0:
         spikes = new Spike(currentGraphicManager, sf::Vector2f(x, y));
         currentLevel->GetDynamicEntityList()->InsertDynamicEntity(spikes);
@@ -214,14 +213,15 @@ void SaveManager::ReadObstacles()
   }
 }
 
-void SaveManager::SaveItems(){
-  
+void SaveManager::SaveItems()
+{
+
   ofstream Writer("data/saves/items.txt", ios::out);
 
   if (!Writer)
     cerr << "File items.txt cannot be opened" << endl;
 
-  list<Item*>::iterator itItem;
+  list<Item *>::iterator itItem;
 
   for (itItem = currentLevel->GetListItems()->begin(); itItem != currentLevel->GetListItems()->end(); itItem++)
   {

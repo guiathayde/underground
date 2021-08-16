@@ -1,6 +1,6 @@
 #include "Door.h"
 
-Door::Door(GraphicManager *graphicManager, sf::Vector2f position) : Item(graphicManager,position,DOOR_ID)
+Door::Door(GraphicManager *graphicManager, sf::Vector2f position) : Item(graphicManager, position, DOOR_ID)
 {
   isCaught = false;
   isStair = false;
@@ -25,14 +25,6 @@ void Door::Draw(sf::RenderWindow &window)
 
 void Door::OnCollision(sf::Vector2f direction)
 {
-}
-
-void Door::SetCaught(bool state)
-{
-  isCaught = state;
-
-  // if (isStair && isCaught)
-  //   body.setPosition(body.getSize().x + 10.0f, body.getSize().y + 10.0f);
 }
 
 sf::Vector2f Door::GetHalfSize()

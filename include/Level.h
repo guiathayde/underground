@@ -21,6 +21,7 @@ protected:
   int nextLevel;
   int hearts;
 
+  bool isCoop;
   bool isStairCought;
   bool endLevel;
 
@@ -72,9 +73,10 @@ public:
   string GetNameLevel() { return nameLevel; }
 
   int GetScore() { return score; }
+
+  bool GetIsCoop() { return isCoop; }
   bool GetEndLevel() { return endLevel; }
-  
-  
+
   Player *GetPlayer() { return playerOne; };
   void SetPlayerOne(Player *p) { playerOne = p; };
   void SetPlayerTwo(Player *p) { playerTwo = p; };

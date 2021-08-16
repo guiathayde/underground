@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <math.h>
 #include <map>
 #include <list>
 #include <iostream>

@@ -9,10 +9,12 @@ Game::Game()
   graphicManager = new GraphicManager();
   mainMenu = new MainMenu(graphicManager);
   pauseMenu = new PauseMenu(graphicManager);
+  modMenu = new ModMenu(graphicManager);
   chapters = new Chapters(graphicManager);
   ranking = new Ranking(graphicManager);
-  level = NULL;
   saveManager = new SaveManager(graphicManager, ranking);
+  level = NULL;
+  levelNumber = 0;
 }
 
 Game::~Game()
@@ -21,6 +23,7 @@ Game::~Game()
   delete (saveManager);
   delete (mainMenu);
   delete (pauseMenu);
+  delete (modMenu);
   delete (chapters);
   delete (ranking);
   delete (level);
@@ -64,6 +67,63 @@ void Game::Execute()
           pauseMenu->SetPause(false);
         else if (event.key.code == sf::Keyboard::Escape)
           pauseMenu->SetPause(true);
+        else if (modMenu->GetModMenu())
+        {
+          bool isSecondPlayer = false;
+          bool isChoosable = false;
+          if (modMenu->SelectItem(event, level) == 1)
+          {
+            isSecondPlayer = true;
+            isChoosable = true;
+          }
+          else if (modMenu->SelectItem(event, level) == 0)
+          {
+            isSecondPlayer = false;
+            isChoosable = true;
+          }
+
+          if (isChoosable)
+          {
+            switch (levelNumber)
+            {
+            case 1:
+            {
+              LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager, isSecondPlayer);
+              levelSewer->Initialize();
+              level = levelSewer;
+              mainMenu->SetPlaying(true);
+              chapters->SetChapters(false);
+              modMenu->SetModMenu(false);
+              break;
+            }
+
+            case 2:
+            {
+              LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager, isSecondPlayer);
+              levelSubway->Initialize();
+              level = levelSubway;
+              mainMenu->SetPlaying(true);
+              chapters->SetChapters(false);
+              modMenu->SetModMenu(false);
+              break;
+            }
+
+            case 3:
+            {
+              LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager, isSecondPlayer);
+              levelOverground->Initialize();
+              level = levelOverground;
+              mainMenu->SetPlaying(true);
+              chapters->SetChapters(false);
+              modMenu->SetModMenu(false);
+              break;
+            }
+
+            default:
+              break;
+            }
+          }
+        }
         else if (chapters->GetChapters())
         {
           int numberAction = chapters->SelectItem(event, NULL);
@@ -71,28 +131,10 @@ void Game::Execute()
           {
             chapters->SetChapters(false);
           }
-          else if (numberAction == 1)
+          else if (numberAction != -1)
           {
-            LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
-            levelSewer->Initialize();
-            level = levelSewer;
-            mainMenu->SetPlaying(true);
-            chapters->SetChapters(false);
-          }
-          else if (numberAction == 2)
-          {
-            LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
-            levelSubway->Initialize();
-            level = levelSubway;
-            mainMenu->SetPlaying(true);
-            chapters->SetChapters(false);
-          }
-          else if (numberAction == 3)
-          {
-            LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
-            levelOverground->Initialize();
-            level = levelOverground;
-            mainMenu->SetPlaying(true);
+            levelNumber = numberAction;
+            modMenu->SetModMenu(true);
             chapters->SetChapters(false);
           }
         }
@@ -106,45 +148,40 @@ void Game::Execute()
           int numberAction = mainMenu->SelectItem(event, NULL);
           if (numberAction == 1)
           {
-            LevelSewer *levelsewer = new LevelSewer(graphicManager, colliderManager);
-            levelsewer->Initialize();
-            mainMenu->SetPlaying(true);
-            level = levelsewer;
+            modMenu->SetModMenu(true);
+            levelNumber = numberAction;
           }
           else if (numberAction == 2)
           {
-            
             saveManager->ReadLevel();
             string nameLevel = saveManager->GetNameLevel();
             if (nameLevel == "Sewer")
             {
-              LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager);
+              LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager, false);
               level = levelSewer;
               saveManager->SetLevel(level);
               saveManager->ReadLevel();
-              
+
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
-             // cout << "setou o level" <<endl;
             }
             else if (nameLevel == "Subway")
             {
-              LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
+              LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager, false);
               level = levelSubway;
               saveManager->SetLevel(level);
               saveManager->ReadLevel();
-              
+
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
-             // cout << "setou o level" <<endl;
             }
             else if (nameLevel == "Overground")
             {
-              LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
+              LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager, false);
               level = levelOverground;
-              saveManager->SetLevel(level);              
+              saveManager->SetLevel(level);
               saveManager->ReadLevel();
-              
+
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
             }
@@ -173,8 +210,9 @@ void Game::Execute()
           }
           else if (numberAction == 2)
           {
+            bool tmp = level->GetIsCoop();
             level->ClearAll();
-            LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager);
+            LevelSubway *levelSubway = new LevelSubway(graphicManager, colliderManager, tmp);
             levelSubway->Initialize();
             level = levelSubway;
             mainMenu->SetPlaying(true);
@@ -182,8 +220,9 @@ void Game::Execute()
           }
           else if (numberAction == 3)
           {
+            bool tmp = level->GetIsCoop();
             level->ClearAll();
-            LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager);
+            LevelOverground *levelOverground = new LevelOverground(graphicManager, colliderManager, tmp);
             levelOverground->Initialize();
             level = levelOverground;
             mainMenu->SetPlaying(true);
@@ -227,13 +266,15 @@ void Game::Execute()
       }
       else if (mainMenu->GetPlaying())
       {
-        //cout << "Entrou no getPlaying" <<endl;
         level->CheckCollison();
-        //cout << "Saiu do checkCollision" <<endl;
         level->Update(deltaTime);
-        //cout << "Saiu do update" <<endl;
         level->Draw(*graphicManager->GetWindow());
         level->SetViewCenter();
+      }
+      else if (!mainMenu->GetPlaying() && modMenu->GetModMenu())
+      {
+        graphicManager->GetView()->setCenter(modMenu->GetCenterPosition());
+        modMenu->Draw(graphicManager->GetWindow(), graphicManager->GetView());
       }
       else if (!mainMenu->GetPlaying() && chapters->GetChapters())
       {

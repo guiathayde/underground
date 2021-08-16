@@ -11,8 +11,8 @@ protected:
   sf::Vector2f velocity;
   sf::Vector2f size;
   sf::Vector2u imageCount;
-  
-  int id;  
+
+  int id;
   int hearts;
 
   float speed;
@@ -27,7 +27,7 @@ protected:
   bool isPlayer;
 
 public:
-  Character(GraphicManager* graphicManager,sf::Texture* texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts,int id, bool isAlive, bool isPlayer);
+  Character(GraphicManager *graphicManager, sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, int id, bool isAlive, bool isPlayer);
   ~Character();
 
   virtual void Update(float deltaTime, Character *character);
@@ -45,9 +45,8 @@ public:
 
   void SetIsAlive(bool alive) { isAlive = alive; };
 
-  void GetDamage(){
-    //cout << "Levou dano"<< endl;
+  void GetDamage()
+  {
     hearts--;
   }
-
 };

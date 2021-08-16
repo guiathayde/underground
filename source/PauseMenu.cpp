@@ -12,6 +12,7 @@ PauseMenu::PauseMenu(GraphicManager *graphicManager) : Menu(graphicManager)
   isPaused = false;
   isChapters = false;
   isRanking = false;
+  isModMenu = false;
 
   sf::Vector2f windowSize = static_cast<sf::Vector2f>(graphicManager->GetWindow()->getSize());
 

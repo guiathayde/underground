@@ -9,7 +9,7 @@ private:
   sf::Vector2f basePlatformPosition;
 
 public:
-  LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider);
+  LevelSewer(GraphicManager *graphicManager, ColliderManager *graphicCollider, bool isCoop);
   ~LevelSewer();
 
   void InitializeCharacters();

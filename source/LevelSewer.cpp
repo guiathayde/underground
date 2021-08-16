@@ -15,8 +15,11 @@
 #include "Stair.h"
 #include "Door.h"
 
-LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *manageCollider) : Level(graphicManager, manageCollider)
+LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *manageCollider, bool isCoop) : Level(graphicManager, manageCollider)
 {
+
+  this->isCoop = isCoop;
+
   nameLevel = "Sewer";
   sizeX = 5000.0f;
   enemiesNum = 2;
@@ -30,7 +33,6 @@ LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *manageCo
   background.setSize(backgroundSize);
   background.setTexture(backgroundTexture);
 
-  
   basePlatformPosition.x = 0.0f;
   basePlatformPosition.y = static_cast<float>(windowSize.y);
 
@@ -53,38 +55,41 @@ LevelSewer::~LevelSewer()
 void LevelSewer::InitializeCharacters()
 {
 
-    ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
-    characters.push_back(playerOne);
-    entities->InsertDynamicEntity(playerOne);
-    SetPlayerOne(playerOne);
-    
-    
+  ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+  characters.push_back(playerOne);
+  entities->InsertDynamicEntity(playerOne);
+  SetPlayerOne(playerOne);
+
+  if (isCoop)
+  {
+
     ChildPlayerTwo *playerTwo = new ChildPlayerTwo(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
     characters.push_back(playerTwo);
     entities->InsertDynamicEntity(playerTwo);
-    SetPlayerOne(playerTwo);
-    
-    for (int i = 0; i < enemiesNum; i++)
-    {
-      sf::Vector2f enemyPosistion;
-      enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
-      enemyPosistion.y = 0.0f;
+    SetPlayerTwo(playerTwo);
+  }
 
-      sf::Vector2f enemyPosistion1;
-      enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
-      enemyPosistion1.y = 0.0f;
+  for (int i = 0; i < enemiesNum; i++)
+  {
+    sf::Vector2f enemyPosistion;
+    enemyPosistion.x = static_cast<float>((rand() % 3000) + 1200);
+    enemyPosistion.y = 0.0f;
 
-      sf::Vector2f enemyPosistion2;
-      enemyPosistion2.x = static_cast<float>((rand() % 3000) + 1200);
-      enemyPosistion2.y = 0.0f;
+    sf::Vector2f enemyPosistion1;
+    enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
+    enemyPosistion1.y = 0.0f;
 
-      WelderEnemy *aux1 = NULL;
-      HollowHatEnemy *aux2 = NULL;
+    sf::Vector2f enemyPosistion2;
+    enemyPosistion2.x = static_cast<float>((rand() % 3000) + 1200);
+    enemyPosistion2.y = 0.0f;
 
-      aux1 = new WelderEnemy(graphicManager, enemyPosistion2, entities);
-      characters.push_back(aux1);
-      entities->InsertDynamicEntity(aux1);
-      /*
+    WelderEnemy *aux1 = NULL;
+    HollowHatEnemy *aux2 = NULL;
+
+    aux1 = new WelderEnemy(graphicManager, enemyPosistion2, entities);
+    characters.push_back(aux1);
+    entities->InsertDynamicEntity(aux1);
+    /*
       Enemy *boss = new TrashMonster(graphicManager, enemyPosistion);
       characters.push_back(boss);
       entities->InsertDynamicEntity(boss);
@@ -93,8 +98,7 @@ void LevelSewer::InitializeCharacters()
       characters.push_back(aux2);
       entities->InsertDynamicEntity(aux2);
       */
-   }
-
+  }
 }
 
 void LevelSewer::Initialize()
@@ -277,11 +281,8 @@ void LevelSewer::Initialize()
   }
 
   Door *door = new Door(graphicManager, sf::Vector2f(4931.0f, basePlatformPosition.y - 424.5f));
-  door->SetDoor(true);
   entities->InsertDynamicEntity(door);
   items.push_back(door);
-
-  //cout << "antes do initialize chara" << endl;
 
   InitializeCharacters();
 }

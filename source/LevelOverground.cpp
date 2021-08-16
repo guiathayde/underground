@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "Spike.h"
 #include "ChildPlayerOne.h"
+#include "ChildPlayerTwo.h"
 #include "TrashMonster.h"
 #include "WallPlatform.h"
 #include "AirPlatform.h"
@@ -14,8 +15,11 @@
 #include "Stair.h"
 #include "Door.h"
 
-LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager *manageCollider) : Level(graphicManager, manageCollider)
+LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager *manageCollider, bool isCoop) : Level(graphicManager, manageCollider)
 {
+
+  this->isCoop = isCoop;
+
   nameLevel = "Overground";
   sizeX = 5400.0f;
   enemiesNum = 3;
@@ -55,6 +59,14 @@ void LevelOverground::InitializeCharacters()
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
+
+  if (isCoop)
+  {
+    ChildPlayerTwo *playerTwo = new ChildPlayerTwo(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+    characters.push_back(playerTwo);
+    entities->InsertDynamicEntity(playerTwo);
+    SetPlayerTwo(playerTwo);
+  }
 
   for (int i = 0; i < enemiesNum; i++)
   {
@@ -99,8 +111,6 @@ void LevelOverground::Initialize()
   entities->InsertDynamicEntity(spikesFirst);
   obstacles.push_back(spikesFirst);
 
-  cout <<"106"<< endl;
-
   Spike *spikesPrevious = spikesFirst;
   Spike *spikesLast = NULL;
   for (int i = 0; i < 84; i++)
@@ -117,7 +127,6 @@ void LevelOverground::Initialize()
 
   TrapPlatform *trapPlatform1 = new TrapPlatform(graphicManager, sf::Vector2f(trapPlatformBase->GetHalfSize().x, basePlatformPosition.y - 150.0f));
   TrapPlatform *trapPlatform2 = new TrapPlatform(graphicManager, sf::Vector2f(trapPlatform1->GetPosition().x + trapPlatformBase->GetSize().x, basePlatformPosition.y - 150.0f));
-
 
   entities->InsertDynamicEntity(trapPlatform1);
   obstacles.push_back(trapPlatform1);
@@ -178,7 +187,7 @@ void LevelOverground::Initialize()
     obstacles.push_back(wallPlatformLast);
   }
 
-  TrapPlatform *trapPlatform4 = new TrapPlatform(graphicManager,  sf::Vector2f(airPlatformLast->GetPosition().x + airPlatformBase->GetSize().x, basePlatformPosition.y - spikesBase->GetSize().y - 20.0f));
+  TrapPlatform *trapPlatform4 = new TrapPlatform(graphicManager, sf::Vector2f(airPlatformLast->GetPosition().x + airPlatformBase->GetSize().x, basePlatformPosition.y - spikesBase->GetSize().y - 20.0f));
   entities->InsertDynamicEntity(trapPlatform4);
   obstacles.push_back(trapPlatform4);
 
@@ -199,9 +208,8 @@ void LevelOverground::Initialize()
   TrapPlatform *trapPlatform5 = new TrapPlatform(graphicManager, sf::Vector2f(wallPlatformLast->GetPosition().x + wallPlatformBase->GetHalfSize().x + trapPlatformBase->GetHalfSize().x + 10.0f, airPlatformLast->GetPosition().y));
   entities->InsertDynamicEntity(trapPlatform5);
   obstacles.push_back(trapPlatform5);
-  cout << "linha 203" << endl;
-  Stair *stair = new Stair(graphicManager, sf::Vector2f(trapPlatform5->GetPosition().x, trapPlatform5->GetPosition().y - trapPlatformBase->GetHalfSize().y - (graphicManager->GetTexture("stair3")->getSize().y / 2.0f)),3);
-  stair->SetStair(true);
+
+  Stair *stair = new Stair(graphicManager, sf::Vector2f(trapPlatform5->GetPosition().x, trapPlatform5->GetPosition().y - trapPlatformBase->GetHalfSize().y - (graphicManager->GetTexture("stair3")->getSize().y / 2.0f)), 3);
   entities->InsertDynamicEntity(stair);
   items.push_back(stair);
 
@@ -223,8 +231,7 @@ void LevelOverground::Initialize()
     obstacles.push_back(airPlatformLast);
   }
 
-  Door *door = new Door(graphicManager,  sf::Vector2f(airPlatformLast->GetPosition().x - (2 * airPlatformBase->GetSize().x), airPlatformLast->GetPosition().y - airPlatformBase->GetHalfSize().y - (graphicManager->GetTexture("door")->getSize().y / 2.0f)));
-  door->SetDoor(true);
+  Door *door = new Door(graphicManager, sf::Vector2f(airPlatformLast->GetPosition().x - (2 * airPlatformBase->GetSize().x), airPlatformLast->GetPosition().y - airPlatformBase->GetHalfSize().y - (graphicManager->GetTexture("door")->getSize().y / 2.0f)));
   entities->InsertDynamicEntity(door);
   items.push_back(door);
 

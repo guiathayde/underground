@@ -1,15 +1,12 @@
 #include "Stair.h"
 
-Stair::Stair(GraphicManager *graphicManager, sf::Vector2f position, int number) : 
-Item(graphicManager,position,STAIR_ID)
+Stair::Stair(GraphicManager *graphicManager, sf::Vector2f position, int number) : Item(graphicManager, position, STAIR_ID)
 {
   this->number = number;
 
   isCaught = false;
   isStair = true;
   isDoor = false;
-
-  cout << "Entrou na construtora da stair" <<endl;
 
   string stairTexture = "stair" + to_string(number);
   sf::Texture *texture = graphicManager->GetTexture(stairTexture);
@@ -31,14 +28,6 @@ void Stair::Draw(sf::RenderWindow &window)
 
 void Stair::OnCollision(sf::Vector2f direction)
 {
-}
-
-void Stair::SetCaught(bool state)
-{
-  isCaught = state;
-
-  // if (isStair && isCaught)
-  //   body.setPosition(body.getSize().x + 10.0f, body.getSize().y + 10.0f);
 }
 
 sf::Vector2f Stair::GetHalfSize()

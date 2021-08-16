@@ -1,13 +1,9 @@
+#include "stdfx.h"
 #include "Enemy.h"
-#include <iostream>
-#include <math.h>
-using std::cout;
-using std::endl;
 
-Enemy::Enemy(GraphicManager* graphicManager,sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight,float totalStunTime,int id,int hearts, bool isAlive, bool isPlayer)
-:Character(graphicManager,texture, size, origin, imageCount, switchTime, speed, jumpHeight, id,hearts, isAlive, isPlayer), totalStunTime(totalStunTime)
+Enemy::Enemy(GraphicManager *graphicManager, sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, float totalStunTime, int id, int hearts, bool isAlive, bool isPlayer)
+    : Character(graphicManager, texture, size, origin, imageCount, switchTime, speed, jumpHeight, id, hearts, isAlive, isPlayer), totalStunTime(totalStunTime)
 {
-
 }
 
 Enemy::~Enemy()
@@ -16,9 +12,6 @@ Enemy::~Enemy()
 
 void Enemy::Update(float deltaTime, Character *character)
 {
-
-    cout << "Entrou no update do enemy"<< endl;
-
     Player *p;
     p = static_cast<Player *>(character);
 

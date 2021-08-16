@@ -1,33 +1,32 @@
 #include "ChildPlayerOne.h"
 
-ChildPlayerOne::ChildPlayerOne(GraphicManager* graphicManager, sf::Vector2f position)
-:Player(graphicManager, texture,size,position,imageCount,switchTime,speed,jumpHeight,ID_PLAYER_ONE,hearts,isAlive,isPlayer,isPlayerOne)
+ChildPlayerOne::ChildPlayerOne(GraphicManager *graphicManager, sf::Vector2f position)
+    : Player(graphicManager, texture, size, position, imageCount, switchTime, speed, jumpHeight, ID_PLAYER_ONE, hearts, isAlive, isPlayer, isPlayerOne)
 {
-    id = ID_PLAYER_ONE;
-    size = CHILD_PLAYER_SIZE;
-    imageCount = CHILD_PLAYER_IMAGE_COUNT;
-    switchTime = CHILD_PLAYER_SWITCH_TIME;
-    speed = CHILD_PLAYER_SPEED;
-    jumpHeight = CHILD_PLAYER_JUMP_HEIGHT;
-    hearts = CHILD_PLAYER_HEARTS;
-    
-    isAlive = true;
-    isPlayer = true;
-    isPlayerOne = true;
-    
-    texture = graphicManager->GetTexture("playerOne");
-    animation = new Animation(texture,imageCount,switchTime);
+  id = ID_PLAYER_ONE;
+  size = CHILD_PLAYER_SIZE;
+  imageCount = CHILD_PLAYER_IMAGE_COUNT;
+  switchTime = CHILD_PLAYER_SWITCH_TIME;
+  speed = CHILD_PLAYER_SPEED;
+  jumpHeight = CHILD_PLAYER_JUMP_HEIGHT;
+  hearts = CHILD_PLAYER_HEARTS;
 
-    body.setSize(size);
-    body.setOrigin(body.getSize() / 2.0f);
-    body.setPosition(position.x, position.y);
-    body.setTexture(texture);
+  isAlive = true;
+  isPlayer = true;
+  isPlayerOne = true;
+
+  texture = graphicManager->GetTexture("playerOne");
+  animation = new Animation(texture, imageCount, switchTime);
+
+  body.setSize(size);
+  body.setOrigin(body.getSize() / 2.0f);
+  body.setPosition(position.x, position.y);
+  body.setTexture(texture);
 }
 
-ChildPlayerOne::~ChildPlayerOne(){
-
+ChildPlayerOne::~ChildPlayerOne()
+{
 }
-
 
 void ChildPlayerOne::Update(float deltaTime, Character *ini)
 {
@@ -69,7 +68,6 @@ void ChildPlayerOne::Update(float deltaTime, Character *ini)
 
   if (hearts <= 0)
     isAlive = false;
-  //cout << hearts <<endl;
 
   animation->Update(row, deltaTime, faceRight);
   body.setTextureRect(animation->uvRect);

@@ -1,9 +1,8 @@
 #include "Entity.h"
 
-Entity::Entity(GraphicManager* graphicManager){
-    
-    //cout <<"Construtora do entity"<<endl;
+Entity::Entity(GraphicManager *graphicManager)
+{
     this->graphicManager = graphicManager;
 }
 
-Entity::~Entity(){}
+Entity::~Entity() {}

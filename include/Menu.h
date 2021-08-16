@@ -13,6 +13,7 @@ protected:
   bool isPaused;
   bool isChapters;
   bool isRanking;
+  bool isModMenu;
 
   sf::Vector2f centerPosition;
 
@@ -39,6 +40,9 @@ public:
 
   void SetRanking(bool state) { isRanking = state; }
   bool GetRanking() { return isRanking; }
+
+  void SetModMenu(bool state) { isModMenu = state; }
+  bool GetModMenu() { return isModMenu; }
 
   sf::Vector2f GetCenterPosition() { return centerPosition; }
 };
