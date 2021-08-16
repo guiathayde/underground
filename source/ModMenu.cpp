@@ -116,4 +116,5 @@ bool ModMenu::SelectMod(sf::RenderWindow *window, sf::View *view, sf::Event even
 
     return choise == 1 ? true : false;
   }
+  return false;
 }

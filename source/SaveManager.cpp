@@ -27,7 +27,6 @@ SaveManager::SaveManager(GraphicManager *graphicManager, Ranking *ranking)
 
 SaveManager::~SaveManager()
 {
-  delete currentGraphicManager;
   delete currentLevel;
   delete currentRanking;
 }
@@ -36,6 +35,9 @@ void SaveManager::SaveLevel()
 {
   ofstream Writer("data/saves/level.txt", ios::out);
   Writer << currentLevel->GetNameLevel() << endl;
+  Writer << currentLevel->GetNameLevel() << endl;
+  Writer << currentLevel->GetNameLevel() << endl;
+
   Writer.close();
 
   SaveCharacters();
@@ -82,7 +84,6 @@ void SaveManager::ReadCharacters()
       float x, y;
 
       Reader >> id >> x >> y >> hearts;
-
       switch (id)
       {
       case 1:
@@ -282,15 +283,26 @@ void SaveManager::ReadItems()
   }
 }
 
-void SaveManager::ReadLevel()
-{
+string SaveManager::ReadNameLevel(){
   ifstream Reader("data/saves/level.txt", ios::in);
   Reader >> nameLevel;
   Reader.close();
+  return nameLevel;
+}
 
-  ReadCharacters();
-  ReadObstacles();
-  ReadItems();
+void SaveManager::ReadLevel()
+{
+
+  ifstream Reader("data/saves/level.txt", ios::in);
+  Reader >> nameLevel;
+  Reader.close();
+  if(currentLevel)
+   ReadCharacters();
+  if(currentLevel)
+    ReadObstacles();
+  if(currentLevel)
+    ReadItems();
+
 }
 
 void SaveManager::SaveScore()

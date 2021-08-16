@@ -80,7 +80,7 @@ MainMenu::MainMenu(GraphicManager *graphicManager) : Menu(graphicManager)
 
 MainMenu::~MainMenu()
 {
-  delete (backgroundTexture);
+  //delete (backgroundTexture);
 }
 
 void MainMenu::Draw(sf::RenderWindow *window, sf::View *view)

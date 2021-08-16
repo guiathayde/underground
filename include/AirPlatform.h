@@ -8,7 +8,6 @@
 class AirPlatform : public Platform
 {
 private:
-  sf::Vector2f velocity;
 
 public:
   AirPlatform(GraphicManager *graphicManager, sf::Vector2f position);

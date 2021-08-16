@@ -13,7 +13,6 @@ Game::Game()
   chapters = new Chapters(graphicManager);
   ranking = new Ranking(graphicManager);
   saveManager = new SaveManager(graphicManager, ranking);
-  level = NULL;
   levelNumber = 0;
 }
 
@@ -22,11 +21,8 @@ Game::~Game()
   delete (graphicManager);
   delete (saveManager);
   delete (mainMenu);
-  delete (pauseMenu);
-  delete (modMenu);
   delete (chapters);
-  delete (ranking);
-  delete (level);
+
 }
 
 void Game::Execute()
@@ -153,15 +149,14 @@ void Game::Execute()
           }
           else if (numberAction == 2)
           {
-            saveManager->ReadLevel();
-            string nameLevel = saveManager->GetNameLevel();
+            
+            string nameLevel = saveManager->ReadNameLevel();
             if (nameLevel == "Sewer")
             {
               LevelSewer *levelSewer = new LevelSewer(graphicManager, colliderManager, false);
               level = levelSewer;
               saveManager->SetLevel(level);
               saveManager->ReadLevel();
-
               mainMenu->SetPlaying(true);
               chapters->SetChapters(false);
             }

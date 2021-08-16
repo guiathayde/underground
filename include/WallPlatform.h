@@ -8,7 +8,6 @@
 class WallPlatform : public Platform
 {
 private:
-  sf::Vector2f velocity;
 
 public:
   WallPlatform(GraphicManager *graphicManager, sf::Vector2f position);

@@ -19,6 +19,7 @@ public:
   SaveManager(GraphicManager *graphicManager, Ranking *ranking);
   ~SaveManager();
 
+  string ReadNameLevel();
   string GetNameLevel() { return nameLevel; };
 
   void SaveLevel();
