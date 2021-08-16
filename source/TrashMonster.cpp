@@ -51,6 +51,8 @@ void TrashMonster::Update(float deltaTime, Character *character)
     {
         coolDown = 0;
         velocity.x = Attack(p);
+        if(velocity.y == 0)
+            velocity.y -=jumpHeight;
     }
     velocity.y += 981.0f * deltaTime;
 

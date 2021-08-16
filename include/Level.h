@@ -87,6 +87,9 @@ public:
   void SetPlayerOne(Player *p) { playerOne = p; };
   void SetPlayerTwo(Player *p) { playerTwo = p; };
 
+
+  void SetHeartOnWindow();
+  void SetScoreOnWindow();
   void SetViewCenter();
 
   void ClearAll();

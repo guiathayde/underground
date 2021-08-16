@@ -82,20 +82,24 @@ void LevelOverground::InitializeCharacters()
     enemyPosistion1.x = static_cast<float>((rand() % 3000) + 1200);
     enemyPosistion1.y = 0.0f;
 
-    Enemy *boss = new TrashMonster(graphicManager, enemyPosistion1);
-    characters.push_back(boss);
-    entities->InsertDynamicEntity(boss);
-
     Enemy *aux = new HollowHatEnemy(graphicManager, enemyPosistion);
     characters.push_back(aux);
     entities->InsertDynamicEntity(aux);
 
-    /*
+    
     Enemy *aux1 = new WelderEnemy(graphicManager, enemyPosistion1,entities);
     characters.push_back(aux1);
     entities->InsertDynamicEntity(aux1);
-    */
+    
   }
+  sf::Vector2f boosPosition;
+  boosPosition.x = sizeX-500.0f;
+  boosPosition.y = 400.0f;
+  Enemy *boss = new TrashMonster(graphicManager,boosPosition );
+    characters.push_back(boss);
+    entities->InsertDynamicEntity(boss);
+  
+
 }
 
 void LevelOverground::Initialize()

@@ -1,6 +1,9 @@
 Garres 40 
+Naosei 20 
 burda 30 
+dddddddddddddd 10 
 etore 80 
 garres 170 
 gui 40 
 guiathayde 300 
+naosei 30 

@@ -95,11 +95,11 @@ void LevelSewer::InitializeCharacters()
       Enemy *boss = new TrashMonster(graphicManager, enemyPosistion);
       characters.push_back(boss);
       entities->InsertDynamicEntity(boss);
-
+    */
       aux2 = new HollowHatEnemy(graphicManager, enemyPosistion1);
       characters.push_back(aux2);
       entities->InsertDynamicEntity(aux2);
-      */
+    
   }
 }
 
