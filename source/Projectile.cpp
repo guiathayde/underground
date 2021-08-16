@@ -1,7 +1,7 @@
 #include "Projectile.h"
 #include "Character.h"
 
-Projectile::Projectile(GraphicManager *graphicManager, sf::Vector2f position, float speed) : DynamicEntity(graphicManager, false, true, false, false)
+Projectile::Projectile(GraphicManager *graphicManager, sf::Vector2f position, float speed) : DynamicEntity(graphicManager, false, true, false, false,false)
 {
 
     size = PROJECTILE_SIZE;

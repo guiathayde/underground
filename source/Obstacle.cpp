@@ -1,7 +1,7 @@
 #include "Obstacle.h"
 
 Obstacle::Obstacle(int id,bool isPlatform,bool isSpike)
-: DynamicEntity(graphicManager,isPlatform,true,false,false)
+: DynamicEntity(graphicManager,isPlatform,true,false,false,false)
 {
     this->isSpike = isSpike;
     this->id = id;

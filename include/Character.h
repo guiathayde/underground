@@ -27,7 +27,7 @@ protected:
   bool isPlayer;
 
 public:
-  Character(GraphicManager *graphicManager, sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, int id, bool isAlive, bool isPlayer);
+  Character(GraphicManager *graphicManager, sf::Texture *texture, sf::Vector2f size, sf::Vector2f origin, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight, int hearts, int id, bool isAlive, bool isPlayer, bool isEnemy);
   ~Character();
 
   virtual void Update(float deltaTime, Character *character);

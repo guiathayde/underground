@@ -124,10 +124,13 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
       if ((*entities)[i] && (*entities)[j])
       {
         if (i != j && !(*entities)[j]->GetIsObstacle() && !(*entities)[j]->GetIsItem() && CheckCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody(), direction, 0.1f))
+        { 
           (*entities)[j]->OnCollision(direction);
-        if ((*entities)[i]->GetIsPlayer() && (*entities)[j]->GetIsProjectile())
-        {
-          static_cast<Player *>((*entities)[i])->GetDamage();
+          if ((*entities)[j]->GetIsPlayer() && ((*entities)[i]->GetIsProjectile()||(*entities)[i]->GetIsEnemy()))
+          {
+          if(!CheckOnHeadCollision(*((*entities)[i])->GetBody(), *((*entities)[j])->GetBody()))
+            static_cast<Player *>((*entities)[j])->GetDamage();
+          }
         }
       }
     }
