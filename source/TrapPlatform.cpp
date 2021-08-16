@@ -3,6 +3,8 @@
 TrapPlatform::TrapPlatform(GraphicManager *graphicManager, sf::Vector2f position)
     : Platform(graphicManager, position, TRAP_PALTFORM_ID)
 {
+  isTrap = true;
+
   sf::Texture *texture = graphicManager->GetTexture("trapPlatform");
 
   body.setSize(static_cast<sf::Vector2f>(texture->getSize()));

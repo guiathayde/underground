@@ -21,6 +21,7 @@ LevelSewer::LevelSewer(GraphicManager *graphicManager, ColliderManager *manageCo
   this->isCoop = isCoop;
 
   nameLevel = "Sewer";
+  finalPhrase = "You escaped from the sewer!";
   sizeX = 5000.0f;
   enemiesNum = 2;
   nextLevel = 2;

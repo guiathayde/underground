@@ -21,6 +21,7 @@ LevelOverground::LevelOverground(GraphicManager *graphicManager, ColliderManager
   this->isCoop = isCoop;
 
   nameLevel = "Overground";
+  finalPhrase = "You are FREE?";
   sizeX = 5400.0f;
   enemiesNum = 3;
   nextLevel = 0;

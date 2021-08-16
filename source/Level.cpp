@@ -14,6 +14,7 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   nextLevel = 0;
   endLevel = false;
   name = "";
+  finalPhrase = "";
 
   sizeX = 5000.0f;
 
@@ -49,6 +50,27 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   scoreText[1].setOrigin(0.0f, 0.0f);
   scoreText[1].setPosition(textRectScore.width + 15.0f, 40.0f);
 
+  /* ----------------------------------------------- SetUp Health Display -----------------------------------------------*/
+  heartsText[0].setFont(font);
+  heartsText[0].setCharacterSize(48);
+  heartsText[0].setFillColor(sf::Color::White);
+  heartsText[0].setString(to_string(hearts));
+  sf::FloatRect textRectHealthInt = heartsText[0].getLocalBounds();
+  heartsText[0].setOrigin(0.0f, 0.0f);
+  heartsText[0].setPosition((window->getSize().x / 2.0f) - 50.0f, 40.0f);
+
+  heartsText[1].setFont(font);
+  heartsText[1].setCharacterSize(48);
+  heartsText[1].setFillColor(sf::Color::White);
+  heartsText[1].setString("/300");
+  sf::FloatRect textRectHealthTotal = heartsText[1].getLocalBounds();
+  heartsText[1].setOrigin(0.0f, 0.0f);
+  heartsText[1].setPosition((window->getSize().x / 2.0f) + 50.0f, 40.0f);
+
+  healthBox.setSize(sf::Vector2f(150.0f, 50.0f));
+  healthBox.setPosition((window->getSize().x / 2.0f) - 50.0f, 40.0f);
+  healthBox.setFillColor(sf::Color::Red);
+
   /* ----------------------------------------------- SetUp End Level Display -----------------------------------------------*/
   endLevelText[0].setFont(font);
   endLevelText[0].setCharacterSize(56);
@@ -61,7 +83,7 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   endLevelText[1].setFont(font);
   endLevelText[1].setCharacterSize(44);
   endLevelText[1].setFillColor(sf::Color::White);
-  endLevelText[1].setString("You escaped from the sewer!");
+  endLevelText[1].setString(finalPhrase);
   sf::FloatRect textRectEndLevelPhrase = endLevelText[1].getLocalBounds();
   endLevelText[1].setOrigin(textRectEndLevelPhrase.left + textRectEndLevelPhrase.width / 2.0f, textRectEndLevelPhrase.top + textRectEndLevelPhrase.height / 2.0f);
   endLevelText[1].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / 2.0f, 40.0f + textRectEndLevelCongratulation.height);
@@ -100,10 +122,13 @@ void Level::Update(float deltaTime)
     if ((*itItem)->GetCaught() && (*itItem)->GetStair())
       (*itItem)->SetPosition(sf::Vector2f(graphicManager->GetView()->getCenter().x + (graphicManager->GetView()->getSize().x / 2.0f) - (*itItem)->GetHalfSize().x - 20.0f, graphicManager->GetView()->getCenter().y - (graphicManager->GetView()->getSize().y / 2.0f) + (*itItem)->GetHalfSize().y + 20.0f));
 
-  string scoreUpdated = to_string(score);
   scoreText[0].setPosition(graphicManager->GetView()->getCenter().x - (graphicManager->GetView()->getSize().x / 2.0f) + 30.0f, 40.0f);
   scoreText[1].setPosition(graphicManager->GetView()->getCenter().x - (graphicManager->GetView()->getSize().x / 2.0f) + 215.0f, 40.0f);
-  scoreText[1].setString(scoreUpdated);
+  scoreText[1].setString(to_string(score));
+
+  heartsText[0].setPosition(graphicManager->GetView()->getCenter().x - 50.0f, 40.0f);
+  heartsText[1].setPosition(graphicManager->GetView()->getCenter().x + 50.0f, 40.0f);
+  heartsText[0].setString(to_string(hearts));
 }
 
 void Level::CheckCollison()
@@ -144,6 +169,7 @@ void Level::SetEndLevel(sf::Event event)
   endLevelText[3].setPosition(graphicManager->GetView()->getCenter().x + 100.0f, graphicManager->GetView()->getCenter().y);
   endLevelText[4].setPosition(graphicManager->GetView()->getCenter().x, graphicManager->GetView()->getCenter().y + 275.0f);
 
+  endLevelText[1].setString(finalPhrase);
   endLevelText[3].setString(to_string(score));
 
   if (event.type == sf::Event::TextEntered)
@@ -190,8 +216,11 @@ void Level::Draw(sf::RenderWindow &window)
   if (!endLevel)
   {
     window.draw(background);
+    window.draw(healthBox);
     window.draw(scoreText[0]);
     window.draw(scoreText[1]);
+    window.draw(heartsText[0]);
+    window.draw(heartsText[1]);
     entities->DrawEntities(window);
   }
   else

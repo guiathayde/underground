@@ -111,6 +111,8 @@ void ColliderManager::CheckEntitiesCollison(DynamicEntityList *entities, list<Ob
         (*itCharacters)->OnCollision(direction);
         if ((*itObstacle)->GetIsSpike() && (*itCharacters)->GetIsPlayer())
           (*itCharacters)->GetDamage();
+        // else if (static_cast<Platform *>((*itObstacle))->GetIsTrap())
+        //   static_cast<Platform *>((*itObstacle))->OnCollision({1,0});
       }
     }
   }

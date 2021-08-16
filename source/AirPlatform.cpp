@@ -3,6 +3,9 @@
 AirPlatform::AirPlatform(GraphicManager *graphicManager, sf::Vector2f position)
     : Platform(graphicManager, position, AIR_PLATFORM_ID)
 {
+
+  isTrap = false;
+
   sf::Texture *texture = graphicManager->GetTexture("airPlatform");
 
   body.setSize(static_cast<sf::Vector2f>(texture->getSize()));

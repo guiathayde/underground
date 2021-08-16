@@ -26,9 +26,11 @@ protected:
   bool endLevel;
 
   string nameLevel;
+  string finalPhrase;
   string name;
 
   sf::Font font;
+  sf::Text heartsText[2];
   sf::Text scoreText[2];
   sf::Text endLevelText[5];
 
@@ -45,6 +47,9 @@ protected:
 
   sf::Texture *backgroundTexture;
   sf::RectangleShape background;
+
+  sf::RectangleShape healthBox;
+
   sf::View *view;
   sf::RenderWindow *window;
   sf::RectangleShape endLevelBackground;

@@ -21,6 +21,7 @@ LevelSubway::LevelSubway(GraphicManager *graphicManager, ColliderManager *graphi
   this->isCoop = isCoop;
 
   nameLevel = "Subway";
+  finalPhrase = "You escaped the subway!";
   sizeX = 5600.0f;
   enemiesNum = 3;
   nextLevel = 3;
