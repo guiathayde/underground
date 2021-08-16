@@ -1,6 +1,6 @@
 #include "Item.h"
 
-Item::Item(GraphicManager *graphicManager, sf::Vector2f position, int id) : DynamicEntity(graphicManager, false, false, false, true)
+Item::Item(GraphicManager *graphicManager, sf::Vector2f position, int id) : DynamicEntity(graphicManager, false, false, false, false,true)
 {
   this->id = id;
 }

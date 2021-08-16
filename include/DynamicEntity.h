@@ -15,13 +15,14 @@ protected:
     sf::Texture *texture;
     sf::RectangleShape body;
 
+    bool isEnemy;
     bool isObstacle;
     bool isProjectile;
     bool isPlayer;
     bool isItem;
 
 public:
-    DynamicEntity(GraphicManager* graphicManager,bool isObstacle,bool isProjectile, bool isPlayer, bool isItem);
+    DynamicEntity(GraphicManager* graphicManager,bool isObstacle,bool isProjectile, bool isPlayer,bool isEnemy, bool isItem);
     virtual ~DynamicEntity();
 
     sf::RectangleShape *GetBody() { return &body; }
@@ -30,6 +31,7 @@ public:
     bool GetIsProjectile(){return isProjectile;}
     bool GetIsPlayer(){return isPlayer;}
     bool GetIsItem(){return isItem;}
+    bool GetIsEnemy(){return isEnemy;}
     virtual void Draw(sf::RenderWindow &window) = 0;
     virtual void OnCollision(sf::Vector2f direction) = 0;
     virtual void Update(float deltaTime, Character* character) = 0;
