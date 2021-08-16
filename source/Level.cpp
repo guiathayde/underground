@@ -122,13 +122,13 @@ void Level::Update(float deltaTime)
   for (itItem = items.begin(); itItem != items.end(); itItem++)
     if ((*itItem)->GetCaught() && (*itItem)->GetStair())
       (*itItem)->SetPosition(sf::Vector2f(graphicManager->GetView()->getCenter().x + (graphicManager->GetView()->getSize().x / 2.0f) - (*itItem)->GetHalfSize().x - 20.0f, graphicManager->GetView()->getCenter().y - (graphicManager->GetView()->getSize().y / 2.0f) + (*itItem)->GetHalfSize().y + 20.0f));
-  SetViewCenter();
-  scoreText[0].setPosition(graphicManager->GetView()->getCenter());
-  scoreText[1].setPosition(graphicManager->GetView()->getCenter());
+
+  scoreText[0].setPosition(graphicManager->GetView()->getCenter().x - (graphicManager->GetView()->getSize().x / 2.0f) + 30.0f, 40.0f);
+  scoreText[1].setPosition(graphicManager->GetView()->getCenter().x - (graphicManager->GetView()->getSize().x / 2.0f) + 215.0f, 40.0f);
   scoreText[1].setString(to_string(score));
 
-  heartsText[0].setPosition(graphicManager->GetView()->getCenter().x - 50.0f, (window->getSize().y / 2.0f) - 60.0f);
-  heartsText[1].setPosition(graphicManager->GetView()->getCenter().x + 50.0f, (window->getSize().y / 2.0f) - 60.0f);
+  heartsText[0].setPosition(graphicManager->GetView()->getCenter().x - 50.0f, 40.0f);
+  heartsText[1].setPosition(graphicManager->GetView()->getCenter().x + 50.0f, 40.0f);
   heartsText[0].setString(to_string(playerOne->GetHearts()));
 
   healthBox.setPosition(graphicManager->GetView()->getCenter().x - 55.0f, (window->getSize().y / 2.0f) - 55.0f);
@@ -244,13 +244,12 @@ void Level::Draw(sf::RenderWindow &window)
   }
 }
 
-void Level::SetHeartOnWindow(){
-
+void Level::SetHeartOnWindow()
+{
 }
-void Level::SetScoreOnWindow(){
-
+void Level::SetScoreOnWindow()
+{
 }
-
 
 void Level::ClearAll()
 {

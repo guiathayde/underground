@@ -1,0 +1,7 @@
+Para compilar o jogo é necessário ter um compilador C++ e Makefile instalado
+Acessar o diretório da pasta e então executar make em um terminal, o próprio Makefile verifica qual sistema operacional está rodando,
+compila e roda o executavel
+
+Roda em Linux e Windows
+Compilador: gcc version 6.3.0
+Biblioteca gráfica: SFML 2.5
