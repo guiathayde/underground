@@ -39,6 +39,7 @@ protected:
   list<Obstacle *> obstacles;
   list<Item *> items;
 
+  sf::Vector2f initialPosition;
   Player *playerOne;
   Player *playerTwo;
 

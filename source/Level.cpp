@@ -15,8 +15,9 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   endLevel = false;
   name = "";
   finalPhrase = "";
-
   sizeX = 5000.0f;
+
+  playerTwo = NULL;
 
   this->graphicManager = graphicManager;
 
@@ -84,8 +85,8 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
   endLevelText[1].setCharacterSize(44);
   endLevelText[1].setFillColor(sf::Color::White);
   endLevelText[1].setString(finalPhrase);
-  sf::FloatRect textRectEndLevel = endLevelText[1].getLocalBounds();
-  endLevelText[1].setOrigin(textRectEndLevel.left + textRectEndLevel.width / 2.0f, textRectEndLevel.top + textRectEndLevel.height / 2.0f);
+  sf::FloatRect textRectEndLevelPhrase = endLevelText[1].getLocalBounds();
+  endLevelText[1].setOrigin(textRectEndLevelPhrase.left + textRectEndLevelPhrase.width / 2.0f, textRectEndLevelPhrase.top + textRectEndLevelPhrase.height / 2.0f);
   endLevelText[1].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / 2.0f, 40.0f + textRectEndLevelCongratulation.height);
 
   for (int i = 2, j = 3; i <= 3; i++, j--)
@@ -93,8 +94,8 @@ Level::Level(GraphicManager *graphicManager, ColliderManager *colliderManager) :
     endLevelText[i].setFont(font);
     endLevelText[i].setCharacterSize(48);
     endLevelText[i].setFillColor(sf::Color::White);
-    sf::FloatRect textRectEndLevelPhrase = endLevelText[i].getLocalBounds();
-    endLevelText[i].setOrigin(textRectEndLevelPhrase.left + textRectEndLevelPhrase.width / 2.0f, textRectEndLevelPhrase.top + textRectEndLevelPhrase.height / 2.0f);
+    sf::FloatRect textRectEndLevel = endLevelText[i].getLocalBounds();
+    endLevelText[i].setOrigin(textRectEndLevel.left + textRectEndLevel.width / 2.0f, textRectEndLevel.top + textRectEndLevel.height / 2.0f);
     endLevelText[i].setPosition(static_cast<float>(graphicManager->GetWindow()->getSize().x) / (float)j, static_cast<float>(graphicManager->GetWindow()->getSize().y) / 2.0f);
   }
   endLevelText[2].setFillColor(sf::Color::Red);
@@ -131,6 +132,15 @@ void Level::Update(float deltaTime)
   heartsText[0].setString(to_string(playerOne->GetHearts()));
 
   healthBox.setPosition(graphicManager->GetView()->getCenter().x - 55.0f, 45.0f);
+
+  if (playerOne->GetHearts() < 1)
+  {
+    playerOne->SetPosition(initialPosition);
+    if (playerTwo != NULL)
+      playerTwo->SetPosition(initialPosition);
+
+    playerOne->SetHearts(300);
+  }
 }
 
 void Level::CheckCollison()
@@ -166,7 +176,7 @@ void Level::SetEndLevel(sf::Event event)
   endLevelBackground.setPosition(graphicManager->GetView()->getCenter());
 
   endLevelText[0].setPosition(graphicManager->GetView()->getCenter().x, 50.0f);
-  endLevelText[1].setPosition(graphicManager->GetView()->getCenter().x, 100.0f);
+  endLevelText[1].setPosition(graphicManager->GetView()->getCenter().x - 300.0f, 100.0f);
   endLevelText[2].setPosition(graphicManager->GetView()->getCenter().x - 300.0f, graphicManager->GetView()->getCenter().y);
   endLevelText[3].setPosition(graphicManager->GetView()->getCenter().x + 100.0f, graphicManager->GetView()->getCenter().y);
   endLevelText[4].setPosition(graphicManager->GetView()->getCenter().x, graphicManager->GetView()->getCenter().y + 275.0f);
@@ -201,7 +211,8 @@ int Level::SetContinueLevel(sf::Event event, Ranking *ranking)
 
   if (event.key.code == sf::Keyboard::Return && endLevelText[4].getFillColor() == sf::Color::Red)
   {
-    ranking->SetRank(name, score);
+    if (name != "")
+      ranking->SetRank(name, score);
     return nextLevel;
   }
 

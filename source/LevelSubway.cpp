@@ -55,7 +55,10 @@ LevelSubway::~LevelSubway()
 
 void LevelSubway::InitializeCharacters()
 {
-  ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+  initialPosition.x = 31.0f;
+  initialPosition.y = static_cast<float>(graphicManager->GetWindow()->getSize().y) - 31.0f;
+
+  ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 31.0f));
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
@@ -123,7 +126,7 @@ void LevelSubway::Initialize()
   entities->InsertDynamicEntity(airPlatform4);
   obstacles.push_back(airPlatform4);
 
-  Stair *stair = new Stair(graphicManager, sf::Vector2f((trapPlatformBase->GetHalfSize().x / 2.0f) * 30.0f, basePlatformPosition.y - 600.0f - airPlatform4->GetHalfSize().y - (graphicManager->GetTexture("stair2")->getSize().y / 2.0f)), 2);
+  Stair *stair = new Stair(graphicManager, sf::Vector2f(airPlatform4->GetPosition().x, airPlatform4->GetPosition().y - airPlatformBase->GetHalfSize().y - (static_cast<float>(graphicManager->GetTexture("stair2")->getSize().y) / 2.0f)), 2);
   entities->InsertDynamicEntity(stair);
   items.push_back(stair);
 

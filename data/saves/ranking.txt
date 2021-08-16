@@ -2,5 +2,5 @@ Garres 40
 burda 30 
 etore 80 
 garres 170 
-gui 10 
-guiathayde 220 
+gui 40 
+guiathayde 300 

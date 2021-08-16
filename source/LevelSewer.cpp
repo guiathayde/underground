@@ -55,8 +55,9 @@ LevelSewer::~LevelSewer()
 
 void LevelSewer::InitializeCharacters()
 {
-
-  ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 21.0f));
+  initialPosition.x = 31.0f;
+  initialPosition.y = static_cast<float>(graphicManager->GetWindow()->getSize().y) - 31.0f;
+  ChildPlayerOne *playerOne = new ChildPlayerOne(graphicManager, sf::Vector2f(31.0f, static_cast<float>(graphicManager->GetWindow()->getSize().y) - 31.0f));
   characters.push_back(playerOne);
   entities->InsertDynamicEntity(playerOne);
   SetPlayerOne(playerOne);
